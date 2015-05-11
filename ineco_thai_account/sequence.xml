@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="seq_ineco_wht_code" model="ir.sequence.type">
+            <field name="name">WHT</field>
+            <field name="code">ineco.wht</field>
+        </record>
+
+        <record id="seq_ineco_wht" model="ir.sequence">
+            <field name="name">WHT</field>
+            <field name="code">ineco.wht</field>
+            <field name="prefix">WHT-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        
+        <record id="seq_ineco_wht_sale_code" model="ir.sequence.type">
+            <field name="name">WHT-SALE</field>
+            <field name="code">ineco.wht.sale</field>
+        </record>
+
+        <record id="seq_ineco_wht_sale" model="ir.sequence">
+            <field name="name">WHT-SALE</field>
+            <field name="code">ineco.wht.sale</field>
+            <field name="prefix">WHS-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        
+
+        <record id="seq_ineco_cheque_journal_in_code" model="ir.sequence.type">
+            <field name="name">Cheque Journal In</field>
+            <field name="code">ineco.cheque.in</field>
+        </record>
+
+        <record id="seq_ineco_cheque_journal_in" model="ir.sequence">
+            <field name="name">Cheque Journal In</field>
+            <field name="code">ineco.cheque.in</field>
+            <field name="prefix">CQI-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>    
+            
+        <record id="seq_ineco_cheque_journal_out_code" model="ir.sequence.type">
+            <field name="name">Cheque Journal Out</field>
+            <field name="code">ineco.cheque.out</field>
+        </record>
+
+        <record id="seq_ineco_cheque_journal_out" model="ir.sequence">
+            <field name="name">Cheque Journal Out</field>
+            <field name="code">ineco.cheque.out</field>
+            <field name="prefix">CQO-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>        
+        		
+    </data>
+</openerp>

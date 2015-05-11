@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+	
+		<record model="ir.ui.view" id="view_company_form">
+		    <field name="name">res.company.form.ac_account_thai</field>
+		    <field name="inherit_id" ref="base.view_company_form"/>
+		    <field name="model">res.company</field>
+		    <field name="type">form</field>
+		    <field name="priority">20</field>
+		    <field name="arch" type="xml">
+		    <data>
+		        <field name="partner_id" position="after">
+		            <field name="department_code" />
+		        </field>
+		        <page string="Configuration" position="inside">
+		        	<group>
+		        		<group string="Cheque">
+				            <field name="cq_postdate_in"  domain="[('company_id','=',active_id),('type','not in',['view','consolidation'])]"/>
+				            <field name="cq_postdate_out"  domain="[('company_id','=',active_id),('type','not in',['view','consolidation'])]"/>
+						</group>
+			            <group string="Advance" >
+				            <field name="advance"  domain="[('company_id','=',active_id),('type','not in',['view','consolidation'])]"/>
+				            <field name="advance_delay"/>
+						</group>
+					</group>
+					<group>
+						<group string="Cash">
+		            		<field name="cash"  domain="[('company_id','=',active_id),('type','not in',['view','consolidation'])]"/>
+						</group>
+			            <group string="Bank">
+		            		<field name="bank_charge"  domain="[('company_id','=',active_id),('type','not in',['view','consolidation'])]"/>
+						</group>
+					</group>
+					<group>
+						<group string="WHT">
+				            <field name="wht_company_id"  domain="[('company_id','=',active_id),('type','not in',['view','consolidation'])]"/>
+				            <field name="wht_personal_id"  domain="[('company_id','=',active_id),('type','not in',['view','consolidation'])]"/>
+						</group>
+						<group string="Date">
+				            <field name="date_start"/>
+			            </group>
+			        </group>
+		        </page>
+		        <page string="Configuration" position="after">
+		            <page string="Journal">	
+		            	<group>
+		            		<group string="Purchases">
+				                <field name="in_invoice_journal_id"  domain="[('company_id','=',active_id)]"/>
+				                <field name="in_cash_journal_id" domain="[('company_id','=',active_id)]"/>
+				                <field name="in_refund_journal_id" domain="[('company_id','=',active_id)]"/>
+				                <field name="in_charge_journal_id" domain="[('company_id','=',active_id)]"/>
+				                <field name="in_deposit_journal_id" domain="[('company_id','=',active_id)]"/>
+			                </group>
+							<group string="Sales">		
+				                <field name="out_invoice_journal_id" domain="[('company_id','=',active_id)]"/>
+				                <field name="out_cash_journal_id" domain="[('company_id','=',active_id)]"/>
+				                <field name="out_refund_journal_id" domain="[('company_id','=',active_id)]"/>
+				                <field name="out_charge_journal_id" domain="[('company_id','=',active_id)]"/>
+				                <field name="out_deposit_journal_id" domain="[('company_id','=',active_id)]"/>
+			                </group>
+							<group string="Payment">
+				                <field name="in_payment_journal_id" domain="[('company_id','=',active_id)]"/>
+				                <field name="out_payment_journal_id" domain="[('company_id','=',active_id)]"/>
+							</group>
+							<group string="Cheque">
+				                <field name="in_cheque_journal_id" domain="[('company_id','=',active_id)]"/>
+				                <field name="out_cheque_journal_id" domain="[('company_id','=',active_id)]"/>
+							</group>
+							<group string="Petty/Advance">
+				                <field name="advance_journal_id" domain="[('company_id','=',active_id)]"/>
+				                <field name="in_petty_journal_id" domain="[('company_id','=',active_id)]"/>
+				                <field name="out_petty_journal_id" domain="[('company_id','=',active_id)]"/>
+			                </group>
+			                <group string="Bank">
+				                <field name="bank_journal_id" domain="[('company_id','=',active_id)]"/>
+			                </group>
+		                </group>
+		            </page>
+		        </page>
+		        
+		
+		    </data>
+		    </field>
+		</record>
+	
+	
+	</data>
+</openerp>
+

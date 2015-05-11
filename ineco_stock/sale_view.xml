@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+	
+		<!-- Sale Shop -->
+        <record model="ir.ui.view" id="view_ineco_sale_shop_tree">
+	      	<field name="name">ineco.sale.shop.tree</field>
+	      	<field name="model">sale.shop</field>
+	      	<field name="inherit_id" ref="sale.view_shop_tree"/>
+	      	<field name="arch" type="xml">
+	        	<field name="project_id" position="after">
+	        		<field name="sequence_id" />
+	        		<field name="production_sequence_id" />
+	        		<field name="stock_journal_id" />
+	        	</field>
+	      	</field>
+	    </record>      
+	    
+        <record model="ir.ui.view" id="view_ineco_sale_shop_form">
+	      	<field name="name">ineco.sale.shop.form</field>
+	      	<field name="model">sale.shop</field>
+	      	<field name="inherit_id" ref="sale.view_shop_form"/>
+	      	<field name="arch" type="xml">
+	        	<field name="project_id" position="after">
+	        		<field name="sequence_id" />
+	        		<field name="production_sequence_id" />
+	        		<field name="stock_journal_id" />
+	        	</field>
+	      	</field>
+	    </record>      
+	           	
+    </data>
+</openerp>

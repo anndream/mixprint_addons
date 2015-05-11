@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20"
+ >
+	<property name="OPENERP_RELATIONS" value="[&apos;Attachments&apos;]"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="STANDARD_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/albert/d/koo/server-modules/jasper_reports/report/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/albert/d/git/nan-openerp/openobject-client-kde-5.0/server-modules/jasper_reports/demo/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="EVENTS_DATA_SOURCE" class="java.lang.Object"/>
+	<parameter name="IDS" class="java.lang.Object">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PIDS" class="java.util.List" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{IDS}.toList()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select ref, name, website, date from res_partner where $X{IN, id, PIDS}]]>
+	</queryString>
+	<field name="ref" class="java.lang.String">
+		<fieldDescription><![CDATA[Ref.]]></fieldDescription>
+	</field>
+	<field name="name" class="java.lang.String"/>
+	<field name="website" class="java.lang.String"/>
+	<field name="date" class="java.sql.Date">
+		<fieldDescription><![CDATA[Date End]]></fieldDescription>
+	</field>
+	<group name="partner">
+		<groupExpression><![CDATA[$F{name}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="62"/>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band height="20">
+			<staticText>
+				<reportElement  x="5" y="0" width="69" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reference]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="75" y="0" width="227" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="302" y="0" width="184" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Website]]></text>
+			</staticText>
+			<staticText>
+				<reportElement  x="486" y="0" width="70" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<textField isBlankWhenNull="true">
+				<reportElement  x="0" y="0" width="73" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ref}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true" hyperlinkType="Reference">
+				<reportElement x="301" y="0" width="184" height="20" forecolor="#3366FF"/>
+				<textElement verticalAlignment="Middle">
+					<font isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{website}]]></textFieldExpression>
+				<hyperlinkReferenceExpression><![CDATA[$F{website}]]></hyperlinkReferenceExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement  x="74" y="0" width="227" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement  x="485" y="0" width="70" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band/>
+	</pageFooter>
+	<summary>
+		<band height="23"/>
+	</summary>
+</jasperReport>

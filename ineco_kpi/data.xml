@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="0">
+	    
+	   	<record id="month_1" model="ineco.kpi.category">
+	        <field name="name">January</field>
+	    </record>      
+	   	<record id="month_2" model="ineco.kpi.category">
+	        <field name="name">Feburay</field>
+	    </record>      
+	   	<record id="month_3" model="ineco.kpi.category">
+	        <field name="name">March</field>
+	    </record>      
+	   	<record id="month_4" model="ineco.kpi.category">
+	        <field name="name">April</field>
+	    </record>      
+	   	<record id="month_5" model="ineco.kpi.category">
+	        <field name="name">May</field>
+	    </record>      
+	   	<record id="month_6" model="ineco.kpi.category">
+	        <field name="name">June</field>
+	    </record>      
+	   	<record id="month_7" model="ineco.kpi.category">
+	        <field name="name">July</field>
+	    </record>      
+	    <record id="month_8" model="ineco.kpi.category">
+	        <field name="name">August</field>
+	    </record>      
+	   	<record id="month_9" model="ineco.kpi.category">
+	        <field name="name">September</field>
+	    </record>      
+	    <record id="month_10" model="ineco.kpi.category">
+	        <field name="name">Octorber</field>
+	    </record>      
+	    <record id="month_11" model="ineco.kpi.category">
+	        <field name="name">November</field>
+	    </record>      
+	    <record id="month_12" model="ineco.kpi.category">
+	        <field name="name">December</field>
+	    </record>      
+	    	   		   		   		   		   		   		   		     	   		    	    	    	    	    
+	</data>
+</openerp>

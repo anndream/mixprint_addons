@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data noupdate="0">
+
+	    <record id="base.group_sale_grade" model="res.groups">
+	        <field name="name">Sale Grade</field>
+	        <field name="category_id" ref="base.module_category_hidden"/>
+	    </record>
+
+	    <record id="base.group_garment_pattern" model="res.groups">
+	        <field name="name">Garment Pattern</field>
+	        <field name="category_id" ref="base.module_category_hidden"/>
+	    </record>
+
+	    <record id="base.group_garment_collar" model="res.groups">
+	        <field name="name">Garment Collar</field>
+	        <field name="category_id" ref="base.module_category_hidden"/>
+	    </record>
+	
+	    <record id="secure_ineco_sale_qty_amount" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_sale_qty_amount" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+
+	    <record id="secure_ineco_sale_qty_customer" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_sale_qty_customer" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+
+	    <record id="secure_ineco_sale_mytop_opportunity" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_sale_mytop_opportunity" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+
+	    <record id="secure_ineco_cost_group" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_cost_group" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+
+	    <record id="secure_ineco_mrp_machine_group" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_mrp_machine" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+
+	    <record id="secure_ineco_mrp_process_group" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_mrp_process_group" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+
+	    <record id="secure_ineco_mrp_process" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_mrp_process" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+
+	    <record id="secure_ineco_mrp_period" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_mrp_period" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+
+	    <record id="secure_ineco_mrp_task" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_mrp_task" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+
+	    <record id="secure_ineco_sale_qty_dashboard" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_sale_qty_dashboard" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+
+	    <record id="secure_ineco_mrp_production_ticket" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_mrp_production_ticket" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+	    	
+	    <record id="secure_ineco_pattern_group" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_pattern_group" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+
+	    <record id="secure_ineco_mrp_subworkcenter_group" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_mrp_subworkcenter" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+
+	    <record id="secure_ineco_subworkcenter_task_group" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_mrp_subworkcenter_task" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+	   	
+	    <record id="secure_ineco_mrp_task_list_group" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_mrp_task_list" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+	   	
+	    <record id="secure_ineco_color_of_lastyear_group" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_color_of_lastyear" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+
+	    <record id="secure_ineco_color_of_year_group" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_color_of_year" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+
+	    <record id="secure_ineco_sale_audit_delivery" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_sale_audit_delivery" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="0"/>
+	        <field name="perm_create" eval="0"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>
+	    	
+	</data>
+</openerp>

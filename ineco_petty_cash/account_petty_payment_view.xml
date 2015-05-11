@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+	
+	
+		<record id="view_petty_payment_tree" model="ir.ui.view">
+		    <field name="name">petty.payment.tree</field>
+		    <field name="model">account.petty.payment</field>
+		    <field name="arch" type="xml">
+		        <tree string="Petty Cash Payments">
+		            <field name="name"/>
+		            <field name="date"/>
+		            <field name="fund_id"/>
+		            <field name="employee_id"/>
+		            <field name="desc"/>
+		            <field name="state"/>
+		            <field name="company_id" invisible="1"/>
+		        </tree>
+		    </field>
+		</record>
+		
+		<record id="view_petty_payment_form" model="ir.ui.view">
+		    <field name="name">petty.payment.form</field>
+		    <field name="model">account.petty.payment</field>
+		    <field name="arch" type="xml">
+		        <form string="Petty Cash Payment" version="7.0">
+		        	<header>
+		              	<button name="button_post" string="Post" states="draft" type="object" icon="gtk-ok"/>
+		              	<button name="button_cancel" string="Cancel" states="draft,posted" type="object"  icon="gtk-cancel"/>
+		             	<button name="button_draft" string="To Draft" states="canceled" type="object" 
+		                            icon="gtk-convert" groups="base.group_no_one"/>
+		                <field name="state"  widget="statusbar" statusbar_visible="draft,posted,canceled"/>
+		        	</header>
+		        	<sheet>
+		        		<group>
+		        			<group>
+					            <field name="name"/>
+					            <field name="date"/>
+					            <field name="fund_id" domain="[('company_id','=',company_id)]"/>
+					            <field name="paid_total" invisible="1" />
+		        			</group>
+		        			<group>
+					            <field name="employee_id"/>
+					            <field name="desc"/>
+					            <field name="journal_id" domain="[('company_id','=',company_id)]" />
+					            <field name="move_id" attrs="{'invisible':[('state','!=','posted')]}"/>
+		        			</group>
+		        		</group>
+		            <notebook colspan="4">
+		                <page string="Details">
+		                    <field name="lines" colspan="4" nolabel="1"
+		                        context="{'amount':abs(amount_total-paid_total)}">
+		                        <tree string="Payment Lines" editable="top">
+		                        	<field name="date" />
+		                        	<field name="invoice_no" />
+		                        	<field name="partner_id" />
+		                        	<field name="product_id" on_change="onchange_product(product_id)"/>
+		                            <field name="name" invisible="1"/>
+		                            <field name="account_id" domain="[('company_id','=',parent.company_id or user.company_id.id),('type','not in',('view','consolidation','closed'))]"/>
+		                            <field name="quantity"/>
+		                            <field name="price_unit"/>
+		                            <field name="taxes" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','!=','sale')]"/>
+		                            <field name="tax_period_id" />
+		                            <!-- <field name="subtotal"/>  -->
+		                        </tree>
+		                    </field>
+		                    <group colspan="2" col="4">
+		                        <!-- <button name="btn_compute_taxes" string="Compute Taxes" colspan="2" type="object"
+		                        attrs="{'readonly':[('state','!=','draft')]}"
+		                            icon="gtk-execute"/> -->
+		                        <field name="amount_untaxed"/>
+		                        <field name="amount_tax"/>
+		                        <!-- <field name="amount_wht"/> -->
+		                        <field name="amount_total"/>
+		                    </group>
+		                </page>
+		                <page string="Other Information">
+		                	<group>
+		                		<group>
+		                			<field name="company_id" colspan="4" on_change="onchange_company_id(company_id)"/>		
+		                		</group>
+		                		
+		                	</group>
+		                    <group>
+		                    	<field name="notes" colspan="4" />
+		                    </group>      
+		                    
+		                </page>
+		            </notebook>
+		        	</sheet>
+		        </form>
+		    </field>
+		</record>
+		
+		<record id="petty_payment_search" model="ir.ui.view">
+		    <field name="name">account.petty.payment.search</field>
+		    <field name="model">account.petty.payment</field>
+		    <field name="priority">2</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Petty Payment">
+		           <group col="10" colspan="4">
+		                <filter name="draft" icon="terp-document-new" string="Draft" domain="[('state', '=', 'draft')]"/>
+		                <filter name="posted" icon="terp-check" string="Posted" domain="[('state', '=', 'posted')]"/>
+		                <separator orientation="vertical"/>
+		                <field name="name"/>
+		                <field name="date"/>
+		                <field name="company_id"/>
+		                <newline/>
+		                <field name="desc"/>
+		                <field name="fund_id"/>
+		                <field name="employee_id"/>
+		            </group>
+		            <newline/>
+		            <group expand="0" string="Group By...">
+		                <filter string="Petty Cash Fund" icon="terp-folder-orange" domain="[]" context="{'group_by':'fund_id'}"/>
+		                <filter string="Employee" icon="terp-personal" domain="[]" context="{'group_by':'employee_id'}"/>
+		                <filter string="Company" icon="terp-partner" domain="[]" context="{'group_by':'company_id'}"/>
+		                <filter string="Date" icon="terp-go-month" domain="[]"  context="{'group_by':'date'}"/>
+		            </group>
+		       </search>
+		    </field>
+		</record>
+		
+		<act_window id="action_petty_payment" name="Petty Cash Payments" res_model="account.petty.payment" view_type="form" view_mode="tree,form"/>
+		
+		<act_window id="action_petty_received" name="Petty Cash Received" res_model="account.cash.move" domain="[('fund_id','!=',False),('type','=','in')]" view_type="form" view_mode="tree,form" context="{'type':'in'}"/>
+		
+		<act_window id="action_petty_link_payment" name="Petty Cash Payments" src_model="account.petty.fund" res_model="account.petty.payment" domain="[('fund_id','=',active_id)]"/>
+		
+		<act_window id="action_petty_link_move" name="Petty Cash Moves" src_model="account.petty.fund" res_model="account.cash.move" domain="[('fund_id','=',active_id)]"/>
+	
+    	<menuitem name="Petty Cash" parent="account.menu_finance" 
+    		id="menu_ineco_account_pettcash" sequence="12"  />	     
+
+    	<menuitem name="Petty Cash Fund" parent="menu_ineco_account_pettcash"
+    		id="menu_ineco_petty_fund" sequence="1"
+    		action="action_petty_fund" />
+
+    	<menuitem name="Petty Cash Received" parent="menu_ineco_account_pettcash"
+    		id="menu_ineco_petty_received" sequence="2"
+    		action="action_petty_received" />
+
+    	<menuitem name="Petty Cash Payments" parent="menu_ineco_account_pettcash"
+    		id="menu_ineco_petty_payments" sequence="3"
+    		action="action_petty_payment" />
+  	    			
+
+	</data>
+</openerp>
+

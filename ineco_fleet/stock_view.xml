@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+	    <record model="ir.ui.view" id="view_fleet_warehouse_form">
+	        <field name="name">fleet.stock.warehouse.form</field>
+	        <field name="model">stock.warehouse</field>
+	        <field name="inherit_id" ref="stock.view_warehouse"/>
+	        <field name="arch" type="xml">
+	        	<field name="lot_input_id" position="before">
+	        		<field name="code" />
+	        	</field>
+	        </field>
+	    </record>
+	    
+	    <record model="ir.ui.view" id="view_fleet_warehouse_tree">
+	        <field name="name">fleet.stock.warehouse.tree</field>
+	        <field name="model">stock.warehouse</field>
+	        <field name="inherit_id" ref="stock.view_warehouse_tree"/>
+	        <field name="arch" type="xml">
+	        	<field name="name" position="before">
+	        		<field name="code" />
+	        	</field>
+	        </field>
+	    </record>	    
+	        	
+	    <record model="ir.ui.view" id="view_fleet_picking_out_form">
+	        <field name="name">fleet.picking.out.form</field>
+	        <field name="model">stock.picking.out</field>
+	        <field name="inherit_id" ref="stock.view_picking_form"/>
+	        <field name="arch" type="xml">
+	        	<field name="partner_id" position="replace">
+	        		<field name="partner_id" on_change="onchange_partner_in(partner_id)" />
+	        	</field>
+	        	<xpath expr="/form/sheet/notebook" position="inside">	        	
+	        	 	<page string="Vehicle">
+	        	 		<group>	
+	        	 			<group>
+	        	 				<field name="vehicle_id" />
+	        	 				<field name="driver_id" />	
+	        	 				<field name="route_id" />
+	        	 			</group>
+	        	 			<group>
+		        	 				<field name="date_vehicle_start" />
+		        	 				<field name="odometer_start" />
+
+		        	 				<field name="date_vehicle_stop" />
+		        	 				<field name="odometer_stop" />
+		        	 		</group>	        	 			
+			        	 </group>        
+			        		 			
+	        	 	</page>
+	        	 </xpath>
+			</field>
+		</record>    	
+    	
+	</data>
+</openerp>

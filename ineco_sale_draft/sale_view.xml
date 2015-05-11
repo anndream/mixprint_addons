@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_ineco_cancel_order_form" model="ir.ui.view">
+            <field name="name">ineco.cancel.sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="/form/sheet/notebook/page[@string='Other Information']" position="after" >
+                    <page string="Command" groups="base.group_erp_manager">
+                    	<group>
+                    		<group string="Reset Draft State (Cancel MO, Delete Picking)">
+                    			<button name="button_change_draft" string="Reset To Draft" type="object" icon="gtk-justify-fill"/>
+                    		</group>
+                    		<group string="Temp to Draft and Progress">
+                    			<button name="button_toggle_draft" string="Toggle Draft" type="object" icon="gtk-justify-fill"/>
+                    			<button name="button_toggle_progress" string="Toggle Process" type="object" icon="gtk-justify-fill"/>
+                    			<button name="button_toggle_done" string="Toggle Done" type="object" icon="gtk-justify-fill"/>
+                    		</group>
+                    	</group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+		    
+    </data>
+</openerp>

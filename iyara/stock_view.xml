@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_picking_iyara_from" model="ir.ui.view">
+            <field name="name">stock.picking.iyara.from</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+	      	    <field name="stock_journal_id" position='after' >
+	     			<field name="analytic_account_id" /> 	        
+	      	    </field>           	
+            </field>   	
+        </record>
+        <record id="view_picking_iyara_tree" model="ir.ui.view">
+            <field name="name">stock.picking.iyara.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+	      	    <field name="backorder_id" position='after' >
+	     			<field name="analytic_account_id" /> 	        
+	      	    </field>           	
+            </field>   	
+        </record>
+        <record id="view_picking_iyara_search" model="ir.ui.view">
+            <field name="name">stock.picking.iyara.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+	      	    <field name="name" position='after' >
+	     			<field name="analytic_account_id" /> 	        
+	      	    </field>           	
+            </field>   	
+        </record>
+
+        <record id="view_picking_in_iyara_from" model="ir.ui.view">
+            <field name="name">stock.picking.in.iyara.from</field>
+            <field name="model">stock.picking.in</field>
+            <field name="inherit_id" ref="stock.view_picking_in_form"/>
+            <field name="arch" type="xml">
+	      	    <field name="stock_journal_id" position='after' >
+	     			<field name="analytic_account_id" /> 	        
+	      	    </field>           	
+            </field>   	
+        </record>
+        <record id="view_picking_in_iyara_tree" model="ir.ui.view">
+            <field name="name">stock.picking.in.iyara.tree</field>
+            <field name="model">stock.picking.in</field>
+            <field name="inherit_id" ref="stock.view_picking_in_tree"/>
+            <field name="arch" type="xml">
+	      	    <field name="partner_id" position='after' >
+	     			<field name="analytic_account_id" /> 	        
+	      	    </field>           	
+            </field>   	
+        </record>
+        <record id="view_picking_in_iyara_search" model="ir.ui.view">
+            <field name="name">stock.picking.in.iyara.search</field>
+            <field name="model">stock.picking.in</field>
+            <field name="inherit_id" ref="stock.view_picking_in_search"/>
+            <field name="arch" type="xml">
+	      	    <field name="name" position='after' >
+	     			<field name="analytic_account_id" /> 	        
+	      	    </field>           	
+            </field>   	
+        </record>        
+        
+        <record id="view_picking_out_iyara_from" model="ir.ui.view">
+            <field name="name">stock.picking.out.iyara.from</field>
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form"/>
+            <field name="arch" type="xml">
+	      	    <field name="stock_journal_id" position='after' >
+	     			<field name="analytic_account_id" /> 	        
+	      	    </field>           	
+            </field>   	
+        </record>
+        <record id="view_picking_out_iyara_tree" model="ir.ui.view">
+            <field name="name">stock.picking.out.iyara.tree</field>
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_tree"/>
+            <field name="arch" type="xml">
+	      	    <field name="partner_id" position='after' >
+	     			<field name="analytic_account_id" /> 	        
+	      	    </field>           	
+            </field>   	
+        </record>              
+        	            
+     </data>
+</openerp>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+
+        <record id="view_ineco_pay_commission_form" model="ir.ui.view">
+            <field name="name">ineco.pay.commission.form</field>
+            <field name="model">ineco.pay.commission</field>
+            <field name="arch" type="xml">
+                <form string="Pay Commission" version="7.0">
+                	<group>
+                		
+                	</group>
+                    <p class="oe_grey">
+                    </p>
+                    <footer>
+                        <button string="Pay" name="update_data" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ineco_pay_commission_form" model="ir.actions.act_window">
+            <field name="name">Pay Commission</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ineco.pay.commission</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <record model="ir.values" id="ineco_pay_commission_value">
+            <field name="name">Pay Commission</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_ineco_pay_commission_form'))" />
+            <field name="key">action</field>
+            <field name="model">account.invoice</field>
+        </record>   
+        
+    </data>
+</openerp>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+
+
+        <record id="sequence_iyara_contract_type" model="ir.sequence.type">
+            <field name="name">Sale Contract</field>
+            <field name="code">iyara.contract</field>
+        </record>
+        
+        <record id="sequence_iyara_contract" model="ir.sequence">
+            <field name="name">Sale Contract</field>
+            <field name="code">iyara.contract</field>
+            <field name="prefix">CT56%(month)s-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+   	</data>
+</openerp>

@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+            	
+    	<record model="ir.ui.view" id="ineco_delivery_type_form">
+      		<field name="name">ineco.delivery.type.form</field>
+      		<field name="model">ineco.delivery.type</field>
+      		<field name="arch" type="xml">
+	        	<form string="Delivery Type" version="7.0">
+	        	    <header>
+	        	    </header>
+	        	    <sheet>
+		        	    <group string="Delivery Type">
+							<div class="oe_title">
+		                        <label for="name" class="oe_edit_only"/>
+		                        <h1>
+		                            <field name="name"/>                            
+		                        </h1>
+		                    </div>
+		        	    </group>
+	        	    </sheet>
+	        	    <!-- 
+	                <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+	                    <field name="message_ids" widget="mail_thread" placeholder="Share a message..."/>
+	                </div>
+	                 -->
+	        	</form>
+
+      		</field>
+    	</record>
+    	 
+    	<record model="ir.ui.view" id="ineco_delivery_type_tree">
+      		<field name="name">ineco.delivery.type.tree</field>
+      		<field name="model">ineco.delivery.type</field>
+      		<field name="arch" type="xml">
+		        <tree string="Delivery Type">
+		            <field name="name"/>		            
+		        </tree>
+      		</field>
+    	</record>
+
+	    <record model="ir.ui.view" id="ineco_delivery_type_filter">
+	      	<field name="name">ineco.delivery.type.search</field>
+	      	<field name="model">ineco.delivery.type</field>
+	      	<field name="arch" type="xml">
+	        	<search string="Delivery Type">
+	          		<field name="name" />
+	        	</search>
+	      	</field>
+	    </record>
+    		
+	    <record model="ir.actions.act_window" id="ineco_delivery_type_action">
+	        <field name="name">Delivery Type</field>
+	        <field name="res_model">ineco.delivery.type</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>	   
+	     		
+    	<menuitem name="Delivery Type" 
+    		parent="base.menu_base_config" 
+    		id="menu_ineco_delivery_type" 
+    		sequence="100" 
+    		action="ineco_delivery_type_action"/>
+    		 
+    </data>
+</openerp>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data noupdate="1">
+		<!-- Dashboard Story 1 -->
+        <record id="ineco_dashboard_story_seq1" model="ineco.dashboard.story">
+	        <field name="name">/reports/interactive/CustomersReport</field>
+	        <field name="server">192.168.135.132</field>
+	        <field name="username">jasperadmin</field>
+	        <field name="password">jasperadmin</field>
+	        <field name="type">seq1</field>
+	        <field name="port">8000</field>
+        </record>		
+        
+	</data>
+</openerp>

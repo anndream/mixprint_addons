@@ -1,0 +1,675 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <menuitem name="Task"
+            id="menu_mrp_task_menu"
+            parent="base.menu_mrp_root"
+            sequence="30"/>    
+
+        <record id="view_mixprint_mrp_production_form" model="ir.ui.view">
+            <field name="name">mixprint.mrp.production.form</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='button_confirm']" position="after">
+                    <button name="button_done_draft" states="ready" groups="base.group_erp_manager" string="Set Ready to Draft" type="object" class="oe_highlight"/>
+                    <button name="button_done_draft" states="cancel" groups="base.group_erp_manager" string="Set to Draft" type="object" class="oe_highlight"/>
+                </xpath>
+            	
+                <field name="priority" position="after">
+                	<field name="is_print" />
+                	<field name="is_planning" />
+                	<field name="date_plan_start" />
+                	<field name="date_plan_finish" />
+                	<field name="date_process1_start" readonly="1" />
+                	<field name="date_process1_finish" readonly="1" />
+                	<field name="sale_order_id" readonly="1" />
+                </field>                               
+                <field name="date_planned" position="before">
+                	<field name="gender_id" readonly="1"/>
+                	<field name="color_id" readonly="1" />
+                	<field name="size_id" readonly="1"/>
+                	<field name="note" readonly="1"/>
+                </field>
+                <field name="origin" position="after">
+                	<field name="comment" />
+                	<field name="bill_no" />
+                	<field name="bill_type" />
+                	<field name="machine_id" invisible="1"/>
+                	<field name="worker" />
+                	<field name="bill_weight" />
+                </field>
+                <xpath expr="/form/sheet/notebook/page[@string='Extra Information']" position="after" >
+                	<page string="Pattern">
+             			<group>
+             				<group>
+		                		<field name="pattern_id" required="1" />
+		                		<field name="ticket_size" />
+		                	</group>
+		                	<group>
+		                		<button name="button_component" string="Get Component" type="object" />
+		                	</group>
+             			</group>
+             			<field name="pattern_component_ids" nolable="1" colspan="4">
+             				<tree string="Component" editable="top">
+             					<field name="seq" />
+             					<field name="type_id" />
+             					<field name="process1" string="Needle" />
+             					<field name="process2" string="Screen" />
+             				</tree>
+             			</field>
+                	</page>
+                	<page string="Tickets">
+                		<field name="ticket_ids" readonly="1">
+                			<tree string="Ticket">
+                				<field name="machine_id" />
+                				<field name="name" />
+                				<field name="quantity" />
+                			</tree>
+                		</field>
+                	</page>
+                </xpath>
+            </field>
+        </record>   
+        
+        <record id="view_mixprint_mrp_production_tree" model="ir.ui.view">
+            <field name="name">mixprint.mrp.production.tree</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                	<field name="gender_id" readonly="1"/>
+                	<field name="color_id" readonly="1" />
+                	<field name="size_id" readonly="1"/>
+                	<field name="note" readonly="1"/>
+                	<field name="worker" />
+                	<field name="date_plan_finish2" string="Cut Finish" />
+                	<field name="is_print" invisible="1"/>
+                	<field name="is_planning" invisible="1" />
+                	<field name="late" invisible="1" />
+                </field>        
+                <field name="hour_total" position="replace">
+                	<field name="hour_total" invisible="1" />
+                </field>
+                <field name="cycle_total" position="replace">
+                	<field name="cycle_total" invisible="1" />
+                </field>
+                <field name="origin" position="replace">
+                	<field name="origin" invisible="1" />
+                	<field name="partner_id" />
+                	<field name="user_id" />
+                </field>
+        	</field>
+        </record>
+
+        <record id="view_ineco_mrp_production_search" model="ir.ui.view">
+            <field name="name">ineco.mrp.production.select</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.view_mrp_production_filter"/>
+            <field name="arch" type="xml">
+            	<field name="product_id" position="after">
+            		<field name="worker" />
+            		<field name="partner_id" />
+            		<field name="date_plan_finish2" string="Cut Finish" />
+            		<filter string="To Do" name="todo" icon="terp-accessories-archiver" domain="[('state','=','draft'),('is_print','=',False)]" context="{}"/>
+            		<filter string="To Planning" name="toplan" icon="terp-accessories-archiver" domain="[('is_planning','=',False)]" context="{}"/>
+            	</field>
+            	<filter string="Date" position="after">
+            		<filter string="Source Document" icon="terp-go-month" domain="[]" context="{'group_by':'origin'}"/>
+            		<filter string="Worker" icon="terp-go-month" domain="[]" context="{'group_by':'worker'}"/>
+            		<filter string="Cut Finish" icon="terp-go-month" domain="[]" context="{'group_by':'date_plan_finish2'}"/>
+            	</filter>
+			</field>
+		</record>
+
+        <record id="mrp.mrp_production_action" model="ir.actions.act_window">
+            <field name="context">{'search_default_todo': 1}</field>
+        </record>
+        
+		<!-- Routing Workcenter -->
+        <record id="ineco_routing_workcenter_tree_view" model="ir.ui.view">
+            <field name="name">ineco.routing.workcenter.tree</field>
+            <field name="model">mrp.routing.workcenter</field>
+            <field name="inherit_id" ref="mrp.mrp_routing_workcenter_tree_view"/>
+            <field name="arch" type="xml">
+            	<field name="workcenter_id" position="after">
+            		<field name="multiple_component" />
+            	</field>
+            </field>
+        </record>
+
+        <record id="ineco_routing_workcenter_form_view" model="ir.ui.view">
+            <field name="name">ineco.routing.workcenter.form</field>
+            <field name="model">mrp.routing.workcenter</field>
+            <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+            <field name="arch" type="xml">
+            	<field name="workcenter_id" position="after">
+            		<field name="multiple_component" />
+            	</field>
+            </field>
+        </record>
+
+	    <record model="ir.ui.view" id="mixprint_workcenter_tree_view">
+	        <field name="name">mixprint.workcenter.line.tree</field>
+	        <field name="model">mrp.production.workcenter.line</field>
+	        <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_tree_view_inherit"/>
+	        <field name="arch" type="xml">
+				<field name="name" position="replace">
+					<field name="name" invisible="1" />
+				</field>
+				<field name="cycle" position="replace">
+					<field name="cycle" invisible="1" />
+				</field>
+				<field name="hour" position="replace">
+					<field name="hour" invisible="1" />
+				</field>
+				<field name="product" position="after">
+					<field name="size_id" />
+					<field name="note" />
+					<field name="worker" />
+				</field>
+				<field name="date_planned" position="after">
+					<field name="date_finished2" invisible="1" />
+				</field>
+			</field>
+		</record>
+
+	    <record id="view_ineco_mrp_production_workcenter_filter" model="ir.ui.view">
+	        <field name="name">ineco.mrpproduction.workcenter.line.select</field>
+	        <field name="model">mrp.production.workcenter.line</field>
+	        <field name="inherit_id" ref="mrp_operations.view_mrp_production_workcenter_form_view_filter"/>
+	        <field name="arch" type="xml">
+	        	<field name="state" position="after">
+	        		<field name="date_finished2" />
+	        	</field>
+	        	<filter string="Date" position="after">
+	        		<filter string="Date Finish" icon="terp-go-month" domain="[]" context="{'group_by':'date_finished2'}"/>
+	        	</filter>
+			</field>
+		</record>
+		
+		<!-- INECO MACHINE -->
+
+		<record model="ir.ui.view" id="ineco_mrp_machine_form">
+			<field name="name">ineco.mrp.machine.form</field>
+			<field name="model">ineco.mrp.machine</field>
+			<field name="arch" type="xml">
+				<form string="Machine" version="7.0">
+					<header></header>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="active" />
+							</group>
+							<group>
+								<field name="code" />
+								<field name="workcenter_id" />
+							</group>
+						</group>
+					</sheet>
+					<footer></footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ineco_mrp_machine_tree">
+			<field name="name">ineco.mrp.machine.tree</field>
+			<field name="model">ineco.mrp.machine</field>
+			<field name="arch" type="xml">
+				<tree string="Machine" editable="top">
+					<field name="name" />
+					<field name="code" />
+					<field name="brand" />
+					<field name="model" />
+					<field name="type" />
+					<field name="workcenter_id" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ineco_mrp_machine_search">
+			<field name="name">ineco.mrp.machine.search</field>
+			<field name="model">ineco.mrp.machine</field>
+			<field name="arch" type="xml">
+				<search string="Machine">
+					<field name="name" />
+					<field name="code" />
+					<field name="model" />
+					<field name="brand" />
+					<field name="type" />
+					<field name="workcenter_id" />
+				</search>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="ineco_mrp_machine_action">
+			<field name="name">Machine</field>
+			<field name="res_model">ineco.mrp.machine</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Machine" 
+			parent="menu_mrp_task_menu"
+			id="menu_ineco_mrp_machine" 
+			sequence="60" 
+			action="ineco_mrp_machine_action" />
+
+		<!-- INECO PROCESS GROUP -->
+
+		<record model="ir.ui.view" id="ineco_mrp_process_group_tree">
+			<field name="name">ineco.mrp.process.group.tree</field>
+			<field name="model">ineco.mrp.process.group</field>
+			<field name="arch" type="xml">
+				<tree string="Process Group" editable="top">
+					<field name="name" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ineco_mrp_process_group_search">
+			<field name="name">ineco.mrp.process.group.search</field>
+			<field name="model">ineco.mrp.process.group</field>
+			<field name="arch" type="xml">
+				<search string="Process Group">
+					<field name="name" />
+				</search>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="ineco_mrp_process_group_action">
+			<field name="name">Process Group</field>
+			<field name="res_model">ineco.mrp.process.group</field>
+			<field name="view_mode">tree</field>
+		</record>
+
+		<menuitem name="Process Group" 
+			parent="menu_mrp_task_menu"
+			id="menu_ineco_mrp_process_group" 
+			sequence="70" 
+			action="ineco_mrp_process_group_action" />
+
+		<!-- INECO PROCESS -->
+
+		<record model="ir.ui.view" id="ineco_mrp_process_tree">
+			<field name="name">ineco.mrp.process.tree</field>
+			<field name="model">ineco.mrp.process</field>
+			<field name="arch" type="xml">
+				<tree string="Process Group" >
+					<field name="code" />
+					<field name="name" />
+					<field name="process_group_id" />
+					<field name="cost" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ineco_mrp_process_form">
+			<field name="name">ineco.mrp.process.form</field>
+			<field name="model">ineco.mrp.process</field>
+			<field name="arch" type="xml">
+				<form string="Process Group" version="7.0" >
+					<sheet>
+						<group>
+							<group>
+								<field name="code" />
+								<field name="name" />
+								<field name="level" />
+							</group>
+							<group>
+								<field name="process_group_id" />
+								<field name="cost" />
+							</group>
+						</group>
+            			<notebook colspan="4">
+            				<page string="Images">
+            					<field name="image_multi" widget="image_multi" />
+            				</page>
+            				<page string="Attachment">
+            					<field name="attachments" context="{'default_type':'binary'}">
+            						<tree string="Attachment">
+            							<field name="name" />
+            						</tree>
+            						<form string="Attachment" version="7.0">
+            							<group>	
+            								<group>
+              									<field name="type" invisible="1" />
+              									<field name="name" />
+              									<field name="db_datas" />
+            								</group>
+            							</group>
+            						</form>
+            					</field>
+            				</page>	   
+            			</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ineco_mrp_process_search">
+			<field name="name">ineco.mrp.process.search</field>
+			<field name="model">ineco.mrp.process</field>
+			<field name="arch" type="xml">
+				<search string="Process Group">
+					<field name="code" />
+					<field name="name" />
+					<field name="process_group_id" />
+					<field name="cost" />
+					<field name="level" />
+                  	<group expand="0" string="Group By...">
+                        <filter name="by_process_group_id" string="Process Group" icon="terp-partner" domain="[]" context="{'group_by':'process_group_id'}"/>
+                    </group>
+				</search>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="ineco_mrp_process_action">
+			<field name="name">Process</field>
+			<field name="res_model">ineco.mrp.process</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Process" 
+			parent="menu_mrp_task_menu"
+			id="menu_ineco_mrp_process" 
+			sequence="80" 
+			action="ineco_mrp_process_action" />
+
+		<!-- INECO PERIOD -->
+
+		<record model="ir.ui.view" id="ineco_mrp_period_tree">
+			<field name="name">ineco.mrp.period.tree</field>
+			<field name="model">ineco.mrp.period</field>
+			<field name="arch" type="xml">
+				<tree string="Period" editable="top">
+					<field name="seq" />
+					<field name="code" />
+					<field name="name" />
+					<field name="time_start" widget="float_time"/>
+					<field name="time_stop" widget="float_time"/>
+					<field name="active" invisible="1" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ineco_mrp_period_search">
+			<field name="name">ineco.mrp.period.search</field>
+			<field name="model">ineco.mrp.period</field>
+			<field name="arch" type="xml">
+				<search string="Period">
+					<field name="seq" />
+					<field name="code" />
+					<field name="name" />
+					<field name="time_start" />
+					<field name="time_stop" />
+					<field name="active" />
+				</search>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="ineco_mrp_period_action">
+			<field name="name">Period</field>
+			<field name="res_model">ineco.mrp.period</field>
+			<field name="view_mode">tree</field>
+		</record>
+
+		<menuitem name="Period" 
+			parent="menu_mrp_task_menu"
+			id="menu_ineco_mrp_period" 
+			sequence="90" 
+			action="ineco_mrp_period_action" />
+
+		<!-- INECO TASK -->
+
+		<record model="ir.ui.view" id="ineco_mrp_task_tree">
+			<field name="name">ineco.mrp.task.tree</field>
+			<field name="model">ineco.mrp.task</field>
+			<field name="arch" type="xml">
+				<tree string="Task" editable="top">
+					<field name="employee_id" />
+					<field name="machine_id" />
+					<field name="period_id" />
+					<field name="ticket_barcode" on_change="onchange_ticket_barcode(ticket_barcode)" />
+					<field name="process_id" />
+					<field name="good" />
+					<field name="no_good" />
+					<field name="ticket_id" invisible="1"  />
+					<field name="date" />
+					<field name="production_id" />
+					<field name="pattern_type_id" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ineco_mrp_task_search">
+			<field name="name">ineco.mrp.task.search</field>
+			<field name="model">ineco.mrp.task</field>
+			<field name="arch" type="xml">
+				<search string="Task">
+					<field name="employee_id" />
+					<field name="date" />
+					<field name="machine_id" />
+					<field name="period_id" />
+					<field name="production_id" />
+					<field name="process_id" />
+					<field name="pattern_type_id" />
+					<field name="good" />
+					<field name="no_good" />
+				</search>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="ineco_mrp_task_action">
+			<field name="name">Task</field>
+			<field name="res_model">ineco.mrp.task</field>
+			<field name="view_mode">tree</field>
+		</record>
+
+		<menuitem name="Task" 
+			parent="menu_mrp_task_menu"
+			id="menu_ineco_mrp_task" 
+			sequence="100" 
+			action="ineco_mrp_task_action" />
+
+		<!-- INECO SUB Workcenter -->
+
+		<record model="ir.ui.view" id="ineco_mrp_subworkcenter_tree">
+			<field name="name">ineco.mrp.subworkcenter.tree</field>
+			<field name="model">ineco.mrp.subworkcenter</field>
+			<field name="arch" type="xml">
+				<tree string="Sub Workcenter" editable="top">
+					<field name="name" />
+					<field name="workcenter_id" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ineco_mrp_subworkcenter_search">
+			<field name="name">ineco.mrp.subworkcenter.search</field>
+			<field name="model">ineco.mrp.subworkcenter</field>
+			<field name="arch" type="xml">
+				<search string="Sub Workcenter">
+					<field name="name" />
+					<field name="workcenter_id" />
+                  	<group expand="0" string="Group By...">
+                        <filter name="by_workcenter_id" string="Workcenter" icon="terp-partner" domain="[]" context="{'group_by':'workcenter_id'}"/>
+                    </group>
+				</search>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="ineco_mrp_subworkcenter_action">
+			<field name="name">Sub Workenter</field>
+			<field name="res_model">ineco.mrp.subworkcenter</field>
+			<field name="view_mode">tree</field>
+		</record>
+
+		<menuitem name="Sub Workcenter" 
+			parent="menu_mrp_task_menu"
+			id="menu_ineco_mrp_subworkcenter" 
+			sequence="80" 
+			action="ineco_mrp_subworkcenter_action" />
+	
+		<!-- INECO SUB Workcenter Task -->
+
+		<record model="ir.ui.view" id="ineco_mrp_subworkcenter_task_tree">
+			<field name="name">ineco.mrp.subworkcenter.task.tree</field>
+			<field name="model">ineco.mrp.subworkcenter.task</field>
+			<field name="arch" type="xml">
+				<tree string="Sub Workcenter Task" editable="top">
+					<field name="subworkcenter_id" />
+					<field name="date" />
+					<field name="day_month" invisible="1" string="Day" />
+					<field name="saleorder_id" />
+					<field name="garment_order_no" readonly="1" />
+					<field name="quantity" />
+					<field name="date_delivery" readonly="1" />
+					<field name="customer_id" readonly="1" />
+					<field name="product_id" readonly="1" />
+					<field name="user_id" readonly="1" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ineco_mrp_subworkcenter_task_search">
+			<field name="name">ineco.mrp.subworkcenter.task.search</field>
+			<field name="model">ineco.mrp.subworkcenter.task</field>
+			<field name="arch" type="xml">
+				<search string="Sub Workcenter Task">
+					<field name="subworkcenter_id" />
+					<field name="date" />
+					<field name="saleorder_id" />
+					<field name="garment_order_no" />
+					<field name="quantity" />
+					<field name="date_delivery" />
+					<field name="customer_id" />
+					<field name="product_id" />
+					<field name="user_id" />
+                  	<group expand="0" string="Group By...">
+                        <filter name="by_subworkcenter_id" string="Sub Workcenter" icon="terp-partner" domain="[]" 
+                        	context="{'group_by':'subworkcenter_id'}"/>
+                        <filter name="by_saleorder_id" string="Sale Order" icon="terp-partner" domain="[]" 
+                        	context="{'group_by':'saleorder_id'}"/>
+                        <filter name="by_date" string="Month" icon="terp-partner" domain="[]" 
+                        	context="{'group_by':'date'}"/>
+                        <filter name="by_day" string="Day" icon="terp-partner" domain="[]" 
+                        	context="{'group_by':'day_month'}"/>
+                        <filter name="by_user_id" string="Sale" icon="terp-partner" domain="[]" 
+                        	context="{'group_by':'user_id'}"/>
+                        <filter name="by_product_id" string="Product" icon="terp-partner" domain="[]" 
+                        	context="{'group_by':'product_id'}"/>
+                        <filter name="by_garment_order_no" string="Garment Order" icon="terp-partner" domain="[]" 
+                        	context="{'group_by':'garment_order_no'}"/>
+                    </group>
+				</search>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="ineco_mrp_subworkcenter_task_action">
+			<field name="name">Sub Workcenter Task</field>
+			<field name="res_model">ineco.mrp.subworkcenter.task</field>
+			<field name="view_mode">tree</field>
+		</record>
+
+		<menuitem name="Sub Workcenter Task" 
+			parent="menu_mrp_task_menu"
+			id="menu_ineco_mrp_subworkcenter_task" 
+			sequence="110" 
+			action="ineco_mrp_subworkcenter_task_action" />
+
+		<!-- INECO TASK LIST-->
+
+		<record model="ir.ui.view" id="ineco_mrp_task_list_tree">
+			<field name="name">ineco.mrp.task.list.tree</field>
+			<field name="model">ineco.mrp.task.list</field>
+			<field name="arch" type="xml">
+				<tree string="Task List" >
+					<field name="date" />
+					<field name="employee_id" />
+					<field name="machine_id" />
+					<field name="task_ids" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ineco_mrp_task_list_form">
+			<field name="name">ineco.mrp.task.list.form</field>
+			<field name="model">ineco.mrp.task.list</field>
+			<field name="arch" type="xml">
+				<form string="Task List" version="7.0" >
+					<header>
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="employee_id" />
+								<field name="machine_id" />
+							</group>
+							<group>
+								<field name="date" />
+							</group>
+						</group>
+						<notebook>
+							<page string="Task">
+								<field name="task_ids" context="{'default_employee_id':employee_id,'default_machine_id':machine_id,'default_date':date}">
+									<tree string="Task Period" editable="top">
+										<field name="employee_id" invisible="1"/>
+										<field name="machine_id" invisible="1" />
+										<field name="period_id" />
+										<field name="production_id" />
+										<field name="process_id" />
+										<field name="good" required="1"/>
+										<field name="no_good" />
+										<field name="ticket_id" invisible="1"  />
+										<field name="pattern_type_id" invisible="1" />
+										<field name="date" invisible="1"/>
+									</tree>
+								</field>
+							</page>
+						</notebook>						
+					</sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ineco_mrp_task_list_search">
+			<field name="name">ineco.mrp.task.list.search</field>
+			<field name="model">ineco.mrp.task.list</field>
+			<field name="arch" type="xml">
+				<search string="Task List">
+					<field name="employee_id" />
+					<field name="date" />
+					<field name="machine_id" />
+                  	<group expand="0" string="Group By...">
+                        <filter name="by_employee_id" string="Employee" icon="terp-partner" domain="[]" 
+                        	context="{'group_by':'employee_id'}"/>
+                        <filter name="by_date" string="Date" icon="terp-partner" domain="[]" 
+                        	context="{'group_by':'date'}"/>
+                        <filter name="by_machine_id" string="Machine" icon="terp-partner" domain="[]" 
+                        	context="{'group_by':'machine_id'}"/>
+                    </group>
+				</search>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="ineco_mrp_task_list_action">
+			<field name="name">Task List</field>
+			<field name="res_model">ineco.mrp.task.list</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Task List" 
+			parent="menu_mrp_task_menu"
+			id="menu_ineco_mrp_task_list" 
+			sequence="120" 
+			action="ineco_mrp_task_list_action" />
+				    
+    </data>
+</openerp>

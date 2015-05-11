@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Expenses -->
+
+
+        <record id="view_hr_expense_expense_form_iyara_inherit" model="ir.ui.view">
+            <field name="name">hr.expense.expense.iyara.form.inherit</field>
+            <field name="model">hr.expense.expense</field>
+            <field name="inherit_id" ref="hr_expense.view_expenses_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="replace">
+                    <field name="name" string="Number"/>
+                </field>                
+                <field name="name" position="after">
+                    <field name="description"/>
+                </field>
+            </field>
+        </record>        
+
+        <record id="view_hr_expense_expense_tree_iyara_inherit" model="ir.ui.view">
+            <field name="name">hr.expense.expense.tree.iyara_inherit</field>
+            <field name="model">hr.expense.expense</field>
+			<field name="inherit_id" ref="hr_expense.view_expenses_tree"/>            
+            <field name="arch" type="xml">
+                <field name="name" position="replace">
+                    <field name="name" string="Number"/>
+                </field>                
+                <field name="name" position="after">
+                    <field name="description"/>
+                </field>
+            </field>
+        </record>        
+        
+        <record id="expense_confirmed" model="ir.actions.act_window">
+            <field name="name">Expenses To Approve</field>
+            <field name="res_model">hr.expense.expense</field>
+            <field name="domain">[('state','=','confirm')]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <record id="expense_accepted" model="ir.actions.act_window">
+            <field name="name">Expenses To Pay</field>
+            <field name="res_model">hr.expense.expense</field>
+            <field name="domain">[('state','=','accepted')]</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        
+        <menuitem action="expense_confirmed" id="menu_expense_confirmed" groups="base.group_hr_manager" name="Expenses To Approve" parent="hr_expense.next_id_49"/>
+        <menuitem action="expense_accepted"  id="menu_expense_accepted"  groups="base.group_hr_manager" name="Expenses To Pay"     parent="hr_expense.next_id_49"/>
+        
+    </data>
+</openerp>

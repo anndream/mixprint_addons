@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+
+        <record id="view_ineco_production_updateplan_form" model="ir.ui.view">
+            <field name="name">ineco.production.updateplan.form</field>
+            <field name="model">ineco.production.updateplan</field>
+            <field name="arch" type="xml">
+                <form string="Update Start/Finish Production Plan" version="7.0">
+                	<group>
+                		<group><field name="date_from" /></group>
+                		<group><field name="date_to" /></group>
+                	</group>
+                	
+                	
+                    <p class="oe_grey">
+                        Please select date From/To
+                    </p>
+                    <footer>
+                        <button string="Update" name="update_data" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ineco_production_updateplan" model="ir.actions.act_window">
+            <field name="name">Update Production Plan</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ineco.production.updateplan</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <record model="ir.values" id="ineco_production_updateplan_value">
+            <!-- <field name="model_id" ref="sale.model_sale_order" /> -->
+            <field name="name">Update Production Plan</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_ineco_production_updateplan'))" />
+            <field name="key">action</field>
+            <field name="model">mrp.production</field>
+        </record>   
+        
+    </data>
+</openerp>

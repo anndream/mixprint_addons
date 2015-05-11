@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_ineco_users_form" model="ir.ui.view">
+            <field name="name">ineco.users.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <field name="email" position="after">
+                	<field name="nickname" placeholder="Nick name here..."/>
+                	<field name="mixprint" />
+                	<field name="smart" />
+                	<field name="commission_rate" groups="base.group_erp_manager" />
+                </field>
+            </field>
+        </record>
+
+        <record id="view_ineco_users_tree" model="ir.ui.view">
+            <field name="name">ineco.users.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_tree"/>
+            <field name="arch" type="xml">
+                <field name="login" position="before">
+                	<field name="nickname" />
+                	<field name="mixprint" />
+                	<field name="smart" />
+                </field>
+            </field>
+        </record>    
+        
+    </data>
+</openerp>

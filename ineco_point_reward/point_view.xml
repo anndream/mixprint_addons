@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Point Schema Filter -->
+        <record id="view_ineco_point_schema_filter" model="ir.ui.view">
+            <field name="name">ineco.schema.point.search</field>
+            <field name="model">ineco.point.schema</field>
+            <field name="arch" type="xml">
+                <search string="Point Schema">
+                    <field name="name" />
+                    <field name="date_start" />
+                    <field name="date_end" />                    
+                </search>
+            </field>
+        </record>
+                
+        <!-- Point Schema Tree -->
+        <record id="view_ineco_point_schema_tree" model="ir.ui.view">
+            <field name="name">ineco.schema.point.tree</field>
+            <field name="model">ineco.point.schema</field>
+            <field name="arch" type="xml">
+                <tree string="Point Schema">
+                    <field name="name" />
+                    <field name="active" />
+                    <field name="date_start" />
+                    <field name="date_end" />                    
+                </tree>
+            </field>
+        </record>
+
+        <!-- Point Schema Form -->
+        <record id="view_ineco_point_schema_form" model="ir.ui.view">
+            <field name="name">ineco.schema.point.form</field>
+            <field name="model">ineco.point.schema</field>
+            <field name="arch" type="xml">
+                <form string="Point Schema" version="7.0">
+                    <sheet>
+	               		<div class="oe_title">
+	                    	<label for="name" class="oe_edit_only"/>
+	                        <h1><field name="name" class="oe_inline"/></h1>
+	                   	</div>	                    
+	                    <group string="Date Range">
+		                    <field name="date_start" />
+		                    <field name="date_end" />   
+		                    <field name="active" />
+	                    </group>
+	                    <field name="line_ids">
+	                        <tree>
+	                            <field name="seq" />
+	                            <field name="name" />
+	                            <field name="type" />
+	                            <field name="base_on" />
+	                            <field name="multiple" />
+	                            <field name="product_id" />
+	                            <field name="product_category_id" />
+	                            <field name="partner_category_id" />
+	                        </tree>
+	                        <form string="Schema Type" version="7.0">
+	                            <group>
+			               		<div class="oe_title" >
+			                    	<label for="name" class="oe_edit_only"/>
+			                        <h1><field name="name" class="oe_inline" /></h1>
+			                   	</div>	 
+			                   	</group>
+			                   	<group>			                   	    
+		                            <group>
+			                        	<field name="seq" />			                        
+			                            <field name="type" />
+			                            <field name="base_on" />
+		                            </group>
+		                            <group>
+			                            <field name="multiple" />
+			                            <field name="partner_category_id" attrs="{'invisible':[('type','!=','partner')]}" />
+			                            <field name="product_id" attrs="{'invisible':[('type','!=','product')]}"/>
+			                            <field name="product_category_id" attrs="{'invisible':[('type','!=','category')]}"/>
+		                            </group>
+				                   	</group>        
+	                            <newline />
+	                            <field name="value_ids">
+	                                <tree>
+	                                    <field name="value" />
+	                                    <field name="point" />
+	                                </tree>
+	                                <form>
+	                                    <field name="value" />
+	                                    <field name="point" />
+	                                </form>
+	                            </field>
+	                        </form>
+	                    </field>						                        
+                    </sheet>                        
+                </form>
+            </field>
+        </record>
+
+        <record id="action_point_schema" model="ir.actions.act_window">
+            <field name="name">Point Schema</field>
+            <field name="res_model">ineco.point.schema</field>
+             <field name="view_type">form</field> 
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_ineco_point_schema_tree" />
+            <field name="search_view_id" ref="view_ineco_point_schema_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Redemption Order, the first step of a new redemption.
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="base.menu_point_schema" name="Schema" parent="base.menu_base_partner" sequence="10"/>
+        
+        <menuitem id="menu_point_schema"
+        	action="action_point_schema" 
+        	parent="base.menu_point_schema"
+        	sequence="10"/>
+        
+         
+        <!-- Redemption Order -->
+        <record id="view_ineco_redemption_order_tree" model="ir.ui.view">
+            <field name="name">ineco.redemption.order.tree</field>
+            <field name="model">ineco.redemption.order</field>
+            <field name="arch" type="xml">
+                <tree string="Redemption Order">
+                    <field name="name" />
+                    <field name="type" />
+                    <field name="partner_id" />
+                    <field name="date_order" />
+                    <field name="origin" />
+                    <field name="picking_id" />
+                    <field name="point_total" />
+                    <field name="state" />                    
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_ineco_redemption_order_filter" model="ir.ui.view">
+            <field name="name">ineco.redemption.order.filter</field>
+            <field name="model">ineco.redemption.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Redemption Order">
+                    <filter icon="terp-check" string="Receive" name="receive" domain="[('type','=','receive')]"/>
+                    <filter icon="terp-camera_test" string="Issue" name="issue" domain="[('type','=','issue')]"/>
+                    <separator/>
+                    <field name="name"/>
+                    <field name="partner_id" />
+                    <field name="date_order" />
+                    <field name="origin" />
+                    <field name="picking_id" />
+                    <field name="note" /> 
+                    <field name="state" />
+                    <group expand="0" string="Group By...">
+                        <filter string="Customer" icon="terp-personal" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Date" icon="terp-go-month" domain="[]" context="{'group_by':'date_order'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+        
+        <record id="view_ineco_redemption_order_form" model="ir.ui.view">
+            <field name="name">ineco.redemption.order.form</field>
+            <field name="model">ineco.redemption.order</field>
+            <field name="arch" type="xml">
+                <form string="Redemption Order" version="7.0">
+                    <header>
+                    	<button name="action_confirm" states="draft" string="Confirm Inventory" type="object" class="oe_highlight" />
+                    	<button name="action_done" states="confirmed" string="Validate Inventory" type="object" class="oe_highlight" />
+                    	<button name="action_cancel" states="draft,confirmed" string="Cancel Inventory" type="object"/>                        
+                    	<button name="action_cancel_draft" states="cancel,done" string="Undo Inventory" type="object"/>                        
+                    	<field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
+                    </header>
+                    <sheet>
+	               		<div class="oe_title">
+	                    	<label for="name" class="oe_edit_only"/>
+	                        <h1><field name="name" class="oe_inline"/></h1>
+	                   	</div>	                    
+	                    <group string="Information">
+	                        <group>
+	                            <field name="partner_id" />
+	                            <field name="point_balance" />
+	                            <field name="point_total" />
+	                        </group>
+	                        <group>
+			                    <field name="date_order" />
+			                    <field name="origin" />   
+			                    <field name="picking_id" readonly="1" />
+			                    <field name="type" />
+	                        </group>
+	                    </group>
+	                    <notebook>
+	                        <page string="Products">
+			                    <field name="line_ids" >
+			                        <tree editable="top">
+			                            <field name="product_id" domain="[('redemption_ok','=',True)]" on_change="product_id_change(product_id,product_qty,product_uom,context)"/>
+			                            <field name="product_uom" />
+			                            <field name="product_qty" />
+			                            <field name="product_point" />
+			                            <field name="product_point_total" />
+			                        </tree>
+			                    </field>						                        
+	                        </page>
+	                        <page string="Note">
+	                            <field name="note" />
+	                        </page>
+	                    </notebook>
+                    </sheet>    
+	                <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+	                    <field name="message_ids" widget="mail_thread" placeholder="Share a message..."/>
+	                </div>                    
+                </form>
+            </field>
+        </record>
+
+        <record id="action_redemption_order" model="ir.actions.act_window">
+            <field name="name">Redemption</field>
+            <field name="res_model">ineco.redemption.order</field>
+             <field name="view_type">form</field> 
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_ineco_redemption_order_tree" />
+            <field name="search_view_id" ref="view_ineco_redemption_order_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Redemption Order, the first step of a new redemption.
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_redemption_order"
+        	action="action_redemption_order" parent="base.menu_sales"
+        	sequence="10"/>
+        
+	</data>
+</openerp>

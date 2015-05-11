@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<!-- Type -->
+    	<record model="ir.ui.view" id="iayra_type_form">
+      		<field name="name">iyara.type.form</field>
+      		<field name="model">iyara.type</field>
+      		<field name="arch" type="xml">
+      			<form string="Type" version="7.0">
+      				<header>
+      				</header>
+      				<sheet>
+      					<group>
+      						<group>
+      							<field name="name" string="Description"/>
+      							<field name="type" />
+      						</group>
+      					</group>
+      				</sheet>
+      			</form>
+      		</field>
+      	</record>
+
+    	<record model="ir.ui.view" id="iayra_type_tree">
+      		<field name="name">iyara.type.tree</field>
+      		<field name="model">iyara.type</field>
+      		<field name="arch" type="xml">
+      			<tree string="Type">
+      				<field name="name" />
+      				<field name="type" />
+      			</tree>
+      		</field>
+      	</record>
+
+    	<record model="ir.ui.view" id="iayra_type_search">
+      		<field name="name">iyara.type.search</field>
+      		<field name="model">iyara.type</field>
+      		<field name="arch" type="xml">
+      			<search string="Type">
+      				<field name="name" />
+      				<field name="type" />
+      			</search>
+      		</field>
+      	</record>
+      	
+	    <record model="ir.actions.act_window" id="iayra_type_action">
+	        <field name="name">Type</field>
+	        <field name="res_model">iyara.type</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>	   
+
+    	<menuitem name="Type" parent="base.menu_base_config" id="iayra_type_menu" sequence="100" action="iayra_type_action"/>
+
+		<!-- Task Type-->
+    	<record model="ir.ui.view" id="iayra_task_type_form">
+      		<field name="name">iyara.task.type.form</field>
+      		<field name="model">iyara.type.task</field>
+      		<field name="arch" type="xml">
+      			<form string="Type" version="7.0">
+      				<header>
+      				</header>
+      				<sheet>
+      					<group>
+      						<group>
+      							<field name="name" />
+      							<field name="description" />
+      						</group>
+      					</group>
+      				</sheet>
+      			</form>
+      		</field>
+      	</record>
+
+    	<record model="ir.ui.view" id="iayra_task_type_tree">
+      		<field name="name">iyara.task.type.tree</field>
+      		<field name="model">iyara.type.task</field>
+      		<field name="arch" type="xml">
+      			<tree string="Type">
+      				<field name="name" />
+      				<field name="description" />
+      			</tree>
+      		</field>
+      	</record>
+
+    	<record model="ir.ui.view" id="iayra_task_type_search">
+      		<field name="name">iyara.task.type.search</field>
+      		<field name="model">iyara.type.task</field>
+      		<field name="arch" type="xml">
+      			<search string="Type">
+      				<field name="name" />
+      				<field name="description" />
+      			</search>
+      		</field>
+      	</record>
+      	
+	    <record model="ir.actions.act_window" id="iayra_task_type_action">
+	        <field name="name">Task Type</field>
+	        <field name="res_model">iyara.type.task</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>	   
+
+    	<menuitem name="Task Type" parent="base.menu_base_config" id="iayra_task_type_menu" sequence="110" action="iayra_task_type_action"/>
+	    
+    	<record model="ir.ui.view" id="iyara_contract_from">
+      		<field name="name">iyara.contract.form</field>
+      		<field name="model">iyara.contract</field>
+      		<field name="arch" type="xml">
+	        	<form string="Contract Form" version="7.0">
+	        	    <header>
+	        	    </header>
+	        	    <sheet>
+		        	    <group string="Contract">
+							<div class="oe_title">
+		                        <label for="name" class="oe_edit_only"/>
+		                        <h1>
+		                            <field name="name"/>                            
+		                        </h1>
+		                    </div>
+		        	    </group>
+		        	    <group>
+		        	        <group>
+		        	        	<field name="gen_model" />
+		        	        	<field name="alternator_model" />
+		        	        	<field name="engine_model" />
+					        	<field name="date_contract_start" />
+					        	<field name="date_contract_first" />
+ 		        	        </group>
+ 		        	        <group>
+		        	        	<field name="gen_sn" />
+		        	        	<field name="alternator_sn" />
+		        	        	<field name="engine_sn" />		        	         		        	        
+					        	<field name="date_contract_finish" />
+ 		        	        </group>
+			        	    	<notebook colspan="4">
+			        	    		<page string="Partner">
+			        	    			<group>
+			        	    				<field name="saleorder_id" />
+						                    <field name="customer_id"/>
+						                    <field name="street" />
+						                    <field name="phone" />
+						                    <field name="fax" />
+						                    <field name="project_id" />
+						                    <field name="installation" />
+						                    <field name="zone" />
+						                    <field name="gps" />		
+					                    </group>        	    		
+			        	    		</page>
+			        	    		<page string="Product">
+			        	    			<group>
+					        	        	<field name="supplier_id" />
+					        	        	<field name="controlpanel_id" />
+					        	        	<field name="avr_id" />
+					        	        	<field name="battery_charger_id" />
+					        	        	<field name="battery_id" />
+					        	        	<field name="battery_qty" />
+					        	        	<field name="gift_qty" />
+				        	        	</group>			        	    		
+			        	    		</page>
+			        	    		<page string="Contract Detail">
+			        	    			<group>
+					        	        	<field name="warranty_qty" />
+					        	        	<field name="service_qty" />	
+					        	        	<field name="type_task_id" required="1" />	        	    		
+			        	    				<button name="button_genhelpdesk" type="object" string="Generate Service" />	
+			        	    				<newline />        	        
+				        	    			<field colspan="4" name="helpdesk_ids" nolabel="1" context="{'default_partner_id': customer_id,'default_contract_id':id}">
+				        	    				<tree string="Service Detail">
+				        	    					<field name="name" string="Description" />
+				        	    					<field name="partner_id" />
+				        	    					<field name="date" />
+				        	    					<field name="user_id" />
+				        	    					<field name="categ_id" />
+				        	    					<field name="state" />
+				        	    				</tree>
+				        	    			</field>
+			        	    			</group>
+			        	    		</page>
+			        	    	</notebook>
+		        	    </group>
+		        	    
+		        	      
+	        	    </sheet>
+	                <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+	                    <field name="message_ids" widget="mail_thread" placeholder="Share a message..."/>
+	                </div>
+	        	</form>
+
+      		</field>
+    	</record>
+
+    	<record model="ir.ui.view" id="iyara_contract_tree">
+      		<field name="name">iyara.contract.tree</field>
+      		<field name="model">iyara.contract</field>
+      		<field name="arch" type="xml">
+      			<tree string="Contract">
+      				<field name="name" />
+      				<field name="project_id" />
+      				<field name="customer_id" />
+      				<field name="gen_model" />
+      				<field name="alternator_model" />
+      				<field name="engine_model" />
+      				<field name="date_contract_start" />
+      				<field name="date_contract_finish" />
+      			</tree>
+			</field>
+		</record>    
+    
+    	<record model="ir.ui.view" id="iyara_contract_search">
+      		<field name="name">iyara.contract.search</field>
+      		<field name="model">iyara.contract</field>
+      		<field name="arch" type="xml">
+      			<search string="Contract">
+      				<field name="name" />
+      				<field name="customer_id" />
+      				<field name="gen_model" />
+      				<field name="alternator_model" />
+      				<field name="engine_model" />
+      				<field name="project_id" />
+      				<field name="date_contract_start" />
+      				<field name="date_contract_finish" />
+      			</search>
+			</field>
+		</record>    
+
+	    <record model="ir.actions.act_window" id="iayra_contract_action">
+	        <field name="name">Type</field>
+	        <field name="res_model">iyara.contract</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>	   
+
+    	<menuitem name="Contract" parent="base.menu_sales" id="iayra_contract_menu" sequence="100" action="iayra_contract_action"/>
+   	</data>
+</openerp>

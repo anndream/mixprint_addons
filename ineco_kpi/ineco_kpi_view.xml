@@ -1,0 +1,467 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        
+    	<menuitem name="KPI" id="menu_ineco_kpi" sequence="50" />
+    	<menuitem name="Configuration" parent="menu_ineco_kpi" id="menu_ineco_kpi_configuration" sequence="20" />
+    	<menuitem name="Dashboard" parent="menu_ineco_kpi" id="menu_ineco_kpi_dashboard" sequence="10" />
+    	
+    	<!-- KPI Year Form View -->
+    	<record model="ir.ui.view" id="ineco_kpi_year_form">
+      		<field name="name">ineco.kpi.year.form</field>
+      		<field name="model">ineco.kpi.year</field>
+      		<field name="arch" type="xml">
+	        	<form string="KPI's Year" version="7.0">
+	          		<group>
+	            		<field name="name"/>
+	          		</group>
+	        	</form>
+      		</field>
+    	</record>
+    	
+    	<!-- KPI Year Tree View -->
+    	<record model="ir.ui.view" id="ineco_kpi_year_tree">
+      		<field name="name">ineco.kpi.year.tree</field>
+      		<field name="model">ineco.kpi.year</field>
+      		<field name="arch" type="xml">
+		        <tree string="KPI's Year" editable="bottom">
+		            <field name="name"/>
+		        </tree>
+      		</field>
+    	</record>
+
+	    <!-- KPI Year Search  -->
+	    <record model="ir.ui.view" id="ineco_kpi_year_filter">
+	      	<field name="name">ineco.kpi.year.search</field>
+	      	<field name="model">ineco.kpi.year</field>
+	      	<field name="arch" type="xml">
+	        	<search string="Years">
+	          		<field name="name" />
+	        	</search>
+	      	</field>
+	    </record>
+    		
+	    <!-- KPI Year Action -->
+	    <record model="ir.actions.act_window" id="ineco_kpi_year_action">
+	        <field name="name">Years</field>
+	        <field name="res_model">ineco.kpi.year</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>	   
+	     		
+    	<menuitem name="Years" parent="menu_ineco_kpi_configuration" id="menu_ineco_kpi_year" sequence="10" action="ineco_kpi_year_action"/>
+    		
+    	<!-- KPI Category Form View -->
+    	<record model="ir.ui.view" id="ineco_kpi_category_form">
+      		<field name="name">ineco.kpi.category.form</field>
+      		<field name="model">ineco.kpi.category</field>
+      		<field name="arch" type="xml">
+	        	<form string="KPI's Category" version="7.0">
+	          		<group>
+	            		<field name="name"/>
+	          		</group>
+	        	</form>
+      		</field>
+    	</record>
+    	
+    	<!-- KPI Category Tree View -->
+    	<record model="ir.ui.view" id="ineco_kpi_category_tree">
+      		<field name="name">ineco.kpi.category.tree</field>
+      		<field name="model">ineco.kpi.category</field>
+      		<field name="arch" type="xml">
+		        <tree string="KPI's Category" editable="bottom">
+		            <field name="name"/>
+		        </tree>
+      		</field>
+    	</record>
+
+	    <!-- KPI Category Search  -->
+	    <record model="ir.ui.view" id="ineco_kpi_category_filter">
+	      	<field name="name">ineco.kpi.category.search</field>
+	      	<field name="model">ineco.kpi.category</field>
+	      	<field name="arch" type="xml">
+	        	<search string="Years">
+	          		<field name="name" />
+	        	</search>
+	      	</field>
+	    </record>
+    		
+	    <!-- KPI Category Action -->
+	    <record model="ir.actions.act_window" id="ineco_kpi_category_action">
+	        <field name="name">Categories</field>
+	        <field name="res_model">ineco.kpi.category</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>	   
+	     		
+    	<menuitem name="Categories" parent="menu_ineco_kpi_configuration" id="menu_ineco_kpi_category" sequence="20" action="ineco_kpi_category_action"/>
+
+    	
+     	<!-- KPI Sale Form View -->
+    	<!-- <record model="ir.ui.view" id="ineco_kpi_sale_form">
+      		<field name="name">ineco.kpi.sale.form</field>
+      		<field name="model">ineco.kpi.sale</field>
+      		<field name="arch" type="xml">
+	        	<form string="KPI's Sale" >
+	            	<field name="sale_id"/>
+	            	<field name="team_id"/>
+	            	<field name="year_id"/>
+	            	<field name="category_id"/>
+	            	<field name="date_start"/>
+	            	<field name="date_end"/>
+	            	<field name="dimension"/>
+	            	<field name="target"/>
+	            	<field name="actual" readonly="1"/>
+	        	</form>
+      		</field>
+    	</record>
+    	 -->
+
+     	<!-- KPI Sale Form View -->
+    	<record model="ir.ui.view" id="ineco_kpi_sale7_form">
+      		<field name="name">ineco.kpi.sale7.form</field>
+      		<field name="model">ineco.kpi.sale</field>
+      		<field name="arch" type="xml">
+	        	<form string="KPI's Sale" version="7.0">
+	        	    <header>
+	        	        
+	        	    </header>
+	        	    <sheet>
+		        	    <group string="KPI Description">
+							<div class="oe_title">
+		                        <label for="sale_id" class="oe_edit_only"/>
+		                        <h1>
+		                            <field name="sale_id"/>                            
+		                        </h1>
+		                        <field name="team_id"/>
+		                    </div>
+		        	    </group>
+		            	<group col="6">
+			            	<group string="Period">
+			            		<field name="year_id"/>
+			            		<field name="category_id"/>
+			            	</group>		            	
+			            	<group string="Date Range">
+			            		<field name="date_start"/>
+			            		<field name="date_end"/>
+			            	</group>
+			            	<group string="KPI Value">
+			            		<field name="dimension"/>
+			            	    <field name="target"/>
+			            		<field name="actual" readonly="1"/>
+			            		<field name="percent" readonly="1" />
+			            		<group colspan="2">
+                               		<button name="button_dummy" string="Update KPI" type="object" class="oe_edit_only oe_right"/>
+			            		</group>
+			            	</group>
+			         	</group>
+	        	    </sheet>
+	                <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+	                    <field name="message_ids" widget="mail_thread" placeholder="Share a message..."/>
+	                </div>
+	        	</form>
+      		</field>
+    	</record>
+    						    		
+     	<!-- KPI Sale Tree View -->
+    	<record model="ir.ui.view" id="ineco_kpi_sale_tree">
+      		<field name="name">ineco.kpi.sale.tree</field>
+      		<field name="model">ineco.kpi.sale</field>
+      		<field name="arch" type="xml">
+	        	<tree string="KPI's Sale">	            	
+	            	<field name="sale_id"/>
+	            	<field name="team_id"/>
+	            	<field name="year_id"/>
+	            	<field name="category_id"/>
+	            	<field name="date_start"/>
+	            	<field name="date_end"/>
+	            	<field name="dimension"/>
+	            	<field name="target" sum="Total Target"/>
+	            	<field name="actual" sum="Total Actual"/>
+	            	<field name="percent" />
+	            </tree>
+      		</field>
+    	</record>
+
+
+	    <!-- KPI Sale Search  -->
+ 	    <record model="ir.ui.view" id="ineco_kpi_sale_filter">
+	      	<field name="name">ineco.kpi.sale.search</field>
+	      	<field name="model">ineco.kpi.sale</field>
+	      	<field name="arch" type="xml">
+	        	<search string="KPI's Sale">
+	        	    <filter name="sale_id" string="My Sales" domain="[('sale_id','=',uid)]"/>
+                    <filter string="My Sales Team(s)" icon="terp-personal+" context="{'invisible_section': False}" 
+                        domain="[('team_id.user_id','=',uid)]" />
+	        	    <field name="sale_id"/>
+	            	<field name="team_id"/>
+	            	<field name="year_id"/>
+	            	<field name="category_id"/>
+	            	<field name="dimension"/>
+ 	                <group expand="0" string="Group By...">
+ 	                    <filter name="group_by_sale" string="Sale" icon="terp-partner" domain="[]" context="{'group_by':'sale_id'}"/>
+	                    <filter name="group_by_team"  string="Team" icon="terp-personal" domain="[]" context="{'group_by':'team_id'}"/>
+	                    <filter name="group_by_year"  string="Year" icon="terp-go-month" domain="[]" context="{'group_by':'year_id'}"/>
+	                    <filter name="group_by_category"  string="Category" icon="terp-go-month" domain="[]" context="{'group_by':'category_id'}" />
+	                    <filter name="group_by_dimension"  string="Dimension" icon="terp-go-month" domain="[]" context="{'group_by':'dimension'}" />
+	               	</group>
+	           	</search>
+	      	</field>
+	    </record>
+
+        <!-- KPI Sale Graph View -->
+        <record model="ir.ui.view" id="ineco_kpi_sale_graph">
+            <field name="name">ineco.kpi.sale.graph</field>
+            <field name="model">ineco.kpi.sale</field>
+            <field name="arch" type="xml">
+                <graph string="Sale Target" type="bar">
+                    <field name="sale_id" group="True"/>
+                    <field name="category_id" group='True' />
+                    <field name="target" operator="+"/>
+                    <field name="actual" operator="+"/>
+                </graph>
+            </field>
+        </record>	    	    	    
+
+	    <!-- KPI Sale Action -->
+	    <record model="ir.actions.act_window" id="ineco_kpi_sale_action">
+	        <field name="name">Sales KPI</field>
+	        <field name="res_model">ineco.kpi.sale</field>
+	        <field name="view_mode">tree,form,graph</field>
+	    </record>	   
+	     		
+    	<menuitem name="Sales KPI" parent="menu_ineco_kpi_dashboard" id="menu_ineco_kpi_sale" sequence="10" action="ineco_kpi_sale_action"/>
+
+     	<!-- KPI Quotation Form View -->
+    	<record model="ir.ui.view" id="ineco_kpi_quotation7_form">
+      		<field name="name">ineco.kpi.quotation7.form</field>
+      		<field name="model">ineco.kpi.quotation</field>
+      		<field name="arch" type="xml">
+	        	<form string="KPI's Quotation" version="7.0">
+	        	    <header>
+	        	        
+	        	    </header>
+	        	    <sheet>
+		        	    <group string="KPI Description">
+							<div class="oe_title">
+		                        <label for="sale_id" class="oe_edit_only"/>
+		                        <h1>
+		                            <field name="sale_id"/>                            
+		                        </h1>
+		                        <field name="team_id"/>
+		                    </div>
+		        	    </group>
+		            	<group col="6">
+			            	<group string="Period">
+			            		<field name="year_id"/>
+			            		<field name="category_id"/>
+			            	</group>		            	
+			            	<group string="Date Range">
+			            		<field name="date_start"/>
+			            		<field name="date_end"/>
+			            	</group>
+			            	<group string="KPI Value">
+			            		<field name="dimension"/>
+			            	    <field name="target"/>
+			            		<field name="actual" readonly="1"/>
+			            		<field name="percent" readonly="1" />
+			            		<group colspan="2">
+                               		<button name="button_dummy" string="Update KPI" type="object" class="oe_edit_only oe_right"/>
+			            		</group>
+			            	</group>
+			         	</group>
+	        	    </sheet>
+	                <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+	                    <field name="message_ids" widget="mail_thread" placeholder="Share a message..."/>
+	                </div>
+	        	</form>
+      		</field>
+    	</record>
+    						    		
+     	<!-- KPI Quotation Tree View -->
+    	<record model="ir.ui.view" id="ineco_kpi_quotation_tree">
+      		<field name="name">ineco.kpi.quotation.tree</field>
+      		<field name="model">ineco.kpi.quotation</field>
+      		<field name="arch" type="xml">
+	        	<tree string="KPI's Quotation">	            	
+	            	<field name="sale_id"/>
+	            	<field name="team_id"/>
+	            	<field name="year_id"/>
+	            	<field name="category_id"/>
+	            	<field name="date_start"/>
+	            	<field name="date_end"/>
+	            	<field name="dimension"/>
+	            	<field name="target" sum="Total Target"/>
+	            	<field name="actual" sum="Total Actual"/>
+	            	<field name="percent" />
+	            </tree>
+      		</field>
+    	</record>
+
+
+	    <!-- KPI Quotation Search  -->
+ 	    <record model="ir.ui.view" id="ineco_kpi_quotation_filter">
+	      	<field name="name">ineco.kpi.quotation.search</field>
+	      	<field name="model">ineco.kpi.quotation</field>
+	      	<field name="arch" type="xml">
+	        	<search string="KPI's Sale">
+	        	    <filter name="sale_id" string="My Sales" domain="[('sale_id','=',uid)]"/>
+                    <filter string="My Sales Team(s)" icon="terp-personal+" context="{'invisible_section': False}" 
+                        domain="[('team_id.user_id','=',uid)]" />
+	        	    <field name="sale_id"/>
+	            	<field name="team_id"/>
+	            	<field name="year_id"/>
+	            	<field name="category_id"/>
+	            	<field name="dimension"/>
+ 	                <group expand="0" string="Group By...">
+ 	                    <filter name="group_by_sale" string="Sale" icon="terp-partner" domain="[]" context="{'group_by':'sale_id'}"/>
+	                    <filter name="group_by_team"  string="Team" icon="terp-personal" domain="[]" context="{'group_by':'team_id'}"/>
+	                    <filter name="group_by_year"  string="Year" icon="terp-go-month" domain="[]" context="{'group_by':'year_id'}"/>
+	                    <filter name="group_by_category"  string="Category" icon="terp-go-month" domain="[]" context="{'group_by':'category_id'}" />
+	                    <filter name="group_by_dimension"  string="Dimension" icon="terp-go-month" domain="[]" context="{'group_by':'dimension'}" />
+	               	</group>
+	           	</search>
+	      	</field>
+	    </record>
+
+        <!-- KPI Quotation Graph View -->
+        <record model="ir.ui.view" id="ineco_kpi_quotation_graph">
+            <field name="name">ineco.kpi.quotation.graph</field>
+            <field name="model">ineco.kpi.quotation</field>
+            <field name="arch" type="xml">
+                <graph string="Quotation Target" type="bar">
+                    <field name="sale_id" group="True"/>
+                    <field name="category_id" group='True' />
+                    <field name="target" operator="+"/>
+                    <field name="actual" operator="+"/>
+                </graph>
+            </field>
+        </record>	    	    	    
+
+	    <!-- KPI Quotation Action -->
+	    <record model="ir.actions.act_window" id="ineco_kpi_quotation_action">
+	        <field name="name">Quotation KPI</field>
+	        <field name="res_model">ineco.kpi.quotation</field>
+	        <field name="view_mode">tree,form,graph</field>
+	    </record>	   
+	     		
+    	<menuitem name="Quotation KPI" parent="menu_ineco_kpi_dashboard" id="menu_ineco_kpi_quotation" sequence="20" action="ineco_kpi_quotation_action"/>
+
+     	<!-- KPI Opportunity Form View -->
+    	<record model="ir.ui.view" id="ineco_kpi_opportunity7_form">
+      		<field name="name">ineco.kpi.opportunity.form</field>
+      		<field name="model">ineco.kpi.opportunity</field>
+      		<field name="arch" type="xml">
+	        	<form string="KPI's Opportunity" version="7.0">
+	        	    <header>
+	        	        
+	        	    </header>
+	        	    <sheet>
+		        	    <group string="KPI Description">
+							<div class="oe_title">
+		                        <label for="sale_id" class="oe_edit_only"/>
+		                        <h1>
+		                            <field name="sale_id"/>                            
+		                        </h1>
+		                        <field name="team_id"/>
+		                    </div>
+		        	    </group>
+		            	<group col="6">
+			            	<group string="Period">
+			            		<field name="year_id"/>
+			            		<field name="category_id"/>
+			            	</group>		            	
+			            	<group string="Date Range">
+			            		<field name="date_start"/>
+			            		<field name="date_end"/>
+			            	</group>
+			            	<group string="KPI Value">
+			            		<field name="dimension"/>
+			            	    <field name="target"/>
+			            		<field name="actual" readonly="1"/>
+			            		<field name="percent" readonly="1" />
+			            		<group colspan="2">
+                               		<button name="button_dummy" string="Update KPI" type="object" class="oe_edit_only oe_right"/>
+			            		</group>
+			            	</group>
+			         	</group>
+	        	    </sheet>
+	                <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+	                    <field name="message_ids" widget="mail_thread" placeholder="Share a message..."/>
+	                </div>
+	        	</form>
+      		</field>
+    	</record>
+    						    		
+     	<!-- KPI Opportunity Tree View -->
+    	<record model="ir.ui.view" id="ineco_kpi_opportunity_tree">
+      		<field name="name">ineco.kpi.opportunity.tree</field>
+      		<field name="model">ineco.kpi.opportunity</field>
+      		<field name="arch" type="xml">
+	        	<tree string="KPI's Opportunity">	            	
+	            	<field name="sale_id"/>
+	            	<field name="team_id"/>
+	            	<field name="year_id"/>
+	            	<field name="category_id"/>
+	            	<field name="date_start"/>
+	            	<field name="date_end"/>
+	            	<field name="dimension"/>
+	            	<field name="target" sum="Total Target"/>
+	            	<field name="actual" sum="Total Actual"/>
+	            	<field name="percent" />
+	            </tree>
+      		</field>
+    	</record>
+
+
+	    <!-- KPI Opportunity Search  -->
+ 	    <record model="ir.ui.view" id="ineco_kpi_opportunity_filter">
+	      	<field name="name">ineco.kpi.opportunity.search</field>
+	      	<field name="model">ineco.kpi.opportunity</field>
+	      	<field name="arch" type="xml">
+	        	<search string="KPI's Opportunity">
+	        	    <filter name="sale_id" string="My Sales" domain="[('sale_id','=',uid)]"/>
+                    <filter string="My Sales Team(s)" icon="terp-personal+" context="{'invisible_section': False}" 
+                        domain="[('team_id.user_id','=',uid)]" />
+	        	    <field name="sale_id"/>
+	            	<field name="team_id"/>
+	            	<field name="year_id"/>
+	            	<field name="category_id"/>
+	            	<field name="dimension"/>
+ 	                <group expand="0" string="Group By...">
+ 	                    <filter name="group_by_sale" string="Sale" icon="terp-partner" domain="[]" context="{'group_by':'sale_id'}"/>
+	                    <filter name="group_by_team"  string="Team" icon="terp-personal" domain="[]" context="{'group_by':'team_id'}"/>
+	                    <filter name="group_by_year"  string="Year" icon="terp-go-month" domain="[]" context="{'group_by':'year_id'}"/>
+	                    <filter name="group_by_category"  string="Category" icon="terp-go-month" domain="[]" context="{'group_by':'category_id'}" />
+	                    <filter name="group_by_dimension"  string="Dimension" icon="terp-go-month" domain="[]" context="{'group_by':'dimension'}" />
+	               	</group>
+	           	</search>
+	      	</field>
+	    </record>
+
+        <!-- KPI Opportunity Graph View -->
+        <record model="ir.ui.view" id="ineco_kpi_opportunity_graph">
+            <field name="name">ineco.kpi.opportunity.graph</field>
+            <field name="model">ineco.kpi.opportunity</field>
+            <field name="arch" type="xml">
+                <graph string="Opportunity Target" type="bar">
+                    <field name="sale_id" group="True"/>
+                    <field name="category_id" group='True' />
+                    <field name="target" operator="+"/>
+                    <field name="actual" operator="+"/>
+                </graph>
+            </field>
+        </record>	    	    	    
+
+	    <!-- KPI Opportunity Action -->
+	    <record model="ir.actions.act_window" id="ineco_kpi_opportunity_action">
+	        <field name="name">Opportunity KPI</field>
+	        <field name="res_model">ineco.kpi.opportunity</field>
+	        <field name="view_mode">tree,form,graph</field>
+	    </record>	   
+	     		
+    	<menuitem name="Opportunity KPI" parent="menu_ineco_kpi_dashboard" id="menu_ineco_kpi_opportunity" sequence="30" action="ineco_kpi_opportunity_action"/>
+    					    	    	
+    </data>
+</openerp>

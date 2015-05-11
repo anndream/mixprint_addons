@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+
+	<data>
+
+		<report id="ineco_sale_cash_form"
+		    model="sale.order" 
+		    name="ineco.sale.cash.form" 
+		    rml="ineco_sale_report/report/sale_cash_form.jrxml" 
+		    string="Cash Sale Form (Letter)" />
+
+		<report id="ineco_sale_quotation_form"
+		    model="sale.order" 
+		    name="ineco.sale.quotation.form" 
+		    rml="ineco_sale_report/report/quotation.jrxml" 
+		    string="Quotation (A4)" />
+		    
+	</data>
+	
+</openerp>

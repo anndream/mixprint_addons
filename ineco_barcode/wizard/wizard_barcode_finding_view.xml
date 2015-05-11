@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+		<record id="view_wizard_barcode_finding_form" model="ir.ui.view">
+			<field name="name">wizard.barcode.finding.form</field>
+			<field name="model">wizard.barcode.finding</field>
+			<field name="arch" type="xml">
+				<form string="Code" version="7.0">
+					<group>
+						<field name="code" />
+						<field name="note" />
+					</group>
+	                <footer>
+	                    <button name="open_popup" string="Finding" type="object"/>
+	                    or
+	                    <button string="Cancel" class="oe_link" special="cancel" />
+	                </footer>				
+	           	</form>
+			</field>
+		</record>
+
+<!--        <record id="action_wizard_barcode_finding" model="ir.actions.act_window">
+            <field name="name">Barcode Finding</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.barcode.finding</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">current</field> 
+        </record>
+        
+  		<menuitem 
+			action="action_wizard_barcode_finding" 
+			id="menu_ineco_barcode_finding"
+		 	parent="menu_ineco_barcode_config_root" 
+		 	sequence="3" />
+		 	
+-->
+		 	     		
+	</data>
+</openerp>

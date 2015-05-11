@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_general_configuration">
+            <field name="name">base.config.settings.search.limit</field>
+            <field name="model">base.config.settings</field>
+            <field name="inherit_id" ref="base_setup.view_general_configuration"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='module_multi_company']/.." position="after">
+                    <div>
+                        <div name="Search Limit">
+                            <div>
+                                <field name="search_limit" class="oe_inline"/>
+                                <label for="search_limit"/>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

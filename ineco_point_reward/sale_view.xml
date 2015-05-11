@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_ineco_point_sale_form">
+	      	<field name="name">ineco.point.sale.form</field>
+	      	<field name="model">sale.order</field>
+	      	<field name="inherit_id" ref="sale.view_order_form"/>
+	      	<field name="arch" type="xml">
+	        	<field name="client_order_ref" position="after">
+	           		<field name="schema_id" />
+	           		<field name="point" />
+	           		<field name="point_approve" readonly="1" />
+                    <button name="button_point_approve" 
+                            attrs="{'invisible':[('point_approve','=',True)]}"
+                            string="Point Approval" type="object" class="oe_edit_only"/>
+                    <button name="button_point_cancel" 
+                            attrs="{'invisible':[('point_approve','!=',True)]}"
+                            string="Cancel Approved" type="object" class="oe_edit_only"/>
+                    
+	           	</field>
+	        	
+	        	<page string="Other Information" position="after" version="7.0">
+	        	    <page string="Points">
+	        	        <group>
+		        	        <group>
+			           			<field name="point_sale" />
+			           			<field name="point_product" />
+		        	        </group>
+		        	        <group>
+			        	        <field name="point_category" />
+			        	        <field name="point_partner" />	        
+		        	        </group>	        
+		        	        <group>
+		        	            <field name="point_adjust" readonly="1" />
+		        	        </group>
+	        	        </group>
+	        	    </page>
+	        	</page>
+	      	</field>
+	    </record> 
+	    
+	    <record model="ir.ui.view" id="view_ineco_point_quotation_tree">
+	      	<field name="name">ineco.point.quotation.tree</field>
+	      	<field name="model">sale.order</field>
+	      	<field name="inherit_id" ref="sale.view_quotation_tree"/>
+	      	<field name="arch" type="xml">
+	        	<field name="partner_id" position="after">
+	           		<field name="schema_id" />
+	        	</field>
+	        	<field name="amount_total" position="after">
+	        	    <field name="point" />
+	        	    <field name="point_approve" />
+	        	</field>
+	      	</field>
+	    </record>
+	    
+	    
+	    <record model="ir.ui.view" id="view_ineco_point_order_tree">
+	      	<field name="name">ineco.point.order.tree</field>
+	      	<field name="model">sale.order</field>
+	      	<field name="inherit_id" ref="sale.view_order_tree"/>
+	      	<field name="arch" type="xml">
+	        	<field name="state" position="before" >
+	        	    <field name="point" />
+	        	    <field name="point_approve" />
+	        	</field>
+	      	</field>
+	    </record>	
+	    
+	</data>
+</openerp>

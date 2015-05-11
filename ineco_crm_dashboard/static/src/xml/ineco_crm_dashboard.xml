@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+	<t t-name="HomePageTemplate">
+		<div style="height:100%;width:100%"><t t-raw="name2" /></div>
+    </t>
+</templates>

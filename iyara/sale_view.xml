@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_ineco_sale_iyara_form" model="ir.ui.view">
+            <field name="name">ineco.sale.iyara.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="date_order" position="replace">
+                    <field name="date_sale_order"/>
+                    <field name="date_order" string="Delivery Date"/>
+                </field>
+                <field name="name" position="after">
+	             	<div class="oe_right oe_button_box" name="buttons">
+						<button name="%(open_iyara_product_set_form)d" states="draft" type="action" string="Product Set" />	                    
+		           	</div>
+	           	</field> 	
+<!-- 	           	<label for="discount" position="before">
+ 					<label for="discounts" groups="sale.group_discount_per_so_line"/>	           	    
+	           	</label> -->
+                <field name="discount" position="before">
+<!-- 	               	<div name="discounts" groups="sale.group_discount_per_so_line">
+	                	<field name="discounts" class="oe_inline"/>               
+	                </div>	  --> 
+	                <field name="discounts"/>
+	           	</field>     
+             	<xpath expr='//tree/field[@name="discount"]' position='before'> 
+					<field name="discounts" groups="sale.group_discount_per_so_line"/>
+                </xpath>	                        	          	
+        	</field>
+        </record>
+        
+        <record id="view_ineco_sale_iyara_tree" model="ir.ui.view">
+            <field name="name">ineco.sale.iyara.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <field name="date_order" position="replace">
+                    <field name="date_sale_order"/>
+                    <field name="date_order" string="Delivery Date"/>
+                    <field name="project_id" string="Analytic"/>
+                </field>
+        	</field>
+        </record>
+        
+        <record id="view_ineco_quotation_iyara_tree" model="ir.ui.view">
+            <field name="name">ineco.quotation.iyara.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <field name="date_order" position="replace">
+                    <field name="date_sale_order"/>
+                    <field name="date_order" string="Delivery Date"/>
+                    <field name="project_id" string="Analytic"/>
+                </field>
+        	</field>
+        </record>        
+
+        <record id="view_sales_order_iyara_filter" model="ir.ui.view">
+            <field name="name">sale.order.list.select</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="arch" type="xml">            
+                <filter string="Order Date" position="replace">
+               		<filter string="Order Date" icon="terp-go-month" domain="[]" context="{'group_by':'date_sale_order'}"/>
+            	    <filter string="Delivery Date" icon="terp-go-month" domain="[]" context="{'group_by':'date_order'}"/>
+            	 	<filter  string="Analytic" domain="[]" context="{'group_by':'project_id'}"/>
+            	</filter>
+            </field>
+        </record>        
+        
+        
+        
+    </data>
+</openerp>

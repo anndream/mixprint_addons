@@ -1,0 +1,124 @@
+2    [XML-RPC-0] ERROR org.apache.xmlrpc.server.XmlRpcErrorLogger - Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Could not load the following font : 
+pdfFontName   : Helvetica
+pdfEncoding   : Identity-H
+isPdfEmbedded : false
+org.apache.xmlrpc.common.XmlRpcInvocationException: Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Could not load the following font : 
+pdfFontName   : Helvetica
+pdfEncoding   : Identity-H
+isPdfEmbedded : false
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:129)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.execute(ReflectiveXmlRpcHandler.java:106)
+	at org.apache.xmlrpc.server.XmlRpcServerWorker.execute(XmlRpcServerWorker.java:46)
+	at org.apache.xmlrpc.server.XmlRpcServer.execute(XmlRpcServer.java:86)
+	at org.apache.xmlrpc.server.XmlRpcStreamServer.execute(XmlRpcStreamServer.java:200)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:208)
+	at org.apache.xmlrpc.util.ThreadPool$Poolable$1.run(ThreadPool.java:68)
+Caused by: net.sf.jasperreports.engine.JRRuntimeException: Could not load the following font : 
+pdfFontName   : Helvetica
+pdfEncoding   : Identity-H
+isPdfEmbedded : false
+	at net.sf.jasperreports.engine.export.JRPdfExporter.getFont(JRPdfExporter.java:1961)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.getChunk(JRPdfExporter.java:1725)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.getPhrase(JRPdfExporter.java:1694)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportText(JRPdfExporter.java:2177)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportElements(JRPdfExporter.java:778)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportPage(JRPdfExporter.java:738)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportReportToStream(JRPdfExporter.java:616)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportReport(JRPdfExporter.java:385)
+	at com.nantic.jasperreports.JasperServer.privateExecute(JasperServer.java:239)
+	at com.nantic.jasperreports.JasperServer.execute(JasperServer.java:95)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:115)
+	... 6 more
+Caused by: ExceptionConverter: java.io.UnsupportedEncodingException: Identity-H
+Caused by:
+net.sf.jasperreports.engine.JRRuntimeException: Could not load the following font : 
+pdfFontName   : Helvetica
+pdfEncoding   : Identity-H
+isPdfEmbedded : false
+	at net.sf.jasperreports.engine.export.JRPdfExporter.getFont(JRPdfExporter.java:1961)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.getChunk(JRPdfExporter.java:1725)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.getPhrase(JRPdfExporter.java:1694)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportText(JRPdfExporter.java:2177)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportElements(JRPdfExporter.java:778)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportPage(JRPdfExporter.java:738)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportReportToStream(JRPdfExporter.java:616)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportReport(JRPdfExporter.java:385)
+	at com.nantic.jasperreports.JasperServer.privateExecute(JasperServer.java:239)
+	at com.nantic.jasperreports.JasperServer.execute(JasperServer.java:95)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:115)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.execute(ReflectiveXmlRpcHandler.java:106)
+	at org.apache.xmlrpc.server.XmlRpcServerWorker.execute(XmlRpcServerWorker.java:46)
+	at org.apache.xmlrpc.server.XmlRpcServer.execute(XmlRpcServer.java:86)
+	at org.apache.xmlrpc.server.XmlRpcStreamServer.execute(XmlRpcStreamServer.java:200)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:208)
+	at org.apache.xmlrpc.util.ThreadPool$Poolable$1.run(ThreadPool.java:68)
+Caused by: ExceptionConverter: java.io.UnsupportedEncodingException: Identity-H
+292868 [XML-RPC-0] ERROR org.apache.xmlrpc.server.XmlRpcErrorLogger - Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Could not load the following font : 
+pdfFontName   : quotation.jrxml
+pdfEncoding   : Identity-H
+isPdfEmbedded : true
+org.apache.xmlrpc.common.XmlRpcInvocationException: Failed to invoke method execute in class com.nantic.jasperreports.JasperServer: Could not load the following font : 
+pdfFontName   : quotation.jrxml
+pdfEncoding   : Identity-H
+isPdfEmbedded : true
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:129)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.execute(ReflectiveXmlRpcHandler.java:106)
+	at org.apache.xmlrpc.server.XmlRpcServerWorker.execute(XmlRpcServerWorker.java:46)
+	at org.apache.xmlrpc.server.XmlRpcServer.execute(XmlRpcServer.java:86)
+	at org.apache.xmlrpc.server.XmlRpcStreamServer.execute(XmlRpcStreamServer.java:200)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:208)
+	at org.apache.xmlrpc.util.ThreadPool$Poolable$1.run(ThreadPool.java:68)
+Caused by: net.sf.jasperreports.engine.JRRuntimeException: Could not load the following font : 
+pdfFontName   : quotation.jrxml
+pdfEncoding   : Identity-H
+isPdfEmbedded : true
+	at net.sf.jasperreports.engine.export.JRPdfExporter.getFont(JRPdfExporter.java:1961)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.getChunk(JRPdfExporter.java:1725)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.getPhrase(JRPdfExporter.java:1694)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportText(JRPdfExporter.java:2177)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportElements(JRPdfExporter.java:778)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportPage(JRPdfExporter.java:738)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportReportToStream(JRPdfExporter.java:616)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportReport(JRPdfExporter.java:385)
+	at com.nantic.jasperreports.JasperServer.privateExecute(JasperServer.java:239)
+	at com.nantic.jasperreports.JasperServer.execute(JasperServer.java:95)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:115)
+	... 6 more
+Caused by:
+net.sf.jasperreports.engine.JRRuntimeException: Could not load the following font : 
+pdfFontName   : quotation.jrxml
+pdfEncoding   : Identity-H
+isPdfEmbedded : true
+	at net.sf.jasperreports.engine.export.JRPdfExporter.getFont(JRPdfExporter.java:1961)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.getChunk(JRPdfExporter.java:1725)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.getPhrase(JRPdfExporter.java:1694)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportText(JRPdfExporter.java:2177)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportElements(JRPdfExporter.java:778)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportPage(JRPdfExporter.java:738)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportReportToStream(JRPdfExporter.java:616)
+	at net.sf.jasperreports.engine.export.JRPdfExporter.exportReport(JRPdfExporter.java:385)
+	at com.nantic.jasperreports.JasperServer.privateExecute(JasperServer.java:239)
+	at com.nantic.jasperreports.JasperServer.execute(JasperServer.java:95)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.invoke(ReflectiveXmlRpcHandler.java:115)
+	at org.apache.xmlrpc.server.ReflectiveXmlRpcHandler.execute(ReflectiveXmlRpcHandler.java:106)
+	at org.apache.xmlrpc.server.XmlRpcServerWorker.execute(XmlRpcServerWorker.java:46)
+	at org.apache.xmlrpc.server.XmlRpcServer.execute(XmlRpcServer.java:86)
+	at org.apache.xmlrpc.server.XmlRpcStreamServer.execute(XmlRpcStreamServer.java:200)
+	at org.apache.xmlrpc.webserver.Connection.run(Connection.java:208)
+	at org.apache.xmlrpc.util.ThreadPool$Poolable$1.run(ThreadPool.java:68)

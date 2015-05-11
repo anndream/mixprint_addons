@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+ 
+        <record model="ir.ui.view" id="view_uniform_sale_order_form">
+	      	<field name="name">uniform.sale.form</field>
+	      	<field name="model">sale.order</field>
+	      	<field name="inherit_id" ref="sale.view_order_form"/>
+	      	<field name="arch" type="xml">
+	        	
+	        	<page string="Other Information" position="before" version="7.0">
+	        	    <page string="UNIFORM">
+	        	        <group>
+		        	        <group>
+			           			<field name="next_garment_order_no" />
+			           			<field name="next_garment_order_date" />
+			           			<field name="next_sample_order_no" />
+		        	        </group>	        
+	        	        </group>
+	        	        <field name="candidate_ids">
+	        	        	<tree string="Candidate Price" editable="top">
+	        	        		<field name="name" />
+	        	        		<field name="cost" />
+	        	        	</tree>
+	        	        </field>
+	        	    </page>
+	        	</page>
+				
+			</field>
+			
+		</record>
+		
+        <record id="view_uniform_order_tree" model="ir.ui.view">
+            <field name="name">uniform.sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+              	<field name="date_order" position="after">
+              		<field name="next_sample_order_no" />
+              		<field name="next_garment_order_no" />
+              		<field name="next_garment_order_date" />
+              	</field>
+            </field>
+        </record>
+
+        <record id="view_uniform_sale_order_search" model="ir.ui.view">
+            <field name="name">uniform_sale_order_search</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+              	<field name="name" position="after">
+              		<field name="next_garment_order_no" />
+					<field name="next_garment_order_date" />
+					<field name="next_sample_order_no" />
+              	</field>
+            </field>
+        </record>         	
+
+        <record model="ir.ui.view" id="view_uniform_sale_order2_form">
+	      	<field name="name">uniform2.sale.form</field>
+	      	<field name="model">sale.order</field>
+	      	<field name="inherit_id" ref="ineco_quotation_garment.view_ineco_quotation_form"/>
+	      	<field name="arch" type="xml">
+	        	
+	        	<page string="Other Information" position="before" version="7.0">
+	        	    <page string="UNIFORM">
+	        	        <field name="candidate_ids">
+	        	        	<tree string="Candidate Price" editable="top">
+	        	        		<field name="name" />
+	        	        		<field name="cost" />
+	        	        	</tree>
+	        	        </field>
+	        	    </page>
+	        	</page>
+				
+			</field>
+			
+		</record>
+		
+		
+	</data>
+</openerp>

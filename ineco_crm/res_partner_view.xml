@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="ineco_call_partner_action" model="ir.actions.act_window">
+            <field name="name">Partner Calls</field>
+            <field name="res_model">crm.phonecall</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,graph</field>
+            <field name="context">{'search_default_partner_id': active_id}</field>
+            <field name="groups_id" eval="[(4, ref('base.group_sale_salesman'))]"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a quotation or sale order for this customer.
+              </p><p>
+                OpenERP will help you efficiently handle the complete sale flow:
+                quotation, sale order, delivery, invoicing and
+                payment.
+              </p><p>
+                The social feature helps you organize discussions on each sale
+                order, and allow your customer to keep track of the evolution
+                of the sale order.
+              </p>
+            </field>
+        </record>      
+        		
+        <record model="ir.ui.view" id="ineco_partner_kanban_view">
+            <field name="name">ineco.partner.kanban.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="crm.crm_lead_partner_kanban_view"/>
+            <field name="arch" type="xml">
+               	<field name="mobile" position="after">
+                    <field name="phonecall_count"/>                  
+                </field>                
+                <xpath expr="//div[@class='oe_kanban_partner_links']" position="inside">
+                    <a name="%(ineco_call_partner_action)d"        
+                        type="action" t-if="record.phonecall_count.value>0">
+                        <t t-esc="record.phonecall_count.value"/> Calls                      
+                    </a>                 
+                </xpath>
+        	</field>
+        </record>
+        
+        <record id="ineco_partner_lastphonecall_tree" model="ir.ui.view">
+            <field name="name">ineco.lastphonecall.tree</field>
+            <field name="model">res.partner</field>
+            <field eval="8" name="priority"/>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="email" position="replace">
+                    <field name="email" invisible="1" />
+                    <!-- <field name="last_phonecall" />  -->
+                    <field name="last_date_count" />
+                    <field name="last_lead_count" />
+                    <field name="last_opportunity_count" />
+                    <field name="last_quotation_count" />
+                    <field name="last_saleorder_count" />
+                </field>
+                <field name="name" position="after">
+                    <field name="nick_name" />
+                </field>
+            </field>
+        </record>
+
+        <record id="ineco_partner_lastphonecall_form" model="ir.ui.view">
+            <field name="name">ineco.lastphonecall.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                
+                <field name="name" position="after">
+                    <field name="nick_name" />
+                </field>
+                
+                <field name="email" position="after">
+                    <field name="last_phonecall" />
+                </field>
+                
+            </field>
+        </record>
+        
+        <record id="view_inecocrm_partner_form2" model="ir.ui.view">
+            <field name="name">inecocrm.partner.form2</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@string='Sales &amp; Purchases']/group/group/field[@name='user_id']" position="after">
+                	<field name="sale_team_id" />
+                </xpath>            
+            </field>
+        </record>
+        
+        <record id="view_inecocrm_partner_form3" model="ir.ui.view">
+            <field name="name">inecocrm.partner.form3</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="ineco_partner.view_ineco_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                	<field name="sale_team_id" />
+                </field>            
+            </field>
+        </record>
+
+	</data>
+</openerp>

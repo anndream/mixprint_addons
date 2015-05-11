@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+   <data>
+       
+        <record id="crm_ineco_iyara_crm_make_sale_form_view" model="ir.ui.view">
+            <field name="name">ineco.iyara.crm.make.sale.form</field>
+            <field name="model">crm.make.sale</field>
+            <field name="inherit_id" ref="sale_crm.view_crm_make_sale"/>
+            <field name="arch" type="xml">
+                <field name="close" position="after">
+                    <field name="project_id"/>
+                </field>
+        	</field>
+        </record>          
+
+   </data>
+</openerp>

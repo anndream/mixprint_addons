@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="sequence_problem_type" model="ir.sequence.type">
+            <field name="name">Problem</field>
+            <field name="code">ineco.problem</field>
+        </record>
+        
+        <record id="sequence_problem" model="ir.sequence">
+            <field name="name">Problem</field>
+            <field name="code">ineco.problem</field>
+            <field name="prefix">PB56%(month)s-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+    </data>
+</openerp>

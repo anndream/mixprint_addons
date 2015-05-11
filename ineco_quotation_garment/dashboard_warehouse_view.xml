@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<openerp>
+     <data>
+
+		<!-- ALL Order Late Tree -->
+        <record model="ir.ui.view" id="view_ineco_dashbaord_order_late_tree">
+            <field name="name">ineco.dashboard.order.late.tree</field>
+            <field name="model">ineco.dashboard.order.late</field>
+            <field name="arch" type="xml">
+                <tree string="All Order Late" >
+                	<field name="sale_order_id" />
+                	<field name="garment_order_no" />
+                	<field name="garment_order_date" />
+                	<field name="partner_id" />
+                	<field name="user_id" />
+                	<field name="do_plan" />
+                	<field name="delay" />
+                	<field name="quantity_order" />
+                	<field name="quantity_delivery" />
+                	<field name="quantity_balance" />
+                </tree>
+            </field>
+        </record>        
+
+        <record id="view_ineco_dashbaord_order_late_filter" model="ir.ui.view">
+            <field name="name">ineco.dashboard.order.late.filter</field>
+            <field name="model">ineco.dashboard.order.late</field>
+            <field name="arch" type="xml">
+                <search string="Search All Order Late">
+                	<field name="sale_order_id" />
+                	<field name="garment_order_no" />
+                	<field name="garment_order_date" />
+                	<field name="partner_id" />
+                	<field name="user_id" />
+                	<field name="delay" />
+                	<field name="do_plan" />
+                	<group expand="0" string="Group By...">
+                		<filter name="date_group" string="Garment Order Date" icon="terp-personal" domain="[]" context="{'group_by':'garment_order_date'}"/>
+                		<filter name="sale_group" string="Sale" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
+                	</group>                    
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_dashbaord_order_late" model="ir.actions.act_window">
+            <field name="name">Order Late</field>
+            <field name="res_model">ineco.dashboard.order.late</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_dashbaord_order_late_tree"/>
+            <field name="search_view_id" ref="view_ineco_dashbaord_order_late_filter"/>
+            <field name="context">{'search_default_date_group':1}</field>
+            <field name="limit">800</field>
+            <field name="help" type="html">
+            </field>
+        </record>    
+
+        <menuitem 
+            id="menu_ineco_dashbaord_order_late"
+        	action="action_ineco_dashbaord_order_late" 
+        	parent="menu_mixprint_warehouse_dashboard"
+        	sequence="3"/>  
+
+		<!-- ALL Order Late  -->
+        <record model="ir.ui.view" id="view_ineco_dashbaord_order_late_summary_tree">
+            <field name="name">ineco.dashboard.order.late.summary.tree</field>
+            <field name="model">ineco.dashboard.order.late.summary</field>
+            <field name="arch" type="xml">
+                <tree string="All Order Late" >
+                	<field name="year" />
+                	<field name="month" />
+                	<field name="order_total" sum="Order Total" />
+                	<field name="order_count" sum="Order Count" />
+                	<field name="order_late_count" sum="Late Count" />
+                	<field name="order_progress_count" sum="Progress Count" />
+                	<field name="order_done_count" sum="Done Count" />
+                	<field name="order_late_percent" avg="Late Percent" />
+                	<field name="order_progress_percent" avg="Progress Percent" />
+                	<field name="order_done_percent" avg="Done Percent" />
+                	<field name="order_late_avg" avg="Average Late" />
+                	<field name="order_late_max"  />
+                	<field name="order_late_min" />
+                </tree>
+            </field>
+        </record>        
+
+        <record id="view_ineco_dashbaord_order_late_summary_filter" model="ir.ui.view">
+            <field name="name">ineco.dashboard.order.late.summary.filter</field>
+            <field name="model">ineco.dashboard.order.late.summary</field>
+            <field name="arch" type="xml">
+                <search string="Search Order Late Summary">
+                	<field name="year" />
+                	<field name="month" />
+                	<group expand="0" string="Group By...">
+                		<filter name="date_group" string="Year" icon="terp-personal" domain="[]" context="{'group_by':'year'}"/>
+                	</group>                    
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_dashbaord_order_late_summary" model="ir.actions.act_window">
+            <field name="name">Order Late Summary</field>
+            <field name="res_model">ineco.dashboard.order.late.summary</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_dashbaord_order_late_summary_tree"/>
+            <field name="search_view_id" ref="view_ineco_dashbaord_order_late_summary_filter"/>
+            <field name="context">{'search_default_date_group':1}</field>
+            <field name="limit">800</field>
+            <field name="help" type="html">
+            </field>
+        </record>    
+
+        <menuitem 
+            id="menu_ineco_dashbaord_order_late_summary"
+        	action="action_ineco_dashbaord_order_late_summary" 
+        	parent="menu_mixprint_warehouse_dashboard"
+        	sequence="4"/>  
+     
+     </data>
+</openerp>

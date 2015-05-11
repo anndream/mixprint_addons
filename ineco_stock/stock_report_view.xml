@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+	
+    	<record id="view_ineco_stock_list_tree" model="ir.ui.view">
+            <field name="name">ineco.stock.list.tree</field>
+            <field name="model">ineco.stock.list</field>
+            <field name="priority" eval="6"/>
+            <field name="arch" type="xml">
+            	<tree string="List of Stock">
+            		<field name="product_id" />
+            		<field name="product_packaging" />
+            		<field name="prodlot_id" />
+            		<field name="location_dest_id" />
+            		<field name="uom_id" />
+            		<field name="on_hand" />
+            		<field name="forecast" />
+            	</tree>
+           	</field>
+        </record>    
+        
+    	<record id="view_ineco_stock_list_form" model="ir.ui.view">
+            <field name="name">ineco.stock.list.form</field>
+            <field name="model">ineco.stock.list</field>
+            <field name="priority" eval="6"/>
+            <field name="arch" type="xml">
+				<form string="Prosoft Configuration" version="7.0">
+            		<group>
+            			<group>
+		            		<field name="product_id" />
+		            		<field name="product_packaging" />
+		            		<field name="prodlot_id" />
+            			</group>
+            			<group>
+		            		<field name="location_dest_id" />
+		            		<field name="uom_id" />
+		            		<field name="on_hand" />
+		            		<field name="forecast" />            			
+            			</group>
+            		</group>
+            	</form>
+            </field>
+        </record>    
+        
+    	<record id="view_ineco_stock_list_search" model="ir.ui.view">
+            <field name="name">ineco.stock.list.search</field>
+            <field name="model">ineco.stock.list</field>
+            <field name="priority" eval="6"/>
+            <field name="arch" type="xml">
+            	<search string="List of Stock">
+            		<field name="product_id" />
+            		<field name="product_packaging" />
+            		<field name="prodlot_id" />
+            		<field name="location_dest_id" />
+					<group col="8" colspan="4" expand="0" string="Group By...">
+                        <filter string="Products" icon="terp-camera_test" name="group_product_id" context="{'group_by':'product_id'}"/>
+                        <filter string="Locations" icon="terp-camera_test" name="group_location_dest_id" context="{'group_by':'location_dest_id'}"/>				
+                        <filter string="Packaging" icon="terp-camera_test" name="group_product_packaging" context="{'group_by':'product_packaging'}"/>
+                        <filter string="Serial Number" icon="terp-camera_test" name="group_prodlot_id" context="{'group_by':'prodlot_id'}"/>				
+					</group>
+
+            	</search>
+           	</field>
+        </record> 
+
+        <record id="action_ineco_stock_list" model="ir.actions.act_window">
+            <field name="name">Stock List</field>
+            <field name="res_model">ineco.stock.list</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('is_stock','=','STOCK')]</field>
+            <field name="view_id" ref="view_ineco_stock_list_tree"/>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to register a stock list. 
+              </p><p>
+                Here you can receive individual products, no matter what
+                purchase order or picking order they come from. You will find
+                the list of all products you are waiting for. Once you receive
+                an order, you can filter based on the name of the supplier or
+                the purchase order reference. Then you can confirm all products
+                received using the buttons on the right of each line.
+              </p>
+            </field>
+        </record>
+
+<!--       <menuitem 
+      	action="action_ineco_stock_list" 
+      	id="menu_ineco_stock_list" 
+      	parent="stock.menu_traceability"
+      	sequence="60"/> -->
+         	
+        <act_window
+            context="{'search_default_product_id': active_id}"
+            domain="[('location_dest_id.is_stock','=',True),'|',('on_hand','!=',0),('forecast','!=',0)]"
+            id="act_open_stock_list_by_product"
+            name="Stock List"
+            res_model="ineco.stock.list"
+            src_model="product.product"/>                         
+
+<!--         <act_window
+            context="{'search_default_location_dest_id': active_id}"
+            domain="[('is_stock','=','STOCK')]"
+            id="act_open_stock_list_by_location_dest"
+            name="Stock List"
+            res_model="ineco.stock.list"
+            src_model="stock.location"/>  -->
+	</data>
+</openerp>

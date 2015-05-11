@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+ 
+        <record model="ir.ui.view" id="view_ineco_account_sale_form">
+	      	<field name="name">ineco.account.sale.form</field>
+	      	<field name="model">sale.order</field>
+	      	<field name="inherit_id" ref="sale.view_order_form"/>
+	      	<field name="arch" type="xml">
+	        	
+	        	<page string="Other Information" position="before" version="7.0">
+	        	    <page string="Delivery Information">
+	        	        <group>
+<!-- 		        	        <group> -->
+<!-- 			           			<field name="ineco_delivery_date" /> -->
+<!-- 		        	        </group> -->
+		        	        <group>
+			           			<field name="ineco_delivery_type_id" />
+		        	        </group>	        
+	        	        </group>
+	        	    </page>
+	        	</page>
+	        	
+	        	<field name="user_id" position="after">
+	        		<field name="ineco_sale_admin_id" />
+	        	</field>
+
+	            <xpath expr="//field[@name='order_line']/tree//field[@name='price_unit']" position="before">
+	                <field name="account_analytic_id" domain="[('type','=','normal')]" groups="analytic.group_analytic_accounting"/>
+	            </xpath>       	
+	        	
+	            <xpath expr="//field[@name='order_line']/form//field[@name='price_unit']" position="after">
+	                <field name="account_analytic_id" domain="[('type','=','normal')]" groups="analytic.group_analytic_accounting"/>
+	            </xpath>       	
+	        	
+	      	</field>
+	    </record>      
+	
+		<!-- Sale Shop -->
+<!--         <record model="ir.ui.view" id="view_ineco_sale_shop_tree"> -->
+<!-- 	      	<field name="name">ineco.sale.shop.tree</field> -->
+<!-- 	      	<field name="model">sale.shop</field> -->
+<!-- 	      	<field name="inherit_id" ref="sale.view_shop_tree"/> -->
+<!-- 	      	<field name="arch" type="xml"> -->
+<!-- 	        	<field name="project_id" position="after"> -->
+<!-- 	        		<field name="sequence_id" /> -->
+<!-- 	        	</field> -->
+<!-- 	      	</field> -->
+<!-- 	    </record>       -->
+	    
+<!--         <record model="ir.ui.view" id="view_ineco_sale_shop_form"> -->
+<!-- 	      	<field name="name">ineco.sale.shop.form</field> -->
+<!-- 	      	<field name="model">sale.shop</field> -->
+<!-- 	      	<field name="inherit_id" ref="sale.view_shop_form"/> -->
+<!-- 	      	<field name="arch" type="xml"> -->
+<!-- 	        	<field name="project_id" position="after"> -->
+<!-- 	        		<field name="sequence_id" /> -->
+<!-- 	        	</field> -->
+<!-- 	      	</field> -->
+<!-- 	    </record>       -->
+	           	
+    </data>
+</openerp>

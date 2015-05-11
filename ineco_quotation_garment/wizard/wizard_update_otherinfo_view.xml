@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+
+        <record id="view_ineco_production_otherinfo_form" model="ir.ui.view">
+            <field name="name">ineco.production.otherinfo.form</field>
+            <field name="model">ineco.production.otherinfo</field>
+            <field name="arch" type="xml">
+                <form string="Update Other Information" version="7.0">
+                	<group>
+                		<group>
+                			<field name="bill_no" />
+                			<field name="bill_type" />
+                		</group>
+                		<group>
+                			<field name="worker" />
+                			<field name="bill_weight" />
+                		</group>
+                	</group>
+                    <p class="oe_grey">
+                        Please inform other information
+                    </p>
+                    <footer>
+                        <button string="Update" name="update_data" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ineco_production_otherinfo" model="ir.actions.act_window">
+            <field name="name">Update Other Info</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ineco.production.otherinfo</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <record model="ir.values" id="ineco_production_otherinfo_value">
+            <field name="name">Update Other Info</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_ineco_production_otherinfo'))" />
+            <field name="key">action</field>
+            <field name="model">mrp.production</field>
+        </record>   
+        
+    </data>
+</openerp>

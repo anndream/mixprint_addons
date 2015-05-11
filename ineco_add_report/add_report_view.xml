@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    	<wizard string="Add Print Button" model="ir.actions.report.xml" name="ineco.report_actions" menu="True" id="wizard_ineco_report_actions" />
+    	<wizard string="Remove Print Button" model="ir.actions.report.xml" name="ineco.report_actions_remove" menu="True" id="wizard_ineco_report_actions_remove" />
+	</data>
+</openerp>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <record id="view_invoice_mo_form" model="ir.ui.view">
+            <field name="name">mo.account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="fiscal_position" position="after">
+                	<field name="garment_order_no" />
+                	<field name="garment_order_other" />
+                	<field name="commission_relate" />
+                </field>   
+                
+                <field name="internal_number" position="after">
+                	<field name="other_invoice_no" />
+                	<field name="corrected" />
+                </field>          
+                
+                <xpath expr="//page[@string='Other Info']" position="after">
+                	<page string="Address">
+                		<group>
+                			<field name="saleorder_id" readonly="1" />
+                			<field name="partner_shipping_id" context="{'default_type':'delivery'}" attrs="{'readonly': [('state','!=','draft')]}" />
+                		</group>
+                		
+                	</page>
+                </xpath>                  
+                
+            </field>
+        </record>
+        
+        <record id="view_ineco_invoice_cancel_form" model="ir.ui.view">
+            <field name="name">cancel.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account_cancel.invoice_form_cancel_inherit"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='invoice_cancel']" position="replace">
+                    <button name="invoice_cancel" states="draft,proforma2,open" string="Cancel" groups="base.group_erp_manager,ineco_thai_account.group_account_cancel"/>
+                </xpath>
+                
+                <xpath expr="//button[@name='action_cancel_draft']" position="replace">
+                    <button name="action_cancel_draft" states="cancel" string="Reset to Draft" type="object" groups="base.group_erp_manager,ineco_thai_account.group_account_cancel"/>
+					<button name="button_open_payment" string="Open Payment" type="object" />
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_ineco_supplierinvoice_cancel_form" model="ir.ui.view">
+            <field name="name">cancel.supplier.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account_cancel.invoice_supplier_cancel_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='invoice_cancel']" position="replace">
+                    <button name="invoice_cancel" states="draft,proforma2,sale,open" string="Cancel" groups="base.group_erp_manager,ineco_thai_account.group_account_cancel"/>
+                </xpath>
+                <xpath expr="//button[@name='action_cancel_draft']" position="replace">
+					<button name="action_cancel_draft" states="cancel" string="Reset to Draft" type="object" groups="base.group_erp_manager,ineco_thai_account.group_account_cancel"/>
+                	<button name="button_open_payment" string="Open Supplier Payment" type="object" />
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_ineco_receipt_voucher_cancel_form" model="ir.ui.view">
+            <field name="name">cancel.receipt.voucher.form</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@string='Unreconcile']" position="replace">
+					<button name="cancel_voucher" string="Unreconcile" type="object" states="posted" groups="base.group_erp_manager,ineco_thai_account.group_account_cancel" confirm="Are you sure to unreconcile and cancel this record ?"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_ineco_payment_voucher_cancel_form" model="ir.ui.view">
+            <field name="name">cancel.payment.voucher.form</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@string='Unreconcile']" position="replace">
+					<button name="cancel_voucher" string="Unreconcile" type="object" states="posted" groups="base.group_erp_manager,ineco_thai_account.group_account_cancel" confirm="Are you sure to unreconcile and cancel this record ?"/>
+                </xpath>
+            </field>
+        </record>
+           
+        <record id="view_invoice_mo_tree" model="ir.ui.view">
+            <field name="name">mo.account.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="before">
+                	<field name="garment_order_no" />
+                	<field name="garment_order_other" />
+                	<field name="supplier_invoice_number" invisible="not context.get('set_visible',False)" />
+                </field>
+            </field>
+        </record>        
+        
+<!--         <record id="view_invoice_mo_tree" model="ir.ui.view">
+            <field name="name">mo.account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <field name="origin" position="before">
+                	<field name="garment_order_no" />
+                </field>
+            </field>
+        </record> -->
+        
+        <record id="view_mo_account_invoice_search" model="ir.ui.view">
+            <field name="name">mo.account.invoice.search</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <field name="period_id" position="after">
+                	<field name="garment_order_no" />
+                	<field name="garment_order_other" />
+                </field>
+                <filter name="unpaid" position="after">
+                	<filter name="depnomo" icon="terp-go-today" string="Deposit no Garment Order" domain="[('garment_order_no','=',False),('journal_id','in',[10,2]),('state','=','open')]" />			
+                	<filter name="commission_prepare" icon="terp-go-today" string="To Commission" 
+                		domain="[('commission_ready','!=',False),('commission_date','=',False)]" />
+                	<filter name="commission_pay" icon="terp-go-today" string="Pay Commission" 
+                		domain="[('commission_pay','=',False),('commission_date','!=',False),('commission_sale','!=',False)]" />
+                </filter>
+                <filter string="Status" position="after">
+                	<filter name="search_garment_order_no" icon="terp-go-today" string="Garment Order" domain="[]" context="{'group_by':'garment_order_no'}" />					
+                </filter>
+            </field>
+        </record>       
+      
+        <record model="ir.ui.view" id="view_ineco_account_payment_form2">
+	      	<field name="name">ineco.account.payment.form2</field>
+	      	<field name="model">account.voucher</field>
+	      	<field name="inherit_id" ref="ineco_thai_account.view_ineco_account_payment_form"/>
+	      	<field name="arch" type="xml">
+	      		<field name="bill_number" position="replace">
+	      			<div>
+	      				<label for="bill_number" string="Bill/Receipt No" />
+	      				<field name="bill_number" />
+	      				<button name="button_get_billnumber" type="object" string="Get Number" attrs="{'invisible': [('bill_number','!=',False)]}" />
+	      			</div>
+	      		</field>
+			</field>
+		</record>
+
+        <record model="ir.ui.view" id="view_mixprint_invoice_commission_form">
+	      	<field name="name">mixprint.invoice.commission.form</field>
+	      	<field name="model">account.invoice</field>
+	      	<field name="inherit_id" ref="ineco_thai_account.view_ineco_account_invoice_form"/>
+	      	<field name="arch" type="xml">
+	      		<field name="commission_sale" position="after">
+	      			<field name="commission_date" />
+	      		</field>
+			</field>
+		</record>
+				              
+    </data>
+</openerp>

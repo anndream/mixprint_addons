@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_sms_send_by_sale_order_form" model="ir.ui.view">
+            <field name="name">ineco.send.sms.saleorder.form</field>
+            <field name="model">sms.send.by.saleorder</field>
+            <field name="arch" type="xml">
+                <form string="Send SMS" version="7.0">
+                    <group>
+                        <field name="server_id" />
+                        <field name="phone" />
+                        <field name="message" />
+                    </group>
+                    <footer>
+                        <button name="send_sms" string="_Apply" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_sms_send_by_sale_order" model="ir.actions.act_window">
+            <field name="name">Send SMS</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sms.send.by.saleorder</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_sms_send_by_sale_order_form"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</openerp>
+

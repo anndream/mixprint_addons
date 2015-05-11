@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="1">
+	   	<record id="samba_location" model="ir.config_parameter">
+	        <field name="key">samba.location</field>
+	        <field name="value">file:///samba/share</field>
+	    </record>      		
+	</data>
+</openerp>

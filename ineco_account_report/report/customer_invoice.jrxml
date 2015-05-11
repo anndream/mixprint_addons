@@ -1,0 +1,787 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="42" bottomMargin="42">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="141"/>
+	<parameter name="IDS" class="java.lang.Object">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PIDS" class="java.util.List">
+		<defaultValueExpression><![CDATA[$P{IDS}.toList()]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+ ai.id as id,
+ ai.origin,
+ ai.number as invoice_no,
+ rp_ru.name as salesman,
+ rp_ru.mobile as salemobile,
+ --rp_ru1.name as saleadmin,
+ ai.date_invoice as date_invoice,
+ ai.date_due,
+ --ai.date_sale_order as sale_order_date,
+ rc.name as company_name,
+ rc.rml_header1 as company_address,
+ rc.rml_footer as company_phoneFax,
+ rp.id as customer_id,
+  case when rp.parent_id is null then
+	rp.name
+     else
+        (select name from res_partner where id = rp.parent_id)
+     end as customer_name,
+   case when rp.parent_id is null then
+	''
+     else
+	rp.name
+     end as contact_name,
+ rp.street as customer_address,
+ rp.street2 as customer_address2,
+ rcs.name as country_name,
+ rp.zip as customer_zip,
+ rp.phone as customer_phone,
+ rp.fax as customer_fax,
+ rp.email as customer_email,
+ rp.city,
+ --rp_shipping.id as shipping_id,
+ --rp_shipping.street as shipping_address,
+ --rp_shipping.street2 as shipping_address2,
+ --rp_shipping.zip as shipping_zip,
+ --rp_shipping.phone as shipping_phone,
+ --rp_shipping.fax as shipping_fax,
+ --rp_shipping.email as shipping_email,
+-- concat('[',pp.default_code,']') as default_code,
+ position(']'in ail.name) as sale_position,
+ length(ail.name) as sale_length,
+ ail.id as ail_id,
+ pp.name_template as item_name,
+ ail.name as sale_name,
+substring(ail.name from position('['in ail.name) for position(']'in ail.name)) as default_code,
+case when position(']'in ail.name) = 0 then
+	substring(ail.name from (position(']'in ail.name)) for length(ail.name))
+     else substring(ail.name from (position(']'in ail.name)+2) for length(ail.name)) end as line_note,
+ ail.quantity as uom_qty,
+ ail.discount as discount,
+ pu.name as uom,
+ ail.price_unit as price_unit,
+ ROUND((coalesce(ail.price_unit,0)* coalesce(ail.quantity,0)),2) as total_price,
+ ai.amount_untaxed as untaxed,
+ ai.amount_tax as tax,
+ round(ai.amount_total,2) as total,
+ ai.comment as note,
+ ai.name as client_order_ref,
+ apt.note as payment_term,
+ ai.state,
+ --aaa.name as project_name,
+ --aaa.code as project_code,
+ --dt.name as delivery_type,
+ bahttext(ai.amount_total) as bahttext,
+ rp.pid as taxid,
+ rp.tax_detail,
+  --Company Field
+  rc.name as company_name,
+  replace(coalesce(rp2.street,'') || ' ' ||
+	coalesce(rp2.street2,'') || ' ' ||
+	coalesce(rp2.city,'') || ' ' ||
+	coalesce(rcs.name,'') || ' ' ||
+	coalesce(rp2.zip,''), '  ',' ') as company_address_street,
+  'โทร' || ' : ' || rp2.phone || ' ' ||
+  'แฟ็กซ์' || ' : ' ||rp2.fax  as company_address_street2,
+  'อีเมล์' || ' : ' ||rp2.email  || ' ' ||
+  'เว็บไซด์' || ' : ' ||rp2.website as company_address_street3,
+  'เลขประจำตัวผู้เสียภาษี' || ' : ' ||rp2.vat as company_tax_id,
+ (select value || '/web/binary/company_logo?dbname=' || current_database() from ir_config_parameter
+where key = 'web.base.url') as company_logo
+--ai.delivery_date
+from account_invoice ai
+left Join res_company rc on rc.id = ai.company_id
+left Join res_partner rp on rp.id = ai.partner_id
+--left join res_partner rp_shipping on ai.partner_shipping_id = rp_shipping.id
+left join res_users ru on ai.user_id = ru.id
+left join res_partner rp_ru on ru.partner_id = rp_ru.id
+left Join account_invoice_line ail on ail.invoice_id = ai.id
+left Join product_uom pu on  pu.id = ail.uos_id
+left join product_product pp on ail.product_id = pp.id
+left join account_payment_term apt on ai.payment_term = apt.id
+left join ir_property ip on ai.partner_id = to_number(SUBSTRING(ip.res_id, 'Y*([0-9]{1,10})'),'9999999999') and ip.name = 'property_payment_term'
+--left join account_analytic_account aaa on aaa.id = ai.project_id
+left join res_country_state rcs on rp.state_id = rcs.id
+--left join ineco_delivery_type dt on ai.ineco_delivery_type_id = dt.id
+
+left join res_partner rp2 on rp2.id = rc.partner_id
+
+where $X{IN, ai.id, PIDS}
+order by ail.sequence,ail.id]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer"/>
+	<field name="origin" class="java.lang.String">
+		<fieldDescription><![CDATA[Source Document]]></fieldDescription>
+	</field>
+	<field name="invoice_no" class="java.lang.String"/>
+	<field name="salesman" class="java.lang.String"/>
+	<field name="salemobile" class="java.lang.String"/>
+	<field name="date_invoice" class="java.sql.Date">
+		<fieldDescription><![CDATA[Invoice Date]]></fieldDescription>
+	</field>
+	<field name="date_due" class="java.sql.Date">
+		<fieldDescription><![CDATA[Due Date]]></fieldDescription>
+	</field>
+	<field name="company_name" class="java.lang.String"/>
+	<field name="company_address" class="java.lang.String"/>
+	<field name="company_phonefax" class="java.lang.String"/>
+	<field name="customer_id" class="java.lang.Integer"/>
+	<field name="customer_name" class="java.lang.String"/>
+	<field name="contact_name" class="java.lang.String"/>
+	<field name="customer_address" class="java.lang.String"/>
+	<field name="customer_address2" class="java.lang.String"/>
+	<field name="country_name" class="java.lang.String"/>
+	<field name="customer_zip" class="java.lang.String"/>
+	<field name="customer_phone" class="java.lang.String"/>
+	<field name="customer_fax" class="java.lang.String"/>
+	<field name="customer_email" class="java.lang.String"/>
+	<field name="city" class="java.lang.String">
+		<fieldDescription><![CDATA[City]]></fieldDescription>
+	</field>
+	<field name="sale_position" class="java.lang.Integer"/>
+	<field name="sale_length" class="java.lang.Integer"/>
+	<field name="ail_id" class="java.lang.Integer"/>
+	<field name="item_name" class="java.lang.String"/>
+	<field name="sale_name" class="java.lang.String"/>
+	<field name="default_code" class="java.lang.String">
+		<fieldDescription><![CDATA[Internal Reference]]></fieldDescription>
+	</field>
+	<field name="line_note" class="java.lang.String"/>
+	<field name="uom_qty" class="java.math.BigDecimal"/>
+	<field name="discount" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Discount (%)]]></fieldDescription>
+	</field>
+	<field name="uom" class="java.lang.String"/>
+	<field name="price_unit" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[Unit Price]]></fieldDescription>
+	</field>
+	<field name="total_price" class="java.math.BigDecimal"/>
+	<field name="untaxed" class="java.math.BigDecimal"/>
+	<field name="tax" class="java.math.BigDecimal"/>
+	<field name="total" class="java.math.BigDecimal"/>
+	<field name="note" class="java.lang.String">
+		<fieldDescription><![CDATA[Internal Notes]]></fieldDescription>
+	</field>
+	<field name="client_order_ref" class="java.lang.String">
+		<fieldDescription><![CDATA[Customer Reference]]></fieldDescription>
+	</field>
+	<field name="payment_term" class="java.lang.String">
+		<fieldDescription><![CDATA[Payment Terms]]></fieldDescription>
+	</field>
+	<field name="state" class="java.lang.String"/>
+	<field name="bahttext" class="java.lang.String"/>
+	<field name="taxid" class="java.lang.String"/>
+	<field name="tax_detail" class="java.lang.String">
+		<fieldDescription><![CDATA[Tax Detail]]></fieldDescription>
+	</field>
+	<field name="company_address_street" class="java.lang.String"/>
+	<field name="company_address_street2" class="java.lang.String"/>
+	<field name="company_address_street3" class="java.lang.String"/>
+	<field name="company_tax_id" class="java.lang.String"/>
+	<field name="company_logo" class="java.lang.String"/>
+	<variable name="recno" class="java.lang.Integer" resetType="Group" resetGroup="quotation" calculation="Count">
+		<variableExpression><![CDATA[$V{COLUMN_COUNT}]]></variableExpression>
+	</variable>
+	<group name="quotation" isStartNewPage="true" isResetPageNumber="true" isReprintHeaderOnEachPage="true" footerPosition="StackAtBottom">
+		<groupExpression><![CDATA[$F{invoice_no}]]></groupExpression>
+		<groupHeader>
+			<band height="138">
+				<staticText>
+					<reportElement x="29" y="122" width="272" height="16"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[รายละเอียด]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="432" y="10" width="122" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{invoice_no}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="287" y="58" width="68" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{customer_fax}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="302" y="122" width="88" height="16"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[จำนวน]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="391" y="122" width="54" height="16"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[ราคา/หน่วย]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="490" y="122" width="65" height="16"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[จำนวนเงิน]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="58" width="41" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[โทรศัพท์ :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="223" y="58" width="63" height="16"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[โทรสาร :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="26" width="40" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[ที่อยู่ :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="362" y="74" width="68" height="16"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[กำหนดชำระ :]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="43" y="58" width="180" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{customer_phone}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="43" y="10" width="312" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{customer_name}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="43" y="26" width="312" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{customer_address} + ' ' + $F{customer_address2}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="1" y="122" width="30" height="16"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[ลำดับ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="362" y="42" width="68" height="16"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[ใบสั่งขาย :]]></text>
+				</staticText>
+				<textField pattern="" isBlankWhenNull="true">
+					<reportElement x="432" y="42" width="122" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{origin}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="223" y="42" width="63" height="16"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[รหัสไปรษณีย์ :]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="287" y="42" width="68" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{customer_zip}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="131" y="42" width="92" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{country_name}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="43" y="42" width="88" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{city}]]></textFieldExpression>
+				</textField>
+				<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+					<reportElement x="432" y="26" width="122" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{date_invoice}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="90" width="41" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[ผู้ติดต่อ :]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="43" y="90" width="180" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{contact_name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true">
+					<reportElement x="432" y="74" width="122" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.util.Date"><![CDATA[$F{date_due}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="432" y="58" width="122" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{client_order_ref}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="362" y="58" width="68" height="16"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[อ้างถึง :]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="43" y="74" width="113" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{taxid}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="0" y="74" width="41" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[รหัสภาษี :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="156" y="74" width="29" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[สาขา :]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="185" y="74" width="170" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{tax_detail}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="445" y="122" width="45" height="16"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[ส่วนลด]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="10" width="40" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[ลูกค้า :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="362" y="10" width="68" height="16"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[เลขที่ :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="362" y="26" width="68" height="16"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+					</textElement>
+					<text><![CDATA[วันที่ :]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band height="758" splitType="Stretch">
+			<rectangle radius="5">
+				<reportElement mode="Transparent" x="309" y="675" width="164" height="73"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle radius="5">
+				<reportElement mode="Transparent" x="78" y="675" width="164" height="73"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="0" y="576" width="371" height="18"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="222" width="555" height="352"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="32" y="222" width="269" height="352"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="393" y="222" width="52" height="352"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="222" width="555" height="18" backcolor="#CCCCCC"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="386" y="577" width="99" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ราคารวม :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="386" y="595" width="99" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ภาษีมูลค่าเพิ่ม 7% :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="386" y="613" width="99" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[รวมเงินทั้งสิ้น :]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="490" y="577" width="61" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{untaxed}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="490" y="595" width="61" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{tax}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="490" y="613" width="61" height="18"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{total}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement mode="Transparent" x="490" y="222" width="65" height="409"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="490" y="574" width="65" height="20"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement mode="Transparent" x="490" y="594" width="65" height="20"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="1" y="298" width="554" height="115" forecolor="#FF0000"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Norasi" size="60" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[($F{state}.toString() == "cancel") ? "ยกเลิก" : ""]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="78" y="734" width="164" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[............../..................../...............]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="675" width="164" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ผู้แจ้งหนี้]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="309" y="723" width="164" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[...................................................]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="78" y="691" width="164" height="32"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="309" y="734" width="164" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[............../..................../...............]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="309" y="675" width="164" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ผู้รับแจ้งหนี้ (ลูกค้า)]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="309" y="691" width="164" height="32"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="32" y="558" width="269" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[E & O.E. ผิดตกยกเว้น]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="723" width="164" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[นางสาวจันทนา กิจประชุม]]></text>
+			</staticText>
+		</band>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="102" splitType="Stretch">
+			<textField>
+				<reportElement x="490" y="59" width="39" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{PAGE_NUMBER}+" /"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="529" y="59" width="25" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" "+$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="145" y="0" width="409" height="30"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Norasi" size="16" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_name}]]></textFieldExpression>
+			</textField>
+			<image onErrorType="Blank">
+				<reportElement x="6" y="11" width="132" height="60"/>
+				<imageExpression class="java.lang.String"><![CDATA[$F{company_logo}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="321" y="41" width="233" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Norasi" size="8" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_address_street3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="147" y="41" width="174" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Norasi" size="8" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_address_street2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="147" y="28" width="407" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Norasi" size="8" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_address_street}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="147" y="55" width="174" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Norasi" size="8" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{company_tax_id}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="69" width="554" height="32"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Norasi" size="16" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[ใบแจ้งหนี้ / Invoice]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="-1" y="0" width="30" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$V{recno}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="34" y="0" width="267" height="16" isRemoveLineWhenBlank="true" isPrintInFirstWholeBand="true">
+					<printWhenExpression><![CDATA[$F{line_note} != '-']]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{sale_name}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="302" y="0" width="42" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{uom_qty}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="346" y="0" width="44" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{uom}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="390" y="0" width="51" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{price_unit}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement x="490" y="0" width="61" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{total_price}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00 %" isBlankWhenNull="true">
+				<reportElement x="445" y="0" width="40" height="16"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{discount}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="181" splitType="Stretch">
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="80" y="19" width="94" height="16"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Norasi" size="8" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{payment_term}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="1" y="19" width="79" height="16"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[เงื่อนไขการชำระเงิน :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="2" y="2" width="353" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Norasi" size="8" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{bahttext}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="1" y="35" width="79" height="16"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[หมายเหตุ :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="1" y="51" width="389" height="16"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Norasi" size="8" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{note}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="175" y="19" width="218" height="16"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Norasi" size="9" isBold="true" pdfFontName="/usr/share/fonts/truetype/tlwg/Norasi.ttf" pdfEncoding="Identity-H" isPdfEmbedded="true"/>
+				</textElement>
+				<text><![CDATA[กำหนดวันรับเช็ค ........./........../...........  เวลา ......................]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

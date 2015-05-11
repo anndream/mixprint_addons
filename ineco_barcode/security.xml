@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data noupdate="0">
+
+	    <record id="group_ineco_barcode" model="res.groups">
+	        <field name="name">Barcode</field>
+	        <field name="category_id" ref="base.module_category_hidden"/>
+	    </record>
+	    	
+	</data>
+</openerp>

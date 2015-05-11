@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+      <!-- mrp Menu -->
+      
+       <menuitem name="Account Report"
+            id="menu_ineco_account_report"
+            parent="account.menu_finance_reports" sequence="30" />
+       
+            
+       <!--  Jasper Account Report Tree -->
+       <record model="ir.ui.view" id="view_ineco_account_report_tree">
+            <field name="name">ineco.account.report.tree</field>
+            <field name="model">ineco.jasper.report</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Jasper Report">
+					<field name="label" />
+					<button name="browse_report" string="Run" type="object" icon="gtk-ok"/>										
+				</tree>
+            </field>
+        </record>
+
+        <!--  Jasper Account Report Search -->
+       <record model="ir.ui.view" id="view_ineco_account_report_search">
+            <field name="name">ineco.account.report.search</field>
+            <field name="model">ineco.jasper.report</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="MRP Report">
+					<field name="label" />
+              	</search>
+            </field>
+        </record>
+        
+        <!-- Jasper Account Report Action  -->
+        <record model="ir.actions.act_window" id="action_view_ineco_account_report">
+            <field name="name">Account Report</field>
+            <field name="res_model">ineco.jasper.report</field>
+            <field name="view_type">form</field>
+            <field name="domain">['|',('module','=','account'),('module','=',False)]</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_account_report_tree"/>            
+        </record>
+       
+      	<menuitem name="Account Reports"
+            id="menu_ineco_accont_report_list"
+            parent="menu_ineco_account_report"
+            action="action_view_ineco_account_report" 
+            sequence="10" />
+	    	    	    	    
+	</data>
+</openerp>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="0">
+	    
+	    <record id="base.group_sale_operator" model="res.groups">
+	        <field name="name">Operator</field>
+	        <field name="category_id" ref="base.module_category_sales_management"/>
+	    </record>    
+	    
+	    <record model='ir.ui.menu' id='crm.menu_crm_case_phone'>
+	        <field name="groups_id" eval="[(4,ref('base.group_sale_operator'))]"/>
+	    </record>
+	    
+	    <record model='ir.ui.menu' id='base.menu_base_partner'>
+	        <field name="groups_id" eval="[(4,ref('base.group_sale_operator'))]"/>
+	    </record>
+
+	    <record model='ir.ui.menu' id='crm.menu_crm_leads'>
+	        <field name="groups_id" eval="[(4,ref('base.group_sale_salesman'))]"/>
+	    </record>
+	    	    
+	    <record model='ir.ui.menu' id='crm.menu_crm_opportunities'>
+	        <field name="groups_id" eval="[(4,ref('base.group_sale_salesman'))]"/>
+	    </record>
+	    
+	    <record model='ir.ui.menu' id='base.menu_base_config'>
+	        <field name="groups_id" eval="[(4,ref('base.group_sale_manager'))]"/>
+	    </record>
+	    	    
+   	    <record model='ir.ui.menu' id='base.menu_sales_configuration_misc'>
+	        <field name="groups_id" eval="[(4,ref('base.group_sale_manager'))]"/>
+	    </record>
+	    
+   	    <record model='ir.ui.menu' id='crm.menu_crm_case_phone_outbound'>
+	        <field name="groups_id" eval="[(4,ref('base.group_sale_manager'))]"/>
+	    </record>   	    	    
+
+   	    <record id="secure_ineco_crm_reason" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_crm_reason" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="0"/>
+	    </record>       
+   	    	    	    	    	    
+	</data>
+</openerp>

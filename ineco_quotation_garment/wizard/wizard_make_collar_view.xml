@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+
+        <record id="view_ineco_production_makecollar_form" model="ir.ui.view">
+            <field name="name">ineco.production.make.collar.form</field>
+            <field name="model">ineco.production.make.collar</field>
+            <field name="arch" type="xml">
+                <form string="Make Collar" version="7.0">
+                	<group>
+                		<group>
+                			
+                		</group>
+                		<group>
+                		</group>
+                	</group>
+                    <p class="oe_grey">
+                        Please click start/finish button
+                    </p>
+                    <footer>
+                        <button string="Start" name="update_start" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Finish" name="update_finish" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ineco_production_makecollar" model="ir.actions.act_window">
+            <field name="name">Make Collar</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ineco.production.make.collar</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <record model="ir.values" id="ineco_production_makecollar_value">
+            <field name="name">Make Collar</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_ineco_production_makecollar'))" />
+            <field name="key">action</field>
+            <field name="model">mrp.production</field>
+        </record>   
+        
+    </data>
+</openerp>

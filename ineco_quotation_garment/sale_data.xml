@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="sequence_sample_order_type" model="ir.sequence.type">
+            <field name="name">Sampling Order</field>
+            <field name="code">ineco.sampling.order</field>
+        </record>
+        
+        <record id="sequence_sample_order" model="ir.sequence">
+            <field name="name">Sampling Order</field>
+            <field name="code">ineco.sampling.order</field>
+            <field name="prefix">SP56%(month)s-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="sequence_garment_order_type" model="ir.sequence.type">
+            <field name="name">Garment Order</field>
+            <field name="code">ineco.garment.order</field>
+        </record>
+        
+        <record id="sequence_garment_order" model="ir.sequence">
+            <field name="name">Garment Order</field>
+            <field name="code">ineco.garment.order</field>
+            <field name="prefix">MO56-</field>
+            <field name="padding">4</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+    </data>
+</openerp>

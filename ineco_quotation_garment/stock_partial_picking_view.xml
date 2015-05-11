@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+<!--         <record id="ineco_partial_picking_line_list" model="ir.ui.view"> -->
+<!--         	<field name="inherit_id" ref="stock.stock_partial_picking_line_list"/> -->
+<!--             <field name="name">ineco.partial.picking.line.list</field> -->
+<!--             <field name="model">stock.partial.picking.line</field> -->
+<!--             <field name="arch" type="xml"> -->
+<!--             	<field name="product_id" position="after"> -->
+<!--                     <field name="note" /> -->
+<!--             	</field> -->
+<!--             </field> -->
+<!--         </record> -->
+
+        <record id="ineco_partial_picking_form" model="ir.ui.view">
+        	<field name="inherit_id" ref="stock.stock_partial_picking_form"/>
+            <field name="name">ineco.partial.picking.form</field>
+            <field name="model">stock.partial.picking</field>
+            <field name="arch" type="xml">
+            	<xpath expr="/form/field[@name='move_ids']/tree/field[@name='product_id']" position="after" >
+            		<field name="color_id" readonly="1" />
+            		<field name="note" readonly="1" />
+            		<field name="gender_id" readonly="1" />
+            		<field name="size_id" readonly="1" />
+            	</xpath>
+			</field>
+		</record>
+		
+    </data>
+</openerp>

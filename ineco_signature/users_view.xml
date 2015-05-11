@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<record id="view_ineco_signature2_form" model="ir.ui.view">
+            <field name="name">ineco.signature.res.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+            	<field name="signature" position="after">
+            		<field name="signature2" />
+            	</field>
+            </field>
+        </record>
+    </data>
+</openerp>

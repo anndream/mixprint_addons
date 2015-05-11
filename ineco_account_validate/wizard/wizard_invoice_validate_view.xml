@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+
+        <record id="account_voucher_confirm_view" model="ir.ui.view">
+            <field name="name">account.ineco.voucher.confirm.form</field>
+            <field name="model">account.voucher.confirm</field>
+            <field name="arch" type="xml">
+                <form string="Confirm Draft Voucher" version="7.0">
+                    <p class="oe_grey">
+                        Once draft voucher are confirmed, you will not be able
+                        to modify them. The vouchers will receive a unique
+                        number and journal items will be created in your chart
+                        of accounts.
+                    </p>
+                    <footer>
+                        <button string="Confirm Voucher" name="voucher_confirm" type="object" default_focus="1" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_account_voucher_confirm"
+            multi="True"
+            key2="client_action_multi" 
+            name="Confirm Draft Voucher"
+            res_model="account.voucher.confirm" 
+            src_model="account.voucher"
+            view_mode="form" 
+            target="new" 
+            view_type="form" />
+
+        <record id="account_entry_confirm_view" model="ir.ui.view">
+            <field name="name">account.ineco.entry.confirm.form</field>
+            <field name="model">account.move.confirm</field>
+            <field name="arch" type="xml">
+                <form string="Confirm Draft Entry" version="7.0">
+                    <p class="oe_grey">
+                        Once draft entry are confirmed, you will not be able
+                        to modify them. The entry will receive a unique
+                        number and journal items will be created in your chart
+                        of accounts.
+                    </p>
+                    <footer>
+                        <button string="Confirm Entry" name="entry_confirm" type="object" default_focus="1" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window id="action_account_move_confirm"
+            multi="True"
+            key2="client_action_multi" name="Confirm Draft Entry"
+            res_model="account.move.confirm" src_model="account.move"
+            view_mode="form" target="new" view_type="form" />
+            
+        </data>
+   </openerp>

@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<openerp>
+     <data>
+  
+        <!-- CRM dashboard -->
+        <record model="ir.ui.view" id="view_ineco_crm_dashboard_graph">
+            <field name="name">Opportunities By Stage - Graph</field>
+            <field name="model">ineco.crm.dashboard</field>
+            <field name="arch" type="xml">
+                <graph string="Opportunities By Stage" type="bar">
+                    <field name="state"/>
+                    <field name="planned_revenue" operator="+"/>
+                </graph>
+            </field>
+        </record>
+        
+        <!-- Planned Revenue By User line graph--> 
+        <record model="ir.ui.view" id="view_ineco_crm_dashboard_user_stage_graph">
+            <field name="name">Opportunities By Stage Per User - Graph</field>
+            <field name="model">ineco.crm.dashboard</field>
+            <field name="arch" type="xml">
+                <graph string="Opportunities By Stage" type="bar">
+                    <field name="state"/>
+                    <field name="planned_revenue" operator="+"/>
+                    <field name="saleman_id" group="True"/>
+                    
+                </graph>
+            </field>
+        </record>
+                
+        <record model="ir.ui.view" id="view_ineco_crm_dashboard_year_graph">
+            <field name="name">test Opportunities By year - Graph</field>
+            <field name="model">ineco.crm.dashboard.year</field>
+            <field name="arch" type="xml">
+                <graph string="Opportunities By year" type="bar">
+                    <field name="month"/>
+                    <field name="planned_revenue" operator="+"/>
+                    <field name="saleman_id" group="True"/>                 
+                </graph>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="act_ineco_crm_dashboard_stage">
+            <field name="name">Opportunities By Stage</field>
+            <field name="res_model">ineco.crm.dashboard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph,tree,form</field>
+            <field name="view_id" ref="view_ineco_crm_dashboard_graph"/>
+        </record>
+
+       <!--Planned Revenue By User line graph action-->
+        <record model="ir.actions.act_window" id="act_ineco_crm_dashboard_stage_user">
+            <field name="name">Planned Revenue By User and Stage</field>
+            <field name="res_model">ineco.crm.dashboard</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph,tree,form</field>
+            <field name="view_id" ref="view_ineco_crm_dashboard_user_stage_graph"/>
+        </record>
+
+       <!--test Planned Revenue By User line graph action-->
+        <record model="ir.actions.act_window" id="act_ineco_crm_dashboard_year">
+            <field name="name">test Planned Revenue By User and Stage</field>
+            <field name="res_model">ineco.crm.dashboard.year</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph,tree,form</field>
+            <field name="view_id" ref="view_ineco_crm_dashboard_year_graph"/>
+            <field name="domain">[('stage_id','=',6)]</field>
+        </record>        
+        
+ 
+      <record model="ir.ui.view" id="board_ineco_crm_dashboard_form">
+            <field name="name">CRM - Statistical Dashboard Form</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Statistics Dashboard" version="7.0">
+                    <board style="1">
+                        <column>
+                            <action string="Current Opportunities of month" name="%(act_ineco_crm_dashboard_stage)d"/>
+                            <!-- <action string="Opportunities by Stage" name="%(act_ineco_crm_dashboard_stage_user)d"/> -->
+                            <action string="Won Opportunities of year" name="%(act_ineco_crm_dashboard_year)d"/>
+                        </column>                      
+                    </board>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="act_ineco_crm_dashboard_form">
+            <field name="name">My Dashboard</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="usage">menu</field>
+            <field name="view_id" ref="board_ineco_crm_dashboard_form"/>
+        </record>
+        
+        <menuitem
+        	id="menu_ineco_crm_dashboard"
+        	parent="base.menu_sales"
+        	name="Dashboard"
+        	sequence="0" />
+
+        <menuitem
+            id="menu_ineco_crm_my_dashboard"
+            parent="menu_ineco_crm_dashboard"
+            action="act_ineco_crm_dashboard_form"
+            sequence="10"
+            /> 
+
+        <record id="action_ineco_crm_home_page" model="ir.actions.client">
+            <field name="name">Target</field>
+            <field name="tag">ineco_dashboard.homepage</field>
+        </record>
+
+        <menuitem id="menu_ineco_crm_my_target" 
+        	name="Summary" 
+        	parent="menu_ineco_crm_dashboard"
+        	sequence="1"
+            action="action_ineco_crm_home_page"/>
+
+	    <menuitem name="Dashboard"
+	        id="menu_ineco_dashboard"
+	        parent="ineco_jasper_report.menu_ineco" sequence="20" />
+
+        <!--  Jasper Dashboard Story-->
+        <record model="ir.ui.view" id="view_ineco_dashboard_story_tree">
+            <field name="name">ineco.dashboard.story.tree</field>
+            <field name="model">ineco.dashboard.story</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Dashboard Story">
+                	<field name="server" />
+                	<field name="port" />
+                    <field name="name"/>
+                    <field name="username" />
+                    <field name="password" />
+                    <field name="type"/>
+              	</tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_ineco_dashboard_story_search">
+            <field name="name">ineco.dashboard.story.search</field>
+            <field name="model">ineco.dashboard.story</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <search string="Dashboard Story">
+                    <field name="name"/>
+                    <field name="server" />
+                    <field name="port" />
+                    <field name="type"/>
+              	</search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_ineco_dashboard_story_form">
+            <field name="name">ineco.dashboard.story.form</field>
+            <field name="model">ineco.dashboard.story</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard Story" version="7.0">
+                	<group>
+                		<group>
+		                    <field name="name"/>
+		                    <field name="server" />
+		                    <field name="port" />
+		                    <field name="type"/>
+                		</group>
+                		<group>
+		                    <field name="username" />
+		                    <field name="password" />
+                		</group>
+                	</group>
+              	</form>
+            </field>
+        </record>
+        
+        <record model="ir.actions.act_window" id="action_ineco_dashboard_story">
+            <field name="name">Dashboard Story</field>
+            <field name="res_model">ineco.dashboard.story</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Dashboard Story"
+            id="menu_ineco_dashboard_story"
+            parent="menu_ineco_dashboard"
+            action="action_ineco_dashboard_story" />
+        
+    </data>
+</openerp>

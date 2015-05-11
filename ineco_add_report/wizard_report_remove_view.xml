@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_wizard_ineco_report_remove" model="ir.ui.view">
+            <field name="name">Remove Report Button</field>
+            <field name="model">wizard.ineco.report.remove</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+            	<form string="Remove Button">
+                    <group colspan="4">
+                        <group colspan="4" states="choose">
+                            <field invisible="1" name="state"/>
+                        </group>
+                        <group colspan="4" states="get">
+                            <separator string="Finished" colspan="4"/>
+                        </group>
+                    </group>
+                    <group colspan="8" col="8" states="choose">
+                        <separator string="" colspan="8"/>
+                        <button icon="gtk-ok" name="do_action" string="_Execute" type="object"/>
+                        <button icon="gtk-cancel" name="act_cancel" special="cancel" string="_Close" type="object"/>
+                    </group>
+                    <group colspan="8" col="8" states="get">
+                        <separator string="" colspan="8"/>
+                        <button icon="gtk-close" name="act_destroy" special="cancel" string="_Close" type="object"/>
+                    </group>
+            	</form>
+            </field>
+        </record>
+
+        <record id="action_wizard_ineco_report_remove" model="ir.actions.act_window">
+            <field name="name">Remove Report Button</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">wizard.ineco.report.remove</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <act_window name="Remove Print Button (Ineco)"
+            res_model="wizard.ineco.report.remove"
+            src_model="ir.actions.report.xml"
+            view_mode="form"
+            target="new"
+            key2="client_action_multi"
+            id="action_window_wizard_ineco_report_remove"/>
+
+    </data>
+</openerp>

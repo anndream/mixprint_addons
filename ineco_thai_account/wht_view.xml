@@ -1,0 +1,438 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+    	<menuitem name="Thai Tax" parent="account.menu_finance" 
+    		id="menu_ineco_account" sequence="11"  />	     
+    		
+    	<menuitem name="WHT" parent="menu_ineco_account"
+    		id="menu_ineco_wht" sequence="1" />
+    	
+        <!-- WHT Type -->
+    	<record model="ir.ui.view" id="ineco_wht_type_form">
+      		<field name="name">ineco.wht.type.form</field>
+      		<field name="model">ineco.wht.type</field>
+      		<field name="arch" type="xml">
+	        	<form string="WHT Type" version="7.0">
+	        	    <header>
+	        	    </header>
+	        	    <sheet>	
+	        	    	<label for="seq" string="Sequence" />
+	        	    	<field name="seq" />
+	        	    	<label for="name" string="Description" />
+	        	    	<field name="name" />
+	        	    	<label for="seq" string="Printed" />
+	        	    	<field name="printed"/>	   
+	        	    </sheet>
+	        	    <!-- 
+	                <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+	                    <field name="message_ids" widget="mail_thread" placeholder="Share a message..."/>
+	                </div>
+	                 -->
+	        	</form>
+
+      		</field>
+    	</record>
+    	 
+    	<record model="ir.ui.view" id="ineco_wht_type_tree">
+      		<field name="name">ineco.wht.type.tree</field>
+      		<field name="model">ineco.wht.type</field>
+      		<field name="arch" type="xml">
+		        <tree string="WHT Type">
+		        	<field name="seq" />
+		            <field name="name"/>
+		            <field name="printed"/>	            
+		        </tree>
+      		</field>
+    	</record>
+
+	    <record model="ir.ui.view" id="ineco_wht_type_filter">
+	      	<field name="name">ineco.wht.type.search</field>
+	      	<field name="model">ineco.wht.type</field>
+	      	<field name="arch" type="xml">
+	        	<search string="WHT Type">
+	        		<field name="seq" />
+	          		<field name="name" />
+	          		<field name="printed" />
+	        	</search>
+	      	</field>
+	    </record>
+    		
+	    <record model="ir.actions.act_window" id="ineco_wht_type_action">
+	        <field name="name">WHT Type</field>
+	        <field name="res_model">ineco.wht.type</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>	   
+
+    	<menuitem name="WHT Type" 
+    		parent="menu_ineco_account" 
+    		id="menu_ineco_wht_type" 
+    		sequence="100" 
+    		action="ineco_wht_type_action"/>
+    		
+        <!-- WHT -->
+    	<record model="ir.ui.view" id="ineco_wht_form">
+      		<field name="name">ineco.wht.form</field>
+      		<field name="model">ineco.wht</field>
+      		<field name="arch" type="xml">
+	        	<form string="With holding tax" version="7.0">
+	        	    <header>
+                        <button name="action_done" string="Done" type="object" states="draft" class="oe_highlight" />
+                        <button name="action_cancel" string="Cancel" type="object" states="draft,done" />
+                        <button name="action_draft" string="Set Draft" type="object" states="cancel,done" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,sent,invoiced,done" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
+	        	    </header>
+	        	    <sheet>	
+	                    <h1>
+	                    	<label string="No." for="name" />
+		        	    	<field name="name" />
+	                    </h1>	        	    
+	        	    	<group>
+		        	    	<group>
+	                    		<field name="partner_id" class="oe_inline" on_change="on_change_partner(partner_id)"/>
+		        	    		<field name="date_doc" />
+		        	    		<field name="company_id" />
+		        	    		<field name="seq" />
+		        	    	</group>
+		        	    	<group>
+		        	    		<field name="wht_type" required="1" />
+		        	    		<field name="wht_kind" required="1" />
+		        	    		<field name="wht_payment" required="1" />
+		        	    		<field name="account_id" required="1" domain="[('account_wht','=',1)] "/>
+		        	    	</group>	        	    		
+	        	    	</group>
+						<notebook>
+							<page string="Detail">
+								<field name="line_ids" context="{'default_date_doc':date_doc,'default_wht_type_id':15}">
+									<tree string="WHT Lines">
+										<field name="date_doc" />
+										<field name="wht_type_id" />
+										<field name="percent" />
+										<field name="base_amount" />
+										<field name="tax" />
+										<field name="note" />
+									</tree>
+									<form string="WHT Lines" version="7.0">
+										<group>
+											<group>
+												<field name="date_doc" />
+												<field name="wht_type_id" />
+												<field name="note" />
+											</group>
+											<group>
+												<field name="percent" />
+												<field name="base_amount" />
+												<field name="tax" readonly="1" />
+											</group>
+										</group>
+									</form>
+								</field>
+								<group>
+									<group>
+										<field name="base_amount" readonly="1" />
+									</group>
+									<group>
+										<field name="tax" readonly="1" />
+									</group>																	
+								</group>
+							</page>
+							<page string="Note">
+								<field name="note" nolabel="1"/>
+							</page>
+						</notebook>	        	    	
+	        	    </sheet>
+	                <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+	                    <field name="message_ids" widget="mail_thread" placeholder="Share a message..."/>
+	                </div>
+	        	</form>
+
+      		</field>
+    	</record>
+    		
+    	<record model="ir.ui.view" id="ineco_wht_tree">
+      		<field name="name">ineco.wht.tree</field>
+      		<field name="model">ineco.wht</field>
+      		<field name="arch" type="xml">
+		        <tree string="With holding tax">
+		        	<field name="seq" />
+		        	<field name="name" />		        	
+		        	<field name="date_doc" />
+		        	<field name="partner_id" />
+		        	<field name="wht_type" />
+		       		<field name="wht_kind" />
+<!-- 		        	<field name="wht_payment" /> -->
+	        	  	<field name="base_amount" sum="Total"/>
+	        	  	<field name="tax" />
+		        </tree>
+      		</field>
+    	</record>
+
+    	<record model="ir.ui.view" id="ineco_wht_search">
+      		<field name="name">ineco.wht.search</field>
+      		<field name="model">ineco.wht</field>
+      		<field name="arch" type="xml">
+		        <search string="With holding tax">
+		        	<field name="name" />		
+		        	<field name="date_doc" />        	
+		        	<field name="partner_id" />
+		        	<field name="wht_type" />
+		       		<field name="wht_kind" />
+	        	  	<field name="base_amount" />
+	        	  	<field name="tax" />
+                    <filter string="PP3" icon="terp-personal" domain="[('wht_kind','=','pp4')]" context=""/>
+                    <filter string="PP53" icon="terp-personal" domain="[('wht_kind','=','pp7')]" context=""/>	
+                    <group string="Group By...">
+                    	<filter string="Partner" icon="terp-personal" domain="" context="{'group_by': 'partner_id'}"/>     
+                    	<filter string="Date" icon="terp-personal" domain="" context="{'group_by':'date_doc'}" /> 
+                    </group>  	  	
+		        </search>
+      		</field>
+    	</record>
+    	    	
+	    <record model="ir.actions.act_window" id="ineco_wht_action_customer">
+	        <field name="name">WHT - Customer</field>
+	        <field name="res_model">ineco.wht</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="domain">[('wht_type','=','sale')]</field>
+	    </record>	   
+
+    	<menuitem name="WHT - Customer" 
+    		id="menu_ineco_wht_customer" 
+    		parent="menu_ineco_wht" 
+    		sequence="10" 
+    		action="ineco_wht_action_customer"/>
+
+	    <record model="ir.actions.act_window" id="ineco_wht_action_supplier">
+	        <field name="name">WHT - Supplier</field>
+	        <field name="res_model">ineco.wht</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="domain">[('wht_type','=','purchase')]</field>
+	    </record>	   
+
+    	<menuitem name="WHT - Supplier" 
+    		id="menu_ineco_wht_supplier" 
+    		parent="menu_ineco_wht" 
+    		sequence="20" 
+    		action="ineco_wht_action_supplier"/>
+    	
+    	<record model="ir.ui.view" id="ineco_wht_pnd_form">
+      		<field name="name">ineco.wht.pnd.form</field>
+      		<field name="model">ineco.wht.pnd</field>
+      		<field name="arch" type="xml">
+	        	<form string="WHT PND" version="7.0">
+	        	    <header>
+	        	    </header>
+	        	    <sheet>	
+	                    <h1>
+	                    	<label string="No." for="name" />
+		        	    	<field name="name" />
+	                    </h1>	        	    
+	        	    	<group>
+		        	    	<group>
+		        	    		<field name="period_tax_id" required="1"/>
+	                    		<field name="date_pnd"/>
+		        	    		<field name="type_normal" />
+		        	    		<field name="type_special" />
+		        	    		<field name="type_no" />
+		        	    	    <field name="company_id" />
+		        	    	</group>
+		        	    	<group>
+		        	    		<field name="section_3" />
+		        	    		<field name="section_48"  attrs="{'invisible': [('pnd_type', '!=', 'pp4')]}"/>
+		        	    		<field name="section_50"  attrs="{'invisible': [('pnd_type', '!=', 'pp4')]}"/>
+		        	    		<field name="section_65"  attrs="{'invisible': [('pnd_type', '!=', 'pp7')]}"/>
+		        	    		<field name="section_69"  attrs="{'invisible': [('pnd_type', '!=', 'pp7')]}"/>
+		        	    		<field name="pnd_type" invisible="1"/>
+		        	    		<field name="attach_pnd" />
+		        	    		<field name="attach_count"/>
+		        	    		<field name="attach_no"/>
+		        	    	</group>			        	    	        	    		
+	        	    	</group>
+						<notebook>
+							<page string="Detail">
+								<field name="wht_ids" domain="[('wht_type','=','purchase'),('wht_kind','=','pp4')]">
+									<tree string="WHT PND3 Lines">
+									    <field name="name" />
+										<field name="date_doc" />
+										<field name="partner_id" />
+										<field name="base_amount" />
+										<field name="tax" />
+									</tree>
+								</field>							
+								<group>
+								    <group>
+								    </group>
+									<group>
+										<field name="total_amount"  readonly="1" />
+										<field name="total_tax" 	readonly="1" />
+										<field name="add_amount"/>		
+										<field name="total_tax_send" readonly="1" />									
+									</group>																	
+								</group>
+							</page>
+							<page string="Note">
+								<field name="note" nolabel="1"/>
+							</page>
+						</notebook>	        	    	
+	        	    </sheet>
+	        	</form>
+      		</field>
+    	</record>
+
+    	<record model="ir.ui.view" id="ineco_wht_pnd_tree">
+      		<field name="name">ineco.wht.pnd.tree</field>
+      		<field name="model">ineco.wht.pnd</field>
+      		<field name="arch" type="xml">
+		        <tree string="With holding tax PND">
+		        	<field name="name" />
+		        	<field name="period_tax_id" />
+		        	<field name="date_pnd" />
+		       		<field name="total_amount" />
+		        	<field name="total_tax" />
+	        	  	<field name="add_amount" />
+	        	  	<field name="total_tax_send" />
+		        </tree>
+      		</field>
+    	</record>    		
+
+    	<record model="ir.ui.view" id="ineco_wht_pnd53_tree">
+      		<field name="name">ineco.wht.pnd53.tree</field>
+      		<field name="model">ineco.wht.pnd</field>
+      		<field name="arch" type="xml">
+		        <tree string="With holding tax PND">
+		        	<field name="name" />
+		        	<field name="period_tax_id" />
+		        	<field name="date_pnd" />
+		       		<field name="total_amount" />
+		        	<field name="total_tax" />
+	        	  	<field name="add_amount" />
+	        	  	<field name="total_tax_send" />
+		        </tree>
+      		</field>
+    	</record>    		
+    	
+    	<record model="ir.ui.view" id="ineco_wht_pnd53_form">
+      		<field name="name">ineco.wht.pnd53.form</field>
+      		<field name="model">ineco.wht.pnd</field>
+      		<field name="arch" type="xml">
+	        	<form string="WHT PND" version="7.0">
+	        	    <header>
+	        	    </header>
+	        	    <sheet>	
+	                    <h1>
+	                    	<label string="No." for="name" />
+		        	    	<field name="name" />
+	                    </h1>	        	    
+	        	    	<group>
+		        	    	<group>
+		        	    		<field name="period_tax_id" required="1"/>
+	                    		<field name="date_pnd"/>
+		        	    		<field name="type_normal" />
+		        	    		<field name="type_special" />
+		        	    		<field name="type_no" />
+		        	    	    <field name="company_id" />
+		        	    	</group>
+		        	    	<group>
+		        	    		<field name="section_3" />
+		        	    		<field name="section_48"  attrs="{'invisible': [('pnd_type', '!=', 'pp4')]}"/>
+		        	    		<field name="section_50"  attrs="{'invisible': [('pnd_type', '!=', 'pp4')]}"/>
+		        	    		<field name="section_65"  attrs="{'invisible': [('pnd_type', '!=', 'pp7')]}"/>
+		        	    		<field name="section_69"  attrs="{'invisible': [('pnd_type', '!=', 'pp7')]}"/>
+		        	    		<field name="pnd_type" invisible="1"/>
+		        	    		<field name="attach_pnd" />
+		        	    		<field name="attach_count"/>
+		        	    		<field name="attach_no"/>
+		        	    	</group>			        	    	        	    		
+	        	    	</group>
+						<notebook>
+							<page string="Detail">
+								<field name="wht_ids" domain="[('wht_type','=','purchase'),('wht_kind','=','pp7')]">
+									<tree string="WHT PND53 Lines">
+									    <field name="name" />
+										<field name="date_doc" />
+										<field name="partner_id" />
+										<field name="base_amount" />
+										<field name="tax" />
+									</tree>
+								</field>							
+								<group>
+								    <group>
+								    </group>
+									<group>
+										<field name="total_amount"  readonly="1" />
+										<field name="total_tax" 	readonly="1" />
+										<field name="add_amount"/>		
+										<field name="total_tax_send" readonly="1" />									
+									</group>																	
+								</group>
+							</page>
+							<page string="Note">
+								<field name="note" nolabel="1"/>
+							</page>
+						</notebook>	        	    	
+	        	    </sheet>
+	        	</form>
+      		</field>
+    	</record>
+    	    					
+	    <record model="ir.actions.act_window" id="ineco_wht_pnd_action">
+	        <field name="name">PND3</field>
+	        <field name="res_model">ineco.wht.pnd</field>
+	        <field name="view_mode">tree,form</field>
+            <field name="domain">[('pnd_type','=','pp4')]</field>
+            <field name="context">{'default_pnd_type': 'pp4','pnd_type': 'pp4'}</field>	 	        
+	    </record>	   
+
+	    <record model="ir.actions.act_window.view" id="ineco_wht_pnd_action_tree">
+	        <field name="view_mode">tree</field>
+	        <field name="view_id" ref="ineco_wht_pnd_tree"/>
+	        <field name="act_window_id" ref="ineco_wht_pnd_action"/>
+	    </record>		    
+	    	    
+	    <record model="ir.actions.act_window.view" id="ineco_wht_pnd_action_from">
+	        <field name="view_mode">form</field>
+	        <field name="view_id" ref="ineco_wht_pnd_form"/>
+	        <field name="act_window_id" ref="ineco_wht_pnd_action"/>     
+	    </record>	
+
+    	<menuitem name="PND3" 
+    		id="menu_ineco_wht_pnd" 
+    		parent="menu_ineco_account" 
+    		sequence="10" 
+    		action="ineco_wht_pnd_action"/>    	
+
+    	
+	    <record model="ir.actions.act_window" id="ineco_wht_pnd_action53">
+	        <field name="name">PND53</field>
+	        <field name="res_model">ineco.wht.pnd</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="ineco_wht_pnd_tree"/>	        
+	        <field name="view_mode">tree,form</field>
+            <field name="domain">[('pnd_type','=','pp7')]</field>
+            <field name="context">{'default_pnd_type': 'pp7','pnd_type': 'pp7'}</field>	        
+	    </record>	   
+
+	    <record model="ir.actions.act_window.view" id="ineco_wht_pnd_action53_tree">
+	        <field name="view_mode">tree</field>
+	        <field name="view_id" ref="ineco_wht_pnd53_tree"/>
+	        <field name="act_window_id" ref="ineco_wht_pnd_action53"/>
+	    </record>		    
+	    	    
+	    <record model="ir.actions.act_window.view" id="ineco_wht_pnd_action53_from">
+	        <field name="view_mode">form</field>
+	        <field name="view_id" ref="ineco_wht_pnd53_form"/>
+	        <field name="act_window_id" ref="ineco_wht_pnd_action53"/>     
+	    </record>	
+	    	    
+	    
+	    
+    	<menuitem name="PND53" 
+    		id="menu_ineco_wht_pnd53" 
+    		parent="menu_ineco_account" 
+    		sequence="11" 
+    		action="ineco_wht_pnd_action53"/>    	    			
+    	
+    </data>
+</openerp>

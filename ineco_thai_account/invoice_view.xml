@@ -1,0 +1,1003 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        
+		<menuitem name="Accounting Calendar" id="menu_ineco_accounting_calendar" parent="account.menu_finance" sequence="3"/>
+    	                
+    	<!-- Customer Invoice -->
+        <record model="ir.ui.view" id="view_ineco_account_invoice_form">
+	      	<field name="name">ineco.account.invoice.form</field>
+	      	<field name="model">account.invoice</field>
+	      	<field name="inherit_id" ref="account.invoice_form"/>
+	      	<field name="arch" type="xml">
+	        	<page string="Payments" position="before" version="7.0">
+	        	    <page string="General Ledger">
+	        	    	<field name="account_move_lines" readonly="1">
+	        	    		<tree string="General ledgers">
+	        	    			<field name="date" />
+								<field name="name" />
+								<field name="account_id" />
+								<field name="debit"  sum="Total Debit" />
+								<field name="credit" sum="Total Credit"/>
+								<field name="analytic_account_id" invisible="1" />
+								<field name="quantity" invisible="1" />
+	        	    		</tree>
+	        	    	</field>
+	        	    </page>
+	        	    <page string="Commission" groups="ineco_thai_account.group_account_commission" >
+	        	    	<group>
+	        	    		<group>
+	        	    			<field name="commission_sale" />
+	        	    			<field name="commission_pay" />
+	        	    		</group>
+	        	    		<group>
+			        	    	<field name="commission_note" />
+			        	    	<field name="commission_other"  />
+	        	    		</group>
+	        	    	</group>
+	        	    </page>        	    
+	        	</page>
+	        	<field name="move_id" position="after">
+	        		<field name="bill_due" />
+	        		<field name="service" />
+	        	</field>
+	        	<field name="date_due" position="after">
+	        		<field name="receipt_due" />
+	        	</field>
+	        	<field name="period_id" position="after">
+	        		<field name="period_tax_id" />
+	        	</field>
+			</field>
+		</record>   
+
+		<!-- Voucher Select -->
+        <record model="ir.ui.view" id="view_ineco_voucher_tree">
+            <field name="name">ineco.voucher.tree</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_tree"/>
+            <field name="arch" type="xml">
+            	<field name="period_id" position="after">
+            		<field name="period_tax_id" invisible="context.get('visible', True)" />
+            	</field>
+			</field>
+		</record>
+		
+		<!-- Sale receipt -->
+        <record model="ir.ui.view" id="view_ineco_account_voucher_form">
+	      	<field name="name">ineco.account.voucher.form</field>
+	      	<field name="model">account.voucher</field>
+	      	<field name="inherit_id" ref="account_voucher.view_sale_receipt_form"/>
+	      	<field name="arch" type="xml">
+	      	    <field name="date_due" position="replace">
+	      	   		<field name="date_due" />
+	      	    </field>
+	        	<page string="Sales Information" position="after" version="7.0">
+	        	    <page string="General Ledger">
+	        	    	<field name="account_move_lines" readonly="1">
+	        	    		<tree string="General ledgers">
+	        	    			<field name="date" />
+								<field name="name" />
+								<field name="account_id" />
+								<field name="debit"  sum="Total Debit" />
+								<field name="credit" sum="Total Credit"/>
+								<field name="analytic_account_id" invisible="1" />
+								<field name="quantity" invisible="1" />
+	        	    		</tree>
+	        	    	</field>
+	        	    </page>
+	        	    <page string="Cheque" groups="ineco_thai_account.group_multiple_check">
+	        	    	<field name="cheque_ids" context="{'default_type':'in','default_partner_id': partner_id}" 
+	        	    		domain="[('type','=','in'),('state','=','draft'),('partner_id','=',partner_id)]" colspan="4" nolabel="1">
+			                <tree string="Banks">
+			                    <field name="name"/>
+			                    <field name="cheque_date"/>
+			                    <field name="cheque_date_reconcile" />
+			                    <field name="bank" />                    
+			                    <field name="partner_id" string="Customer" />
+			                    <field name="amount"/>     
+			                    <field name="state"/>           
+			                </tree>
+	        	    	</field>        	    
+	        	    </page>
+	        	    <page string="With Holding Tax">
+	        	    	<field name="wht_ids" attrs="{'readonly':[('state','=','posted')]}" 
+	        	    		   context="{'default_partner_id': partner_id or False, 'default_wht_type':'sale','default_date_doc': date }" >
+	        	    		<tree string="With Holding Tax">
+	        	    			<field name="seq" />
+	        	    			<field name="name" />
+	        	    			<field name="date_doc" />
+	        	    			<field name="base_amount" />
+	        	    			<field name="tax" />
+	        	    			<field name="state" />
+	        	    			<field name="note" />
+	        	    			<button name="button_compute_tax" string="Compute Tax" type="object" />
+	        	    		</tree>
+	        	    	</field>
+	        	    </page>
+	        	</page>
+				<field name="partner_id" position="after">
+			    	<field name="cheque_id" context="{'default_type':'in', 'default_partner_id': partner_id }"  domain="[('type','=','in'),('state','=','draft')]"/>
+			   		<field name="move_id" />
+			   		<field name="period_tax_id" />
+			   	</field>	        	     
+	        </field>
+		</record>    
+
+		<!-- Customer Payment -->
+        <record model="ir.ui.view" id="view_ineco_account_payment_form">
+	      	<field name="name">ineco.account.payment.form</field>
+	      	<field name="model">account.voucher</field>
+	      	<field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
+	      	<field name="arch" type="xml">
+		      	<field name="date" position="after">
+		      		<field name="date_due" />
+		      	</field>		      	  
+		      	<field name="period_id" position="after">
+		      		<field name="period_tax_id" />
+		      	</field>  
+	        	<page string="Payment Information" position="after" version="7.0">        	    
+	        	    <page string="General Ledger">
+	        	    	<field name="account_move_lines" readonly="1">
+	        	    		<tree string="General ledgers">
+	        	    			<field name="date" />
+								<field name="name" />
+								<field name="account_id" />
+								<field name="debit"  sum="Total Debit" />
+								<field name="credit" sum="Total Credit"/>
+								<field name="analytic_account_id" invisible="1" />
+								<field name="quantity" invisible="1" />
+	        	    		</tree>
+	        	    	</field>
+	        	    </page>
+	        	    <page string="Template">
+	        	    	<group>
+	        	    		<group><field name="account_model_id" /></group>
+	        	    		<group><button name="button_loadtemplate" string="Load Template" type="object" /></group>
+	        	    	</group>
+	        	    	<field name="addline_ids">
+	        	    		<tree string="Template" editable="bottom">
+	        	    			<field name="account_id" />
+	        	    			<field name="account_name" />
+	        	    			<field name="debit" />
+	        	    			<field name="credit" />
+	        	    		</tree>
+	        	    	</field>
+	        	    </page>
+	        	    <page string="Cheque" groups="ineco_thai_account.group_multiple_check">
+	        	    	<field name="cheque_ids" context="{'default_type':'in','default_partner_id': partner_id}" 
+	        	    		domain="[('type','=','in'),('state','=','draft'),('partner_id','=',partner_id)]" colspan="4" nolabel="1">
+			                <tree string="Banks">
+			                    <field name="name"/>
+			                    <field name="cheque_date"/>
+			                    <field name="cheque_date_reconcile" />
+			                    <field name="bank" />                    
+			                    <field name="partner_id" string="Customer" />
+			                    <field name="amount"/>     
+			                    <field name="state"/>           
+			                </tree>
+	        	    	</field>        	    
+	        	    </page>
+	        	    <page string="With Holding Tax">
+	        	    	<field name="wht_ids" attrs="{'readonly':[('state','=','posted')]}" 
+	        	    		context="{'default_partner_id': partner_id or False, 'default_wht_type':'sale', 
+	        	    			'default_date_doc': date}" >
+	        	    		<tree string="With Holding Tax">
+	        	    			<field name="seq" />
+	        	    			<field name="name" />
+	        	    			<field name="date_doc" />
+	        	    			<field name="base_amount" />
+	        	    			<field name="tax" />
+	        	    			<field name="state" />
+	        	    			<field name="note" />
+	        	    			<button name="button_compute_tax" string="Compute Tax" type="object" />
+	        	    		</tree>
+	        	    	</field>
+	        	    </page>
+	        	</page>
+		        <field name="journal_id" position="after">
+		        	<field name="cheque_id" context="{'default_type':'in'}" domain="[('type','=','in'),('state','=','draft')]"/>
+		        	<field name="move_id" />
+		        	
+		        </field>
+		        <field name="name" position="after">
+		        	<field name="bill_number" />
+		        </field>	        	       	
+			</field>
+		</record>    
+		
+        
+	<!-- Search Voucher -->  
+	     
+        <record id="view_voucher_filter_vendor_ineco" model="ir.ui.view">
+            <field name="name">account.voucher.select</field>
+            <field name="model">account.voucher</field>
+			<field name="inherit_id" ref="account_voucher.view_voucher_filter_vendor"/>            
+            <field name="arch" type="xml">
+		      	<field name="number" position="after">
+		      		<field name="reference" string="Ref #"/>
+		      		<field name="period_tax_id" />
+		      	</field>	                
+            </field>
+        </record>
+
+        <record id="view_voucher_filter_vendor_pay_ineco" model="ir.ui.view">
+            <field name="name">account.voucher.select</field>
+            <field name="model">account.voucher</field>
+			<field name="inherit_id" ref="account_voucher.view_voucher_filter_vendor_pay"/>            
+            <field name="arch" type="xml">
+		      	<field name="number" position="after">
+		      		<field name="reference" string="Ref #"/>
+		      		<field name="period_tax_id" />
+		      	</field>	                
+            </field>
+        </record>        
+        
+        <record id="view_voucher_filter_customer_pay_ineco" model="ir.ui.view">
+            <field name="name">account.voucher.select</field>
+            <field name="model">account.voucher</field>
+			<field name="inherit_id" ref="account_voucher.view_voucher_filter_customer_pay"/>            
+            <field name="arch" type="xml">
+		      	<field name="number" position="after">
+		      		<field name="reference" string="Ref #"/>
+		      		<field name="period_tax_id" />
+		      	</field>	                
+            </field>
+        </record>        
+        
+        
+        <record id="view_voucher_filter_sale_ineco" model="ir.ui.view">
+            <field name="name">account.voucher.select</field>
+            <field name="model">account.voucher</field>
+			<field name="inherit_id" ref="account_voucher.view_voucher_filter_sale"/>            
+            <field name="arch" type="xml">
+		      	<field name="number" position="after">
+		      		<field name="reference" string="Ref #"/>
+		      		<field name="period_tax_id" />
+		      	</field>	                
+            </field>
+        </record>        
+        
+        
+        
+        
+    	<!-- Supplier Invoice -->
+        <record model="ir.ui.view" id="view_ineco_account_supplierinvoice_form">
+	      	<field name="name">ineco.account.supplierinvoice.form</field>
+	      	<field name="model">account.invoice</field>
+	      	<field name="inherit_id" ref="account.invoice_supplier_form"/>
+	      	<field name="arch" type="xml">
+	        	<page string="Payments" position="before" version="7.0">
+	        	    <page string="General Ledger">
+	        	    	<field name="account_move_lines" readonly="1">
+	        	    		<tree string="General ledgers">
+	        	    			<field name="date" />
+								<field name="name" />
+								<field name="account_id" />
+								<field name="debit"  sum="Total Debit" />
+								<field name="credit" sum="Total Credit"/>
+								<field name="analytic_account_id" invisible="1" />
+								<field name="quantity" invisible="1" />
+	        	    		</tree>
+	        	    	</field>
+	        	    </page>
+	        	</page>
+	        	<field name="period_id" position="after">
+	        		<field name="period_tax_id" />
+	        	</field>
+			</field>
+		</record> 		
+		
+		<!-- Purchase receipt -->
+        <record model="ir.ui.view" id="view_ineco_account_supplierreceipt_form">
+	      	<field name="name">ineco.account.supplierreceipt.form</field>
+	      	<field name="model">account.voucher</field>
+	      	<field name="inherit_id" ref="account_voucher.view_purchase_receipt_form"/>
+	      	<field name="arch" type="xml">
+	        	<page string="Bill Information" position="after" version="7.0">
+	        	    <page string="General Ledger">
+	        	    	<field name="account_move_lines" readonly="1">
+	        	    		<tree string="General ledgers">
+	        	    			<field name="date" />
+								<field name="name" />
+								<field name="account_id" />
+								<field name="debit"  sum="Total Debit" />
+								<field name="credit" sum="Total Credit"/>
+								<field name="analytic_account_id" invisible="1" />
+								<field name="quantity" invisible="1" />
+	        	    		</tree>
+	        	    	</field>
+	        	    </page>
+	        	    <page string="Cheque" groups="ineco_thai_account.group_multiple_check">
+	        	    	<field name="cheque_ids" context="{'default_type':'out','default_partner_id': partner_id}" 
+	        	    		domain="[('type','=','out'),('state','=','draft'),('partner_id','=',partner_id)]" colspan="4" nolabel="1">
+			                <tree string="Banks">
+			                    <field name="name"/>
+			                    <field name="cheque_date"/>
+			                    <field name="cheque_date_reconcile" />
+			                    <field name="bank" />                    
+			                    <field name="partner_id" string="Customer" />
+			                    <field name="amount"/>     
+			                    <field name="state"/>           
+			                </tree>
+	        	    	</field>        	    
+	        	    </page>
+	        	    <page string="With Holding Tax">
+	        	    	<field name="wht_ids" attrs="{'readonly':[('state','=','posted')]}" 
+	        	    		   context="{'default_partner_id': partner_id or False, 'default_wht_type':'purchase', 'default_date_doc': date }" >
+	        	    		<tree string="With Holding Tax">
+	        	    			<field name="seq" />
+	        	    			<field name="name" />
+	        	    			<field name="date_doc" />
+	        	    			<field name="base_amount" />
+	        	    			<field name="tax" />
+	        	    			<field name="state" />
+	        	    			<field name="note" />
+	        	    			<button name="button_compute_tax" string="Compute Tax" type="object" />
+	        	    		</tree>
+	        	    	</field>
+	        	    </page>
+	        	</page>
+		        <field name="partner_id" position="after">
+		        	<field name="cheque_id"  context="{'default_type':'out'}" domain="[('type','=','out'),('state','=','draft')]"/>
+		        	<field name="move_id" />
+		        	<field name="period_tax_id" />
+		        </field>
+		        <field name="journal_id" position="before">
+		        	<field name="bill_number" string="Sup Invocie"/>
+		        </field>		        	        	       		        	
+			</field>
+		</record>    
+
+		<!-- Supplier Payment -->
+        <record model="ir.ui.view" id="view_ineco_account_supplierpayment_form">
+	      	<field name="name">ineco.account.supplierpayment.form</field>
+	      	<field name="model">account.voucher</field>
+	      	<field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+	      	<field name="arch" type="xml">
+	      	    <field name="date" position="after">
+		      		<field name="date_due" />
+		      	</field>
+	        	<page string="Payment Information" position="after" version="7.0">
+	        	    <page string="General Ledger">
+	        	    	<field name="account_move_lines" readonly="1">
+	        	    		<tree string="General ledgers">
+	        	    			<field name="date" />
+								<field name="name" />
+								<field name="account_id" />
+								<field name="debit"  sum="Total Debit" />
+								<field name="credit" sum="Total Credit"/>
+								<field name="analytic_account_id" invisible="1" />
+								<field name="quantity" invisible="1" />
+	        	    		</tree>
+	        	    	</field>
+	        	    </page>
+	        	    <page string="Template">
+	        	    	<group>
+	        	    		<group><field name="account_model_id" /></group>
+	        	    		<group><button name="button_loadtemplate" string="Load Template" type="object" /></group>
+	        	    	</group>
+	        	    	<field name="addline_ids" colspan="4">
+	        	    		<tree string="Add Line" editable="bottom">
+	        	    			<field name="account_id" />
+	        	    			<field name="account_name" />
+	        	    			<field name="debit" />
+	        	    			<field name="credit" />
+	        	    		</tree>
+	        	    	</field>
+	        	    </page>
+	        	    <page string="Cheque" groups="ineco_thai_account.group_multiple_check">
+	        	    	<field name="cheque_ids" context="{'default_type':'out','default_partner_id': partner_id}" 
+	        	    		domain="[('type','=','out'),('state','=','draft'),('partner_id','=',partner_id)]" colspan="4" nolabel="1">
+			                <tree string="Banks">
+			                    <field name="name"/>
+			                    <field name="cheque_date"/>
+			                    <field name="cheque_date_reconcile" />
+			                    <field name="bank" />                    
+			                    <field name="partner_id" string="Customer" />
+			                    <field name="amount"/>     
+			                    <field name="state"/>           
+			                </tree>
+	        	    	</field>        	    
+	        	    </page>
+	        	    <page string="With Holding Tax">
+	        	    	<field name="wht_ids" attrs="{'readonly':[('state','=','posted')]}" 
+	        	    		   context="{'default_partner_id': partner_id or False, 'default_wht_type':'sale', 'default_date_doc': date }" >
+	        	    		<tree string="With Holding Tax">
+	        	    			<field name="seq" />
+	        	    			<field name="name" />
+	        	    			<field name="date_doc" />
+	        	    			<field name="base_amount" />
+	        	    			<field name="tax" />
+	        	    			<field name="state" />
+	        	    			<field name="note" />
+	        	    			<button name="button_compute_tax" string="Compute Tax" type="object" />
+	        	    		</tree>
+	        	    	</field>
+	        	    </page>
+	        	</page>
+		        <field name="journal_id" position="after">
+		        	<field name="cheque_id"  context="{'default_type':'out'}" domain="[('type','=','out'),('state','=','draft')]"/>
+		        	<field name="move_id" />
+		        </field>	        	       		        	
+			</field>
+		</record>    
+		
+		<!-- Payment Term -->
+        <record id="view_ineco_payment_term_form" model="ir.ui.view">
+            <field name="name">ineco.payment.term.form</field>
+            <field name="model">account.payment.term</field>
+	      	<field name="inherit_id" ref="account.view_payment_term_form"/>
+            <field name="arch" type="xml">
+            	<field name="active" position="after">
+            		<field name="billing_term" />
+            	</field>
+            </field>
+        </record>
+
+        <record id="view_ineco_payment_term_search" model="ir.ui.view">
+            <field name="name">ineco.payment.term.search</field>
+            <field name="model">account.payment.term</field>
+	      	<field name="inherit_id" ref="account.view_payment_term_search"/>
+            <field name="arch" type="xml">
+            	<field name="name" position="before">
+                    <filter string="Billing Term" name="billing_term_ok" domain="[('billing_term','=',True)]" icon="terp-dialog-close"/>            	
+            	</field>
+            </field>
+        </record>
+
+        <record id="view_ineco_payment_term_tree" model="ir.ui.view">
+            <field name="name">ineco.payment.term.tree</field>
+            <field name="model">account.payment.term</field>
+            <field name="arch" type="xml">
+                <tree string="Payment Term">
+                    <field name="name" string="Payment Term"/>
+                    <field name="billing_term" />
+                </tree>
+            </field>
+        </record>       
+
+        <record id="view_ineco_account_invoice_filter2" model="ir.ui.view">
+            <field name="name">ineco.account.invoice.select2</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter" />
+            <field name="arch" type="xml">
+            	<field name="number" position="after">
+            		<field name="supplier_invoice_number" />
+            	</field>
+           	</field>
+        </record>
+        
+        <record id="view_ineco_account_invoice_filter" model="ir.ui.view">
+            <field name="name">ineco.account.invoice.select</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter" />
+            <field name="arch" type="xml">
+            	<filter name="unpaid" position="after">
+                    <filter name="nodue" icon="terp-gtk-media-pause" string="No Due Date" domain="[('date_due','=',False),('state','=','draft')]" help="No due date."/>
+                    <filter name="nobill" icon="terp-gtk-media-pause" string="No Billing Date" domain="[('bill_due','=',False),('state','=','draft')]" help="No bill date."/>
+                    <filter name="todaydue" icon="terp-go-today" string="Today Due" domain="[('date_due','=',time.strftime('%%Y-%%m-%%d')),('state','=','draft')]" />
+					<filter name="todaybill" icon="terp-go-today" string="Today Billing" domain="[('bill_due','=',time.strftime('%%Y-%%m-%%d')),('state','=','draft')]" />
+					<filter name="todo" icon="terp-go-today" string="To Do" domain="[('state','in',['draft','open'])]" />
+					<filter name="nosupplierinvoice" icon="terp-go-today" string="No Supplier Invoice" domain="[('supplier_invoice_number','=',False)]" />					
+            	</filter>
+            </field>
+       	</record>
+
+        <record id="view_ineco_invoice_tree" model="ir.ui.view">
+            <field name="name">ineco.account.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_tree" />
+            <field name="arch" type="xml">
+            	<field name="date_due" position="after">
+            		<field name="receipt_due" />
+            		<field name="bill_due" />
+            	</field>
+            	<field name="amount_untaxed" position="replace">
+            		<field name="amount_untaxed" invisible="1" sum="Untaxed Amount"/>
+            	</field>
+            	<field name="period_id" position="after">
+            		<field name="period_tax_id" invisible="1" />
+            	</field>
+            	<field name="state" position="after">
+            		<field name="internal_number" />
+            	</field>
+            </field>
+       	</record>
+       	
+        <!-- Customer Invoices By Due Date -->
+        <record id="view_ineco_invoice_calendar" model="ir.ui.view">
+            <field name="name">ineco.account.invoice.calendar</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <calendar string="Invoices By Due Date" color="partner_id" date_start="date_due">
+                    <field name="partner_id"/>
+                    <field name="amount_total"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="ineco_invoice_due_tree" model="ir.ui.view">
+            <field name="name">ineco.due.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';black:state in ('proforma','proforma2','open');gray:state == 'cancel'" string="Invoice By Due Date">
+                    <field name="partner_id" groups="base.group_user"/>
+                    <field name="date_due"/>
+                    <field name="number"/>
+                    <field name="reference" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="journal_id" invisible="1"/>
+                    <field name="period_id" invisible="1" groups="account.group_account_user"/>
+                    <field name="user_id"/>
+                    <field name="origin"/>
+                    <field name="residual" sum="Residual Amount"/>
+                    <field name="amount_untaxed" sum="Untaxed Amount"/>
+                    <field name="amount_total" sum="Total Amount"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_ineco_invoice_due" model="ir.actions.act_window">
+            <field name="name">Plan Due Date</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="view_id" ref="ineco_invoice_due_tree"/>
+            <field name="context">{'type':'out_invoice'}</field>
+            <field name="domain">[('date_due','!=',False),('type','=','out_invoice'),('state','!=','cancel')]</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        </record>
+        
+        <record id="action_ineco_invoice_due_tree" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="ineco_invoice_due_tree" />
+            <field name="act_window_id" ref="action_ineco_invoice_due"/>
+        </record>
+        
+        <record id="action_ineco_invoice_due_form" model="ir.actions.act_window.view">
+            <field eval="3" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_ineco_invoice_due"/>
+        </record>        
+
+        <record id="action_ineco_invoice_due_calendar" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="view_ineco_invoice_calendar" />
+            <field name="act_window_id" ref="action_ineco_invoice_due"/>
+        </record>
+
+        <menuitem action="action_ineco_invoice_due" id="menu_ineco_invoice_due" parent="menu_ineco_accounting_calendar" sequence="1"/>
+        
+        <!-- Customer Invoices By Billing Date -->
+        <record id="view_ineco_invoice_billing_calendar" model="ir.ui.view">
+            <field name="name">ineco.billing.invoice.calendar</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <calendar string="Invoices By Billing Date" color="partner_id" date_start="bill_due">
+                    <field name="partner_id"/>
+                    <field name="amount_total"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="ineco_invoice_billing_tree" model="ir.ui.view">
+            <field name="name">ineco.billing.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';black:state in ('proforma','proforma2','open');gray:state == 'cancel'" string="Invoice By Due Date">
+                    <field name="partner_id" groups="base.group_user"/>
+                    <field name="bill_due"/>
+                    <field name="receipt_due"/>
+                    <field name="number"/>
+                    <field name="reference" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="journal_id" invisible="1"/>
+                    <field name="period_id" invisible="1" groups="account.group_account_user"/>
+                    <field name="user_id"/>
+                    <field name="origin"/>
+                    <field name="residual" sum="Residual Amount"/>
+                    <field name="amount_untaxed" sum="Untaxed Amount"/>
+                    <field name="amount_total" sum="Total Amount"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_ineco_invoice_billing" model="ir.actions.act_window">
+            <field name="name">Plan Billing Date</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="view_id" ref="ineco_invoice_due_tree"/>
+            <field name="context">{'type':'out_invoice'}</field>
+            <field name="domain">[('bill_due','!=',False),('type','=','out_invoice'),('state','!=','cancel')]</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        </record>
+        
+        <record id="action_ineco_invoice_billing_tree" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="ineco_invoice_billing_tree" />
+            <field name="act_window_id" ref="action_ineco_invoice_billing"/>
+        </record>
+        
+        <record id="action_ineco_invoice_billine_form" model="ir.actions.act_window.view">
+            <field eval="3" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_ineco_invoice_billing"/>
+        </record>        
+
+        <record id="action_ineco_invoice_billing_calendar" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="view_ineco_invoice_billing_calendar" />
+            <field name="act_window_id" ref="action_ineco_invoice_billing"/>
+        </record>
+        
+    	<menuitem action="action_ineco_invoice_billing" id="menu_ineco_invoice_billing" parent="menu_ineco_accounting_calendar" sequence="2"/>        
+
+        <!-- Customer Invoices By Receipt Date -->
+        <record id="view_ineco_invoice_receipt_calendar" model="ir.ui.view">
+            <field name="name">ineco.receipt.invoice.calendar</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <calendar string="Invoices By Receipt Date" color="partner_id" date_start="receipt_due">
+                    <field name="partner_id"/>
+                    <field name="amount_total"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="ineco_invoice_receipt_tree" model="ir.ui.view">
+            <field name="name">ineco.receipt.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';black:state in ('proforma','proforma2','open');gray:state == 'cancel'" string="Invoice By Due Date">
+                    <field name="partner_id" groups="base.group_user"/>
+                    <field name="receipt_due"/>
+                    <field name="number"/>
+                    <field name="reference" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="journal_id" invisible="1"/>
+                    <field name="period_id" invisible="1" groups="account.group_account_user"/>
+                    <field name="user_id"/>
+                    <field name="origin"/>
+                    <field name="residual" sum="Residual Amount"/>
+                    <field name="amount_untaxed" sum="Untaxed Amount"/>
+                    <field name="amount_total" sum="Total Amount"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_ineco_invoice_receipt" model="ir.actions.act_window">
+            <field name="name">Plan Receipt Date</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="view_id" ref="ineco_invoice_due_tree"/>
+            <field name="context">{'type':'out_invoice'}</field>
+            <field name="domain">[('bill_due','!=',False),('type','=','out_invoice'),('state','!=','cancel')]</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        </record>
+        
+        <record id="action_ineco_invoice_receipt_tree" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="ineco_invoice_receipt_tree" />
+            <field name="act_window_id" ref="action_ineco_invoice_receipt"/>
+        </record>
+        
+        <record id="action_ineco_invoice_receipt_form" model="ir.actions.act_window.view">
+            <field eval="3" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_ineco_invoice_receipt"/>
+        </record>        
+
+        <record id="action_ineco_invoice_receipt_calendar" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="view_ineco_invoice_receipt_calendar" />
+            <field name="act_window_id" ref="action_ineco_invoice_receipt"/>
+        </record>
+        
+    	<menuitem action="action_ineco_invoice_receipt" id="menu_ineco_invoice_receipt" parent="menu_ineco_accounting_calendar" sequence="3"/>        
+    		
+        
+        <!-- Customer Payment By Cheque Receipt Date -->
+        <record id="view_ineco_customer_payment_receipt_calendar" model="ir.ui.view">
+            <field name="name">ineco.customer.payment.receipt.calendar</field>
+            <field name="model">account.voucher</field>
+            <field name="arch" type="xml">
+                <calendar string="Customer Payment By Receipt Date" color="partner_id" date_start="date_due">
+                    <field name="partner_id"/>
+                    <field name="amount"/>
+                </calendar>
+            </field>
+        </record>
+        
+        <record id="ineco_customer_payment_receipt_tree" model="ir.ui.view">
+            <field name="name">ineco.customer.payment.receipt.invoice.tree</field>
+            <field name="model">account.voucher</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';gray:state == 'cancel';red:audit" string="Voucher Entries">
+                    <field name="date_due"/>
+                    <field name="date"/>
+                    <field name="number"/>
+                    <field name="reference"/>
+                    <field name="partner_id"/>
+                    <field name="journal_id" groups="account.group_account_user"/>
+                    <field name="period_id" invisible="context.get('visible', True)"/>
+                    <field name="type" invisible="context.get('visible', True)"/>
+                    <field name="amount" sum="Total Amount"/>
+                    <field name="audit" invisible="1"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>        
+        
+        <record id="action_ineco_customer_payment_receipt" model="ir.actions.act_window">
+            <field name="name">Receipt Date</field>
+            <field name="res_model">account.voucher</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="view_id" ref="ineco_customer_payment_receipt_tree"/>
+            <field name="context">{'type':'receipt'}</field>
+            <field name="domain">[('date_due','!=',False),('type','=','receipt'),('state','!=','cancel')]</field>
+            <field name="search_view_id" ref="account_voucher.view_voucher_filter_customer_pay"/>
+        </record>
+        
+        <record id="action_ineco_customer_payment_receipt_tree" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="ineco_customer_payment_receipt_tree" />
+            <field name="act_window_id" ref="action_ineco_customer_payment_receipt"/>
+        </record>        
+        
+        <record id="action_ineco_customer_payment_receipt_form" model="ir.actions.act_window.view">
+            <field eval="3" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account_voucher.view_vendor_receipt_form"/>
+            <field name="act_window_id" ref="action_ineco_customer_payment_receipt"/>
+        </record>         
+        
+        
+        <record id="action_ineco_customer_payment_receipt_calendar" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="view_ineco_customer_payment_receipt_calendar" />
+            <field name="act_window_id" ref="action_ineco_customer_payment_receipt"/>
+        </record>
+        
+		<menuitem action="action_ineco_customer_payment_receipt" id="menu_ineco_customer_payment_receipt" parent="menu_ineco_accounting_calendar" sequence="4"/>            
+        
+        
+        <!-- Customer Payment By Billing Date -->
+        <record id="view_ineco_customer_payment_billing_calendar" model="ir.ui.view">
+            <field name="name">ineco.customer.payment.billing.calendar</field>
+            <field name="model">account.voucher</field>
+            <field name="arch" type="xml">
+                <calendar string="Customer Payment By Billing Date" color="partner_id" date_start="date">
+                    <field name="partner_id"/>
+                    <field name="amount"/>
+                </calendar>
+            </field>
+        </record>
+        
+        <record id="ineco_customer_payment_billing_tree" model="ir.ui.view">
+            <field name="name">ineco.customer.payment.billing.invoice.tree</field>
+            <field name="model">account.voucher</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';gray:state == 'cancel';red:audit" string="Voucher Entries">
+                    <field name="date"/>
+                    <field name="date_due"/>
+                    <field name="number"/>
+                    <field name="reference"/>
+                    <field name="partner_id"/>
+                    <field name="journal_id" groups="account.group_account_user"/>
+                    <field name="period_id" invisible="context.get('visible', True)"/>
+                    <field name="type" invisible="context.get('visible', True)"/>
+                    <field name="amount" sum="Total Amount"/>
+                    <field name="audit" invisible="1"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>        
+        
+        <record id="action_ineco_customer_payment_billing" model="ir.actions.act_window">
+            <field name="name">Billing Date</field>
+            <field name="res_model">account.voucher</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="view_id" ref="ineco_customer_payment_receipt_tree"/>
+            <field name="context">{'type':'receipt'}</field>
+            <field name="domain">[('date','!=',False),('type','=','receipt'),('state','!=','cancel')]</field>
+            <field name="search_view_id" ref="account_voucher.view_voucher_filter_customer_pay"/>
+        </record>
+        
+        <record id="action_ineco_customer_payment_billing_tree" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="ineco_customer_payment_billing_tree" />
+            <field name="act_window_id" ref="action_ineco_customer_payment_billing"/>
+        </record>        
+        
+        <record id="action_ineco_customer_payment_billing_form" model="ir.actions.act_window.view">
+            <field eval="3" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account_voucher.view_vendor_receipt_form"/>
+            <field name="act_window_id" ref="action_ineco_customer_payment_billing"/>
+        </record>         
+        
+        
+        <record id="action_ineco_customer_payment_billing_calendar" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="view_ineco_customer_payment_billing_calendar" />
+            <field name="act_window_id" ref="action_ineco_customer_payment_billing"/>
+        </record>
+        
+    	<menuitem action="action_ineco_customer_payment_billing" id="menu_ineco_customer_payment_billing" parent="menu_ineco_accounting_calendar" sequence="5"/> 
+
+        <!-- Supplier Invoices By Due Date -->
+        <record id="view_ineco_supplier_invoice_due_calendar" model="ir.ui.view">
+            <field name="name">ineco.supplier.invoice.calendar</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <calendar string="Supplier Invoices By Due Date" color="partner_id" date_start="date_due">
+                    <field name="partner_id"/>
+                    <field name="amount_total"/>
+                </calendar>
+            </field>
+        </record>
+        
+        <record id="ineco_supplier_invoice_due_tree" model="ir.ui.view">
+            <field name="name">ineco.supplier.invoice.tree</field>
+            <field name="model">account.invoice</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';black:state in ('proforma','proforma2','open');gray:state == 'cancel'" string="Invoice">
+                    <field name="partner_id" groups="base.group_user"/>
+                    <field name="date_invoice"/>
+                    <field name="number"/>
+                    <field name="reference" invisible="1"/>
+                    <field name="name" invisible="1"/>
+                    <field name="journal_id" invisible="1"/>
+                    <field name="period_id" invisible="1" groups="account.group_account_user"/>
+                    <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                    <field name="user_id"/>
+                    <field name="date_due"/>
+                    <field name="origin"/>
+                    <field name="currency_id" groups="base.group_multi_currency"/>
+                    <field name="residual" sum="Residual Amount"/>
+                    <field name="amount_untaxed" sum="Untaxed Amount"/>
+                    <field name="amount_total" sum="Total Amount"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        
+        <record id="action_ineco_supplier_invoice_due" model="ir.actions.act_window">
+            <field name="name">Supplier By Due Date</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="view_id" ref="ineco_supplier_invoice_due_tree"/>
+            <field name="context">{'type':'in_invoice'}</field>
+            <field name="domain">[('date_due','!=',False),('type','=','in_invoice'),('state','!=','cancel')]</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+        </record>
+        
+        <record id="action_ineco_supplier_invoice_due_tree" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="ineco_supplier_invoice_due_tree" />
+            <field name="act_window_id" ref="action_ineco_supplier_invoice_due"/>
+        </record>
+        
+        <record id="action_ineco_supplier_invoice_due_form" model="ir.actions.act_window.view">
+            <field eval="3" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_supplier_form"/>
+            <field name="act_window_id" ref="action_ineco_supplier_invoice_due"/>
+        </record>        
+
+        <record id="action_ineco_supplier_invoice_due_calendar" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="view_ineco_supplier_invoice_due_calendar" />
+            <field name="act_window_id" ref="action_ineco_supplier_invoice_due"/>
+        </record>
+        
+    	<menuitem action="action_ineco_supplier_invoice_due" id="menu_ineco_supplier_invoice_due" parent="menu_ineco_accounting_calendar" sequence="6"/>
+        
+
+        
+        <!-- Supplier Payment By Payment Date -->
+        <record id="view_ineco_supplier_payment_calendar" model="ir.ui.view">
+            <field name="name">ineco.supplier.payment.calendar</field>
+            <field name="model">account.voucher</field>
+            <field name="arch" type="xml">
+                <calendar string="Supplier Payment By Payment Date" color="partner_id" date_start="date_due">
+                    <field name="partner_id"/>
+                    <field name="amount"/>
+                </calendar>
+            </field>
+        </record>
+        
+        <record id="ineco_supplier_payment_tree" model="ir.ui.view">
+            <field name="name">ineco.supplier.payment.invoice.tree</field>
+            <field name="model">account.voucher</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:state == 'draft';gray:state == 'cancel';red:audit" string="Voucher Entries">
+                    <field name="date_due"/>
+                    <field name="date"/>
+                    <field name="number"/>
+                    <field name="reference"/>
+                    <field name="partner_id"/>
+                    <field name="journal_id" groups="account.group_account_user"/>
+                    <field name="period_id" invisible="context.get('visible', True)"/>
+                    <field name="type" invisible="context.get('visible', True)"/>
+                    <field name="amount" sum="Total Amount"/>
+                    <field name="audit" invisible="1"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>        
+        
+        <record id="action_ineco_supplier_payment" model="ir.actions.act_window">
+            <field name="name">Payment Date</field>
+            <field name="res_model">account.voucher</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
+            <field name="view_id" ref="ineco_supplier_payment_tree"/>
+            <field name="context">{'type':'payment'}</field>
+            <field name="domain">[('date_due','!=',False),('type','=','payment'),('state','!=','cancel')]</field>
+            <field name="search_view_id" ref="account_voucher.view_voucher_filter_vendor_pay"/>
+        </record>
+        
+        <record id="action_ineco_supplier_payment_tree" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="ineco_supplier_payment_tree" />
+            <field name="act_window_id" ref="action_ineco_supplier_payment"/>
+        </record>        
+        
+        <record id="action_ineco_supplier_payment_form" model="ir.actions.act_window.view">
+            <field eval="3" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account_voucher.view_vendor_payment_form"/>
+            <field name="act_window_id" ref="action_ineco_supplier_payment"/>
+        </record>         
+        
+        
+        <record id="action_ineco_supplier_payment_calendar" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">calendar</field>
+            <field name="view_id" ref="view_ineco_supplier_payment_calendar" />
+            <field name="act_window_id" ref="action_ineco_supplier_payment"/>
+        </record>
+        
+    	<menuitem action="action_ineco_supplier_payment" id="menu_ineco_supplier_payment" parent="menu_ineco_accounting_calendar" sequence="7"/>        
+
+		<!-- Search Tax Period Customer Invoice -->
+        <record id="view_ineco_invoice_filter" model="ir.ui.view">
+            <field name="name">ineco.invoice.select</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+            	<field name="period_id" position="after">
+            		<field name="period_tax_id" />
+            	</field>
+            	<filter string="Due Date" position="after">
+            		<filter string="Tax Period" icon="terp-go-month" domain="[]"  context="{'group_by':'period_tax_id'}"/>
+            	</filter>
+			</field>
+		</record>		        	
+  	</data>
+</openerp>

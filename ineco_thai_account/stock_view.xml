@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+    
+        <record model="ir.ui.view" id="view_ineco_account_pickingout_form">
+	      	<field name="name">ineco.account.pickingout.form</field>
+	      	<field name="model">stock.picking.out</field>
+	      	<field name="inherit_id" ref="stock.view_picking_out_form"/>
+	      	<field name="arch" type="xml">
+	        	<page string="Additional Info" position="after" version="7.0">
+	        	    <page string="Accounting">
+						<group>
+							<div>	    	  
+								<label for="account_internal_no" string="Internal Ref" />  	
+								<field name="account_internal_no"/>
+							</div>
+							<div>
+								<label for="account_note" string="Internal Note" />
+								<field name="account_note" colspan="4"/>
+							</div>
+						</group>
+	        	    </page>
+	        	</page>	      		
+	        </field>
+	   	</record>
+
+        <record id="view_delivery_todo_search" model="ir.ui.view">
+            <field name="name">stock.delivery.todo.search</field>
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_search"/>
+            <field name="arch" type="xml">
+                <field name="stock_journal_id" position="after">
+					<filter name="todo" icon="terp-go-today" string="To Do" domain="[('state','in',['draft','assigned','confirmed'])]" />
+                </field>
+        	</field>
+       	</record>	   	
+	   	    
+    </data>
+</openerp>

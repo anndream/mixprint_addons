@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report id="report_wht_certif" 		report_type="pdf" 		model="ineco.wht" 		name="wht.certif" 		string="Withholding Tax Certificate"/>
+        <report id="report_wht_pnd3" 		report_type="pdf" 		model="ineco.wht.pnd" 	name="wht.pnd3" 		string="PND 3"/>  
+        <report id="report_wht_pnd3_attach" report_type="pdf" 		model="ineco.wht.pnd" 	name="wht.pnd3.attach" 	string="PND3 Attach"/>              
+        <report id="report_wht_pnd53" 		report_type="pdf" 		model="ineco.wht.pnd" 	name="wht.pnd53" 		string="PND 53"/>  
+        <report id="report_wht_pnd53_attach" report_type="pdf" 		model="ineco.wht.pnd" 	name="wht.pnd53.attach" string="PND53 Attach"/>              
+        <report id="report_pp30" 			report_type="pdf" 		model="account.period" 	name="pp30" 			string="PP30"/>               
+	</data>
+</openerp>

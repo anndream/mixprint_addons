@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+	<data>
+	
+		<report id="ineco_purchase_order_form"
+		    model="purchase.order" name="ineco.purchase.order.form" rml="ineco_purchase_report/report/purchase_order_form.jrxml" 
+		    string="Purchase Order (Ineco)"/>
+		<report id="ineco_request_quotation_form"
+		    model="purchase.order" name="ineco.request.quotation.form" rml="ineco_purchase_report/report/request_quotation_form.jrxml" 
+		    string="Request Quotation (Ineco)"/>
+		    
+	</data>
+	
+</openerp>

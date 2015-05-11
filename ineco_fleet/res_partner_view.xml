@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+	    <record model="ir.ui.view" id="view_ineco_route_partner_form">
+	        <field name="name">ineco.route.partner.form</field>
+	        <field name="model">res.partner</field>
+	        <field name="inherit_id" ref="base.view_partner_form"/>
+	        <field name="arch" type="xml"> 
+	        	<field name="website" position="before">
+	        		<field name="route_id" />
+	        	</field>   
+	        	
+    		</field>
+    	</record>
+    	
+    </data>
+</openerp>

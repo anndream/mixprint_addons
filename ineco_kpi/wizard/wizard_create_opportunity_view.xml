@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_kpi_create_opportunity" model="ir.ui.view">
+            <field name="name">Create KPI Opportunity</field>
+            <field name="model">ineco.kpi.create_opportunity</field>
+            <field name="arch" type="xml">
+                <form string="Create Opportunity" version="7.0">
+                    <header>
+                        <button name="create_wizard" string="Create" type="object" class="oe_highlight"  />
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </header>
+                    <group>
+                        <field name="year_id" />
+                        <field name="category_id" />
+                        <field name="date_start" />
+                        <field name="date_finish" />
+                        <field name="dimension" />
+                        <field name="target" />
+                    </group>
+               </form>
+            </field>
+        </record>
+
+        <record id="action_kpi_create_opportunity" model="ir.actions.act_window">
+            <field name="name">Create KPI Opportunity</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ineco.kpi.create_opportunity</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_kpi_create_opportunity"/>
+            <field name="target">new</field>
+            <field name="multi">True</field>
+        </record>
+
+    	<menuitem name="Auto Create KPI Opportunity" 
+    	    parent="menu_ineco_kpi_configuration" 
+    	    id="menu_kpi_create_opportunity" 
+    	    sequence="7" 
+    	    action="action_kpi_create_opportunity"/>
+        
+    	<!-- 
+        <record model="ir.values" id="sale_order_approve_point">
+            <field name="model_id" ref="sale.model_sale_order" />
+            <field name="name">Approve Points</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_sale_order_approve_point'))" />
+            <field name="key">action</field>
+            <field name="model">sale.order</field>
+        </record>
+         -->
+        
+    </data>
+</openerp>

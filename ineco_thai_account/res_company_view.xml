@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+        
+        <record model="ir.ui.view" id="view_ineco_res_company_form">
+	      	<field name="name">ineco.res.company.form</field>
+	      	<field name="model">res.company</field>
+	      	<field name="inherit_id" ref="base.view_company_form"/>
+	      	<field name="arch" type="xml">
+	 			<page string="Configuration" position="after" version="7.0">	      	    
+	            	<page string="Address For VAT">
+	            		<group>
+		            	    <group>
+			                	<field name="ineco_company_name"/>	            	        
+			                	<field name="ineco_branch"/>
+			                	<field name="ineco_building"/>
+			                	<field name="ineco_room_no"/>
+			                    <field name="ineco_class"/>
+			                	<field name="ineco_village"/>
+			                </group>
+			                <group>    	
+			                	<field name="ineco_no"/>
+			                	<field name="ineco_moo"/>
+			                    <field name="ineco_alley"/>	                	    
+		                	    <field name="ineco_road"/>
+			                	<field name="ineco_district"/>
+			                	<field name="ineco_amphoe"/>
+		                	</group>
+		                	<group>
+			                	<field name="ineco_province"/>
+			                	<field name="ineco_zip"/>
+			                	<field name="ineco_phone"/>
+			                	<field name="ineco_tax"/>
+			                 </group>
+			                 <group>
+			                	<field name="ineco_position"/>
+			                	<field name="ineco_name"/>
+		                	</group>
+	                	</group>
+	            	</page>
+	 			</page>            	
+	      	</field>
+	    </record> 
+	    
+        
+    </data>
+</openerp>

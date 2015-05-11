@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+	    
+      <menuitem name="Ineco"
+            id="menu_ineco"
+            parent="base.menu_administration" sequence="20" />
+        
+      <menuitem name="Configuration"
+            id="menu_ineco_configuration"
+            parent="menu_ineco" sequence="10" />
+      
+	    	    
+        <!--  Jasper Server Tree -->
+       <record model="ir.ui.view" id="view_ineco_jasper_server_tree">
+            <field name="name">ineco.jasper.server.tree</field>
+            <field name="model">ineco.jasper.server</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Jasper Server">
+                    <field name="name"/>
+                    <field name="host" />
+                    <field name="port" />
+                    <field name="username"/>
+                    <field name="dir"/>
+                    <field name="uuid" />
+              	</tree>
+            </field>
+        </record>
+
+       <record model="ir.ui.view" id="view_ineco_jasper_server_search">
+            <field name="name">ineco.jasper.server.search</field>
+            <field name="model">ineco.jasper.server</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Jasper Server">
+					<field name="name" />
+                    <field name="host" />
+                    <field name="port" />
+					<field name="dir" />
+					<field name="username" />
+              	</search>
+            </field>
+        </record>
+       
+        <!-- Jasper Server Form -->
+       	<record model="ir.ui.view" id="view_ineco_jasper_server_form">
+            <field name="name">ineco.jasper.server.form</field>
+            <field name="model">ineco.jasper.server</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Jasper Server">
+                    <group colspan="4">
+	                    <field name="name" />
+	                    <field name="dir" />
+	                    <field name="host" />
+	                    <field name="port" />
+	                    <field name="username" />
+						<field name="password" password="1"/>
+					</group>
+					<newline />
+					<notebook colspan="4">
+					    <page string="Jasper Report">
+            				<button name="button_get_report" string="Get Reports" type="object" icon="gtk-ok" colspan="4"/>          		
+					        <newline />
+					   		<field name="report_ids" nolabel="1" colspan="4">
+					       		<tree string="Report Lists">
+					                <field name="name" />
+					                <field name="label" />
+					                <field name="uristring" />
+					            </tree>
+					        </field>
+					    </page>
+					    <page string="Public Key">
+					        <field name="key2" nolabel="1" />
+					    </page>
+					    <page string="Code">
+					        <field name="code1" nolabel="1" />
+					    </page>
+					    <page string="Passport">
+					        <field name="passportkey" nolabel="1" />
+					    </page>
+					</notebook>
+				</form>
+            </field>
+        </record>
+
+       		
+        <!-- Jasper Server Action  -->
+        <record model="ir.actions.act_window" id="action_view_ineco_jasper_server">
+            <field name="name">Jasper Server</field>
+            <field name="res_model">ineco.jasper.server</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+      <menuitem name="Jasper Server"
+            id="menu_ineco_configuration_jasperserver"
+            parent="menu_ineco_configuration" sequence="1"
+            action="action_view_ineco_jasper_server" />
+
+        <!--  Jasper Report Tree -->
+       <record model="ir.ui.view" id="view_ineco_jasper_report_tree">
+            <field name="name">ineco.jasper.report.tree</field>
+            <field name="model">ineco.jasper.report</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Jasper Report">
+					<field name="name" />
+					<field name="label" />
+					<field name="module" />
+					<field name="uristring" />					
+					<button name="browse_report" string="Run" type="object" icon="gtk-ok"/>										
+				</tree>
+            </field>
+        </record>
+
+       <record model="ir.ui.view" id="view_ineco_jasper_report_search">
+            <field name="name">ineco.jasper.report.search</field>
+            <field name="model">ineco.jasper.report</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Jasper Report">
+					<field name="name" />
+					<field name="label" />
+					<field name="module"/>
+					<field name="uristring" />	
+	               <group expand="0" string="Group By...">
+	                   <filter string="Module" icon="terp-partner" domain="[]" context="{'group_by':'module'}"/>
+	               </group>
+						
+              	</search>
+            </field>
+        </record>
+       		
+        <!-- Jasper Report Form -->
+       	<record model="ir.ui.view" id="view_ineco_jasper_report_form">
+            <field name="name">ineco.jasper.report.form</field>
+            <field name="model">ineco.jasper.report</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Jasper Report">
+					<field name="name" />
+					<field name="label" />
+					<field name="uristring" colspan="4" />
+					<field name="module" />
+					<field name="server_id" />
+					<button name="browse_report" string="Run" type="object" icon="gtk-ok"/>										
+					<newline />		
+					<field name="param_ids" colspan="4">
+					    <tree string="Parameters" editable="bottom" >
+					        <field name="param_name" />
+					        <field name="param_label" />
+					        <field name="param_uristring" />
+					        <field name="reference_id" />
+					    </tree>
+					    <!-- <form>
+					        <field name="param_name" />
+					        <field name="param_label" />
+					        <field name="param_uristring" />
+					    </form>  -->
+					</field>	
+					<field name="group_ids" colspan="4" />						
+				</form>
+            </field>
+        </record>
+      	    		
+        <!-- Jasper Report Action  -->
+        <record model="ir.actions.act_window" id="action_view_ineco_jasper_report">
+            <field name="name">Jasper Report</field>
+            <field name="res_model">ineco.jasper.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_ineco_jasper_report_tree"/>                                                
+      </record>
+
+      <menuitem name="Jasper Report"
+            id="menu_ineco_configuration_jasperreort"
+            parent="menu_ineco_configuration" sequence="2"
+            action="action_view_ineco_jasper_report" />
+       		      		
+    </data>
+</openerp>

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!-- ineco.close.account -->        
+        <record id="view_ineco_close_account_form" model="ir.ui.view">
+            <field name="name">ineco.close.account.form</field>
+            <field name="model">ineco.close.account</field>
+            <field name="arch" type="xml">  
+                <form string="Close Account">    
+                    <field name="account_id"/>
+                    <field name="period_id" /> 
+                    <field name="balance_before"/>  
+                    <field name="debit"/>   
+                    <field name="credit"/>                                          
+                    <field name="balance"/>   
+                    <field name="company_id"/>                          	      
+                </form>
+            </field>
+        </record>
+                
+        <record id="view_ineco_close_account_tree" model="ir.ui.view">
+            <field name="name">ineco.close.account.tree</field>
+            <field name="model">ineco.close.account</field>
+            <field name="arch" type="xml">
+                <tree string="Close Account">
+                    <field name="account_id"/>
+                    <field name="balance_before"/> 
+                    <field name="debit"/>   
+                    <field name="credit"/>                      
+                    <field name="balance"/>           
+                </tree>
+            </field>
+        </record>
+        
+        <record id="view_ineco_close_account_search" model="ir.ui.view">
+            <field name="name">ineco.close.account.search</field>
+            <field name="model">ineco.close.account</field>
+            <field name="arch" type="xml">
+                <search string="Close Account">
+                    <field name="code"/>
+                    <field name="account_id"/>
+                    <field name="period_id" />                           
+                </search>
+            </field>
+        </record>
+        
+        <record model="ir.ui.view" id="view_ineco_close_account_sale_form">
+	      	<field name="name">ineco.close.account.period.form</field>
+	      	<field name="model">account.period</field>
+	      	<field name="inherit_id" ref="account.view_account_period_form"/>
+	      	<field name="arch" type="xml">      
+	      		<field name="special" position="after">
+	      			<field name="date_pp30" required="1" />
+	      			
+	      		</field>  
+	            <xpath expr="//group" position="after">
+	        	    <newline/>   
+ 	        		<notebook colspan="4">  
+                      <page string="Close Account"> 	        		    
+						<field name="close_line_ids" />	    	    	        	        
+		        	  </page>
+                      <page string="Customer Invoice"> 	      	  		    
+						<field name="customer_invoice_ids">
+							<tree string="Customer Invoice" >
+								<field name="number" />
+								<field name="date_invoice" />
+								<field name="partner_id" />
+								<field name="amount_untaxed" sum="Total" />
+								<field name="amount_tax" sum="Tax" />
+								<field name="amount_total" sum="GrandTotal" />
+								<field name="state" />
+							</tree>
+						</field>						    	    	        	        
+		        	  </page>
+                      <page string="Customer Refund"> 	        		    
+						<field name="customer_refund_ids" >    	    	        	        
+							<tree string="Customer Invoice">
+								<field name="number" />
+								<field name="date_invoice" />
+								<field name="partner_id" />
+								<field name="amount_untaxed" sum="Total" />
+								<field name="amount_tax" sum="Tax" />
+								<field name="amount_total" sum="GrandTotal" />
+								<field name="state" />
+							</tree>
+						</field>
+		        	  </page>	
+		        	  <page string="Sale Receipt">
+		        	  	<field name="sale_receipt_ids" />
+		        	  </page>
+                      <page string="Supplier Invoice"> 	        		    
+						<field name="supplier_invoice_ids">
+							<tree string="Customer Invoice">
+								<field name="number" />
+								<field name="date_invoice" />
+								<field name="partner_id" />
+								<field name="amount_untaxed" sum="Total" />
+								<field name="amount_tax" sum="Tax" />
+								<field name="amount_total" sum="GrandTotal" />
+								<field name="state" />
+							</tree>					
+						</field>    	    	        	        
+		        	  </page>
+                      <page string="Supplier Refund"> 	        		    
+						<field name="supplier_refund_ids">
+							<tree string="Customer Invoice">
+								<field name="number" />
+								<field name="date_invoice" />
+								<field name="partner_id" />
+								<field name="amount_untaxed" sum="Total" />
+								<field name="amount_tax" sum="Tax" />
+								<field name="amount_total" sum="GrandTotal" />
+								<field name="state" />
+							</tree>
+						</field>    	        	        
+		        	  </page>	
+		        	  <page string="Purchase Receipt">
+		        	  	<field name="purchase_receipt_ids" />
+		        	  </page>
+		        	  <page string="PP30"> 	
+		        	  	<group colspan="4">
+
+		        	    <group >
+		        	        <group string="Customer Invoice" >
+				        	    <field name="sale_amount_untaxed" />
+								<field name="sale_amount_tax" />
+							</group>
+		        	        <group string="Customer Refund" >
+				        	    <field name="sale_refund_amount_untaxed" />
+								<field name="sale_refund_amount_tax" />
+							</group>							
+		        	        <group string="Sale Receipt" >
+				        	    <field name="sale_receipt_amount_untaxed" />
+								<field name="sale_receipt_amount_tax" />
+							</group>							
+						</group>
+						<group >
+							<group string="Supplier Invoice">
+				        	    <field name="purchase_amount_untaxed" />
+								<field name="purchase_amount_tax" />
+							</group>	
+							<group string="Supplier Refund">
+				        	    <field name="purchase_refund_amount_untaxed" />
+								<field name="purchase_refund_amount_tax" />
+							</group>	
+		        	        <group string="Purchase Receipt" >
+				        	    <field name="purchase_receipt_amount_untaxed" />
+								<field name="purchase_receipt_amount_tax" />
+							</group>							
+						</group>
+						</group>
+					  </page>	        	  	        	  		        	  
+	        		</notebook>        		
+				</xpath>
+			</field>        
+        </record>
+        
+	    <record model="ir.actions.act_window" id="ineco_pp30_action">
+	        <field name="name">PP30</field>
+	        <field name="res_model">account.period</field>
+	        <field name="view_mode">tree,form</field>        
+	    </record>	   
+
+    	<menuitem name="PP30" 
+    		id="menu_ineco_pp30" 
+    		parent="menu_ineco_account" 
+    		sequence="11" 
+    		action="ineco_pp30_action"/>            
+    </data>
+</openerp>
+                

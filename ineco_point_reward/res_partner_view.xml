@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_ineco_partner_point_form" model="ir.ui.view">
+            <field name="name">ineco.res.partner.point.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                 
+                <page string="History" position="before" version="7.0">                
+                    <page string="Point History">
+                        <div class="oe_title">
+	                    	<label for="points" />
+	                        <h1><field name="points" class="oe_inline"/></h1>	                        
+	                   	</div>	                    
+                        <field name="point_history_ids">
+                            <tree string="Point History" colors="red:(state == 'cancel');blue:(state == 'done')">
+                                <field name="doc_date" />
+                                <field name="docno" />
+                                <field name="name" />
+                                <field name="receive" />
+                                <field name="issue" />
+                                <field name="balance" />
+                                <field name="state" />
+                            </tree>
+                        </field>
+                    </page>
+                </page>
+                
+            </field>
+        </record>
+        
+        
+        <record id="ineco_res_partner_view_buttons" model="ir.ui.view">
+            <field name="name">ineco.partner.view.buttons</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form" />
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='buttons']" position="inside">
+                    <button name="button_redemption" 
+                        type="object"
+                        string="Redemption"
+                        attrs="{'invisible': [('customer', '=', False)]}"
+                        />
+                    <!-- 
+                    <button name="button_transfer" 
+                        type="object"
+                        string="Transfer"
+                        attrs="{'invisible': [('customer', '=', False)]}"
+                        />
+                    <button name="button_return" 
+                        type="object"
+                        string="Return"
+                        attrs="{'invisible': [('customer', '=', False)]}"
+                        />
+                    <button name="button_adjustment" 
+                        type="object"
+                        string="Adjustment"
+                        attrs="{'invisible': [('customer', '=', False)]}"
+                        />
+                    -->
+             	</xpath>
+            </field>
+        </record>
+         
+        
+   </data>
+</openerp>

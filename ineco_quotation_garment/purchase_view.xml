@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_ineco_purchaseorder_form" model="ir.ui.view">
+            <field name="name">ineco.purchase.order.form</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+            	<!-- 
+           		<field name='amount_untaxed' position="replace">
+           			<field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}" groups="purchase.group_purchase_manager" />
+           		</field>
+           		<field name='amount_tax' position="replace">
+           			<field name="amount_tax" widget="monetary" options="{'currency_field': 'currency_id'}" groups="purchase.group_purchase_manager" />
+           		</field>
+           		<field name='amount_total' position="replace">
+           			<field name="amount_total" widget="monetary" options="{'currency_field': 'currency_id'}" groups="purchase.group_purchase_manager" />
+           		</field>
+				<xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="replace" >
+					<field name="price_unit" groups="purchase.group_purchase_manager"/>
+				</xpath>
+				<xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="replace" >
+					<field name="price_subtotal" groups="purchase.group_purchase_manager"/>
+				</xpath>
+				 -->
+				<field name="location_id" position="after">
+					<field name="shipping_term" />
+					<field name="shipping_via" />
+					<field name="incoterm" />
+				</field>
+			</field>    
+	    </record>
+	    
+<!-- 
+        <record id="view_ineco_purchaseorder_tree" model="ir.ui.view">
+            <field name="name">ineco.purchase.order.tree</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+            <field name="arch" type="xml">
+            	<field name="amount_untaxed" position="replace">
+           			<field name="amount_untaxed" sum="Total Untaxed amount" groups="purchase.group_purchase_manager" />            	
+            	</field>
+            	<field name="amount_total" position="replace">
+           			<field name="amount_total" sum="Total amount" groups="purchase.group_purchase_manager" />            	
+            	</field>
+            </field>
+        </record>	    
+ -->
+ 	    
+    </data>
+    
+</openerp>

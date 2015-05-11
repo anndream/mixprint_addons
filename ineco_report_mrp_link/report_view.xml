@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+      <!-- mrp Menu -->
+      
+       <menuitem name="Production Report"
+            id="menu_ineco_mrp_report"
+            parent="base.menu_mrp_root" sequence="20" />
+       
+            
+       <!--  Jasper mrp Report Tree -->
+       <record model="ir.ui.view" id="view_ineco_mrp_report_tree">
+            <field name="name">ineco.mrp.report.tree</field>
+            <field name="model">ineco.jasper.report</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Jasper Report">
+					<field name="label" />
+					<button name="browse_report" string="Run" type="object" icon="gtk-ok"/>										
+				</tree>
+            </field>
+        </record>
+
+        <!--  Jasper mrp Report Search -->
+       <record model="ir.ui.view" id="view_ineco_mrp_report_search">
+            <field name="name">ineco.mrp.report.search</field>
+            <field name="model">ineco.jasper.report</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="MRP Report">
+					<field name="label" />
+              	</search>
+            </field>
+        </record>
+        
+        <!-- Jasper mrp Report Action  -->
+        <record model="ir.actions.act_window" id="action_view_ineco_mrp_report">
+            <field name="name">MRP Report</field>
+            <field name="res_model">ineco.jasper.report</field>
+            <field name="view_type">form</field>
+            <field name="domain">['|',('module','=','mrp'),('module','=',False)]</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_mrp_report_tree"/>            
+        </record>
+       
+      	<menuitem name="MRP Reports"
+            id="menu_ineco_purhase_report_list"
+            parent="menu_ineco_mrp_report"
+            action="action_view_ineco_mrp_report" 
+            sequence="10" />
+	    	    	    	    
+	</data>
+</openerp>

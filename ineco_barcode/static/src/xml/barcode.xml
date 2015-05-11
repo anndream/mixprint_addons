@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+    <t t-name="HomePage">
+        <div class="oe_barcode_homepage">
+            <div class="oe_barcode_homepage_left"></div>
+            <div class="oe_barcode_homepage_right"></div>
+        </div>
+    </t>
+    
+    <t t-name="BarcodeSearch">
+    	<div class="oe_barcode_search_container">
+	    	<label for="oe_barcode_search">BARCODE</label>
+	    	<input type="text" id="oe_barcode_search" class="oe_barcode_search" />
+    	</div>
+    </t>
+    
+    <t t-name="BarcodeResult">
+    	<div class="oe_barcode_result_container">
+    		<textarea id="oe_barcode_result" class="oe_barcode_result" rows="10" readonly="1"/>
+    	</div>
+    </t>
+    
+    <t t-name="LotResult">
+    	<div class="oe_lot_result_container">
+    		<table width="100%">
+    			<tr>
+    				<td class="oe_product_result_label">Lot Code</td>
+    				<td><div class="oe_lot_code"></div></td>
+    				<td class="oe_product_result_label">Lot Quantity</td>
+    				<td><div  class="oe_lot_quantity"></div></td>
+    				<td class="oe_product_result_label">Lot Location</td>
+    				<td><div class="oe_lot_location"></div></td>
+    			</tr>
+    		</table>
+    	</div>
+    </t>
+    
+    <t t-name="ProductResult">
+    	<div class="oe_product_result_container">
+    		<table width="100%">
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Product Name</td>
+    				<td width="*">
+    					<div class="oe_product_id" style="display:none"></div>
+    					<a class="oe_goto_product">                       
+    						<div class="oe_product_name"></div>
+    					</a>
+    				</td>
+    				<td width="15%" class="oe_product_result_label">Unit</td>
+    				<td width="15%"><div class="oe_product_unit"></div></td>
+    			</tr>
+    			<tr>
+    				<td class="oe_product_result_label">Code</td>
+    				<td><div class="oe_product_default_code"></div></td>
+    				<td class="oe_product_result_label">Quantity</td>
+    				<td><div class="oe_product_onhand"></div></td>
+    			</tr>
+    			<tr>
+    				<td class="oe_product_result_label">Location</td>
+    				<td colspan="3"><div class="oe_product_locations"></div></td>
+    			</tr>
+    			<tr>
+    				<td colspan="4">
+    					<table border="0" width="100%">
+    						<tr>
+    							<td class="oe_product_result_label">Supplier</td>
+    							<td>
+    								<div class="oe_product_supplier"></div>
+    							</td>
+    							<td class="oe_product_result_label">Last Purchase</td>
+    							<td><div  class="oe_product_lastpurchase"></div></td>
+    							<td class="oe_product_result_label">Cost Unit</td>
+    							<td><div class="oe_product_cost"></div></td>
+    						</tr>
+    						<tr>
+    							<td class="oe_product_result_label">Customer</td>
+    							<td></td>
+    							<td class="oe_product_result_label">Last Sale</td>
+    							<td></td>
+    							<td class="oe_product_result_label">Price Unit</td>
+    							<td></td>
+    						</tr>
+    					</table>
+    				</td>
+    			</tr>
+    			<tr>
+    				<td colspan="4">
+    					<!-- <img t-att-src="'data:image/jpg;base64,'+item.image"/>  -->
+    					<div class="oe_product_picture_container"></div>
+    				</td>
+    			</tr>
+    		</table>
+    	</div>
+    </t>
+    
+    <t t-name="ProductPictureResult">
+        <div class="oe_product_picture">
+            <img t-att-src="'data:image/jpg;base64,'+product.image"/>
+        </div>
+    </t>
+    
+    <t t-name="PatternResult">
+    	<div class="oe_pattern_container">
+    		<table width="100%">
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Pattern Code</td>
+    				<td width="35%">
+    					<div class="oe_pattern_id" style="display:none"></div>
+    					<a class="oe_goto_pattern">                       
+    						<div class="oe_pattern_name"></div>
+    					</a>
+    				</td>
+    				<td width="15%"></td>
+    				<td width="35%"></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Sale Order</td>
+    				<td width="35%"> <div class="oe_pattern_saleorder" /> </td>
+    				<td width="15%" class="oe_product_result_label">Garment Order</td>
+    				<td width="35%"><div class="oe_pattern_garmentorder" /></td>
+    			</tr>
+    			<tr>
+    				<td class="oe_product_result_label">Customer</td>
+    				<td><div class="oe_pattern_customer" /></td>
+    				<td class="oe_product_result_label">Employee</td>
+    				<td><div class="oe_pattern_employee" /></td>
+    			</tr>
+    			<tr>
+    				<td class="oe_product_result_label">Sampling Order</td>
+    				<td><div class="oe_pattern_samplingorder" /></td>
+    				<td class="oe_product_result_label">Master MO</td>
+    				<td><div class="oe_pattern_mastermo" /></td>
+    			</tr>
+    			<tr>
+    				<td class="oe_product_result_label">Product Type</td>
+    				<td><div class="oe_pattern_producttype" /></td>
+    				<td class="oe_product_result_label">Location</td>
+    				<td><div class="oe_pattern_location" /></td>
+    			</tr>
+    			<tr>
+    				<td class="oe_product_result_label">Sales</td>
+    				<td><div class="oe_pattern_sale" /></td>
+    				<td></td>
+    				<td></td>
+    			</tr>
+    			<tr>
+    				<td colspan="4">
+    					<!-- <img t-att-src="'data:image/jpg;base64,'+item.image"/>  -->
+    					<div class="oe_pattern_picture_container"></div> 
+    				</td>
+    			</tr>
+    		</table>
+    	</div>
+    </t>
+    
+    <t t-name="PatternPictureResult">
+        <div class="oe_pattern_picture">
+        	<a class="oe_goto_pattern">
+            	<img t-att-src="'data:image/jpg;base64,'+pattern.image"/>
+            </a>
+        </div>
+    </t>
+
+    <t t-name="HRResult">
+    	<div class="oe_hr_container">
+    		<table width="100%">
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Code</td>
+    				<td width="35%">
+    					<div class="oe_hr_id" style="display:none"></div>
+    					<a class="oe_goto_hr">                       
+    						<div class="oe_hr_code"></div>
+    					</a>
+					</td>
+    				<td width="15%" class="oe_product_result_label">Name</td>
+    				<td width="35%"><div class="oe_hr_name"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label"></td>
+    				<td width="35%"><div class="oe_hr_position_name"></div></td>
+    				<td width="15%" class="oe_product_result_label">Job</td>
+    				<td width="35%"><div class="oe_hr_job_name"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Department</td>
+    				<td width="35%"><div class="oe_hr_department_name"></div></td>
+    				<td width="15%" class="oe_product_result_label">Manager</td>
+    				<td width="35%"><div class="oe_hr_manager_name"></div></td>
+    			</tr>
+    			<tr>
+    				<td colspan="4">
+    					<div class="oe_hr_picture_container"></div> 
+    				</td>
+    			</tr>
+    		</table>
+    	</div>
+    </t>
+
+    <t t-name="HRPictureResult">
+        <div class="oe_hr_picture">
+        	<a class="oe_goto_hr">
+            	<img t-att-src="'data:image/jpg;base64,'+hr.image_medium"/>
+            </a>
+        </div>
+    </t>
+
+    <t t-name="PatternLineResult">
+    	<div class="oe_patternline_result_container">
+    		<table width="100%">
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Part</td>
+    				<td width="35%"><div class="oe_patternline_name"></div></td>
+    				<td width="15%"></td>
+    				<td width="35%"></td>
+    			</tr>
+    		</table>
+    	</div>
+    </t>
+
+    <t t-name="FGResult">
+    	<div class="oe_fg_container">
+    		<table width="100%">
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">MO NO</td>
+    				<td width="35%">
+    				    <div class="oe_mrp_id" style="display:none"></div>
+    					<a class="oe_goto_fg">                       
+    						<div class="oe_mrp_code"></div>
+    					</a>			
+    				</td>
+    				<td width="15%" class="oe_product_result_label">Customer</td>
+    				<td width="35%"><div class="oe_mrp_customer_name"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Product</td>
+    				<td width="35%"><div class="oe_mrp_product"></div></td>
+    				<td width="15%" class="oe_product_result_label">Pattern</td>
+    				<td width="35%"><div class="oe_mrp_pattern"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Date</td>
+    				<td width="35%"><div class="oe_mrp_date"></div></td>
+    				<td width="15%" class="oe_product_result_label">Date Delivery</td>
+    				<td width="35%"><div class="oe_mrp_date_delivery"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Bill</td>
+    				<td width="35%"><div class="oe_mrp_bill"></div></td>
+    				<td width="15%" class="oe_product_result_label">Type</td>
+    				<td width="35%"><div class="oe_mrp_type"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Worker</td>
+    				<td width="35%"><div class="oe_mrp_worker"></div></td>
+    				<td width="15%" class="oe_product_result_label">Comment</td>
+    				<td width="35%"><div class="oe_mrp_comment"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Size</td>
+    				<td width="35%"><div class="oe_mrp_size"></div></td>
+    				<td width="15%" class="oe_product_result_label">Color</td>
+    				<td width="35%"><div class="oe_mrp_color"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Gender</td>
+    				<td width="35%"><div class="oe_mrp_gender"></div></td>
+    				<td width="15%" class="oe_product_result_label">Note</td>
+    				<td width="35%"><div class="oe_mrp_note"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Total</td>
+    				<td width="35%"><div class="oe_mrp_total"></div></td>
+    				<td width="15%" class="oe_product_result_label">Grand Total</td>
+    				<td width="35%"><div class="oe_mrp_grand_total"></div></td>
+    			</tr>
+    			<tr>
+    				<td colspan="4">
+    					<!-- <img t-att-src="'data:image/jpg;base64,'+item.image"/>  -->
+    					<div class="oe_pattern_picture_container"></div> 
+    				</td>
+    			</tr>
+    		</table>
+    	</div>
+    </t>
+
+    <t t-name="FGLineResult">
+    	<div class="oe_fgline_result_container">
+    		<table width="100%">
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Component</td>
+    				<td width="35%"><div class="oe_fg_component_name"></div></td>
+    				<td width="15%"></td>
+    				<td width="35%"></td>
+    			</tr>
+    		</table>
+    	</div>
+    </t>
+
+    <t t-name="SaleOrderResult">
+    	<div class="oe_saleorder_container">
+    		<table width="100%">
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">SO No</td>
+    				<td width="35%">
+    				    <div class="oe_saleorder_id" style="display:none"></div>
+    					<a class="oe_goto_saleorder">                       
+    						<div class="oe_sale_code"></div>
+    					</a>			
+    				</td>
+    				<td width="15%" class="oe_product_result_label">MO No</td>
+    				<td width="35%">
+    					<a class="oe_goto_saleorder"> 
+    						<div class="oe_sale_garment_order_no"></div>
+    					</a>
+    				</td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Date Order</td>
+    				<td width="35%"><div class="oe_sale_date_order"></div></td>
+    				<td width="15%" class="oe_product_result_label">Date Garment Order</td>
+    				<td width="35%"><div class="oe_sale_date_garment"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Customer</td>
+    				<td width="35%"><div class="oe_sale_customer"></div></td>
+    				<td width="15%" class="oe_product_result_label">Date Delivery</td>
+    				<td width="35%"><div class="oe_sale_date_delivery"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Sale</td>
+    				<td width="35%"><div class="oe_sale_name"></div></td>
+    				<td width="15%" class="oe_product_result_label"></td>
+    				<td width="35%"></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Product</td>
+    				<td width="35%"><div class="oe_sale_product"></div></td>
+    				<td width="15%" class="oe_product_result_label">Quantity</td>
+    				<td width="35%"><div class="oe_sale_quantity"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Pattern Employee</td>
+    				<td width="35%"><div class="oe_sale_employee_pattern"></div></td>
+    				<td width="15%" class="oe_product_result_label">Pattern Finish</td>
+    				<td width="35%"><div class="oe_sale_employee_pattern_finish"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Sampling Employee</td>
+    				<td width="35%"><div class="oe_sale_employee_sampling"></div></td>
+    				<td width="15%" class="oe_product_result_label">Sampling Finish</td>
+    				<td width="35%"><div class="oe_sale_employee_sampling_finish"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Cut Employee</td>
+    				<td width="35%"><div class="oe_sale_employee_cut"></div></td>
+    				<td width="15%" class="oe_product_result_label">Cut Finish</td>
+    				<td width="35%"><div class="oe_sale_employee_cut_finish"></div></td>
+    			</tr>
+    			<tr>
+    				<td width="15%" class="oe_product_result_label">Sew Employee</td>
+    				<td width="35%"><div class="oe_sale_employee_sew"></div></td>
+    				<td width="15%" class="oe_product_result_label">Sew Finish</td>
+    				<td width="35%"><div class="oe_sale_employee_sew_finish"></div></td>
+    			</tr>
+    		</table>
+    	</div>
+    </t>
+    
+</templates>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+
+	<data>
+
+		<report id="ineco_account_customer_invoice_form"
+		    model="account.invoice" 
+		    name="ineco.account.customer.invoice.form" 
+		    rml="ineco_account_report/report/customer_invoice.jrxml" 
+		    string="Invoice (A4)" />
+
+		<report id="ineco_account_customer_taxinvoice_form"
+		    model="account.invoice" 
+		    name="ineco.account.customer.taxinvoice.form" 
+		    rml="ineco_account_report/report/customer_tax_invoice.jrxml" 
+		    string="Receipt / Tax Invoice (A4)" />
+
+		<report id="ineco_account_customer_invoice_voucher_form"
+		    model="account.invoice" 
+		    name="ineco.account.customer.invoice.voucher.form" 
+		    rml="ineco_account_report/report/sale_voucher.jrxml" 
+		    string="Sale Voucher (A4)" />
+
+		<report id="ineco_account_supplier_invoice_voucher_form"
+		    model="account.invoice" 
+		    name="ineco.account.supplier.invoice.voucher.form" 
+		    rml="ineco_account_report/report/purchase_voucher.jrxml" 
+		    string="Purchase Voucher (A4)" />
+
+		<report id="ineco_account_billing_form"
+		    model="account.voucher" 
+		    name="ineco.account.billing.form" 
+		    rml="ineco_account_report/report/billing.jrxml" 
+		    string="Billing Note (A4)" />
+
+		<report id="ineco_account_receivable_form"
+		    model="account.voucher" 
+		    name="ineco.account.receivable.form" 
+		    rml="ineco_account_report/report/receivable_voucher.jrxml" 
+		    string="Receivable Voucher (A4)" />
+
+		<report id="ineco_account_payable_form"
+		    model="account.voucher" 
+		    name="ineco.account.payable.form" 
+		    rml="ineco_account_report/report/payment_voucher.jrxml" 
+		    string="Payable Voucher (A4)" />
+
+		<report id="ineco_account_billing_receipt_form"
+		    model="account.voucher" 
+		    name="ineco.account.billing.receipt.form" 
+		    rml="ineco_account_report/report/billing_receipt.jrxml" 
+		    string="Receipt (A4)" />
+
+		<report id="ineco_account_general_form"
+		    model="account.move" 
+		    name="ineco.account.general.form" 
+		    rml="ineco_account_report/report/general_voucher.jrxml" 
+		    string="General Voucher (A4)" />
+		    
+	</data>
+	
+</openerp>

@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<openerp>
+     <data>
+     
+		<!-- Product Category Stock Tree -->
+        <record id="view_ineco_product_category_stock_tree" model="ir.ui.view">
+            <field name="name">ineco.product.category.stock.tree</field>
+            <field name="model">ineco.product.category.stock</field>
+            <field name="arch" type="xml">
+                <tree string="Product Category Stock" colors="orange:product_rule_count == 0;red:product_rule_min &gt;= qty_available">
+                    <field name="category_id" />
+                    <field name="category_child_id" />
+                    <field name="product_id" />
+                    <field name="virtual_available" />
+                    <field name="qty_available" />
+                    <field name="uom_id" />
+                    <field name="product_count" />
+                    <field name="product_count_uom" />
+                    <field name="product_rule_count" invisible="1" />
+                    <field name="product_rule_min" invisible="1" />
+                </tree>
+            </field>
+        </record>	
+
+		<!-- Product Category Stock Form -->
+        <record id="view_ineco_product_category_stock_form" model="ir.ui.view">
+            <field name="name">ineco.product.category.stock.form</field>
+            <field name="model">ineco.product.category.stock</field>
+            <field name="arch" type="xml">
+                <form string="Product Category Stock">
+                    <field name="category_id" />
+                    <field name="category_child_id" />
+                    <field name="product_id" />
+                    <field name="virtual_available" />
+                    <field name="qty_available" />
+                </form>
+            </field>
+        </record>	
+
+        <record id="view_ineco_product_category_stock_filter" model="ir.ui.view">
+            <field name="name">ineco.product.category.stock.select</field>
+            <field name="model">ineco.product.category.stock</field>
+            <field name="arch" type="xml">
+                <search string="Search Product Cateogry Stock">
+                    <field name="category_id" />
+                    <field name="category_child_id" />
+                    <field name="product_id" />
+
+                    <group expand="0" string="Group By...">
+                        <filter name="category_group" string="Category" domain="[]" context="{'group_by':'category_id'}"/>
+                        <filter name="category_child_group" string="Child Category" domain="[]" context="{'group_by':'category_child_id'}"/>
+                        <filter name="product_group" string="Product" domain="[]" context="{'group_by':'product_id'}"/>
+                    </group>
+
+               	</search>
+            </field>
+        </record>
+
+		<!-- Product Category Stock Option Tree -->
+        <record id="view_ineco_product_category_stock_option_tree" model="ir.ui.view">
+            <field name="name">ineco.product.category.stock.option.tree</field>
+            <field name="model">ineco.product.category.stock.option</field>
+            <field name="arch" type="xml">
+                <tree string="Product Category Stock" colors="orange:product_rule_count == 0;red:product_rule_min &gt;= qty_available">
+                    <field name="category_id" />
+                    <field name="category_child_id" />
+                    <field name="product_id" />
+                    <field name="virtual_available" />
+                    <field name="qty_available" />
+                    <field name="uom_id" />
+                    <field name="product_count" />
+                    <field name="product_count_uom" />
+                </tree>
+            </field>
+        </record>	
+
+		<!-- Product Category Stock Option Form -->
+        <record id="view_ineco_product_category_stock_option_form" model="ir.ui.view">
+            <field name="name">ineco.product.category.stock.option.form</field>
+            <field name="model">ineco.product.category.stock.option</field>
+            <field name="arch" type="xml">
+                <form string="Product Category Stock">
+                    <field name="category_id" />
+                    <field name="category_child_id" />
+                    <field name="product_id" />
+                    <field name="virtual_available" />
+                    <field name="qty_available" />
+                </form>
+            </field>
+        </record>	
+
+        <record id="view_ineco_product_category_stock_filter" model="ir.ui.view">
+            <field name="name">ineco.product.category.stock.option.select</field>
+            <field name="model">ineco.product.category.stock.option</field>
+            <field name="arch" type="xml">
+                <search string="Search Product Cateogry Stock">
+                    <field name="category_id" />
+                    <field name="category_child_id" />
+                    <field name="product_id" />
+
+                    <group expand="0" string="Group By...">
+                        <filter name="category_group" string="Category" domain="[]" context="{'group_by':'category_id'}"/>
+                        <filter name="category_child_group" string="Child Category" domain="[]" context="{'group_by':'category_child_id'}"/>
+                        <filter name="product_group" string="Product" domain="[]" context="{'group_by':'product_id'}"/>
+                    </group>
+
+               	</search>
+            </field>
+        </record>
+
+        <record id="view_ineco_product_forecast_tree" model="ir.ui.view">
+            <field name="name">ineco.product.forcast.tree</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+            	<field name="qty_available" position="after">
+	            	<field name="incoming_qty" />
+	            	<field name="outgoing_qty" />
+            	</field>
+            	<field name="state" position="before">
+            		<field name="lot_count" />
+            	</field>
+            </field>
+        </record>
+
+        <record id="view_ineco_product_noreturn_form" model="ir.ui.view">
+            <field name="name">ineco.product.noreturn.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+            	<field name="list_price" position="after">
+            		<field name="no_return_product" />
+            		<field name="pattern" />
+            		<field name="product_name_eng" />
+            	</field>
+            </field>
+        </record>
+
+
+		<!-- Product Category -->
+        <record id="ineco_product_category_ratio_form" model="ir.ui.view">
+            <field name="name">ineco.product.category.form</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+            	<field name="type" position="after">
+            		<field name="ratio" />
+            		<notebook colspan="4">
+            			<page string="Default Cost">
+            				<field name="cost_type_ids" nolable="1" >
+            					<tree string="Default Cost" editable="top">
+            						<field name="cost_type_id" on_change="on_change_costtype(cost_type_id)" />
+            						<field name="quantity" />
+            						<field name="cost" />
+            					</tree>
+            				</field>
+            			</page>
+            		</notebook>
+            		<newline />
+            	</field>
+			</field>
+		</record>
+
+        <record id="ineco_product_cateogry_ratio_tree" model="ir.ui.view">
+            <field name="name">ineco.product.category.tree</field>
+            <field name="model">product.category</field>
+            <field name="priority">2</field>
+            <field name="inherit_id" ref="product.product_category_list_view"/>
+            <field name="arch" type="xml">
+
+                    <field name="complete_name" position="after">
+                    	<field name="ratio" />
+                    </field>
+
+            </field>
+        </record>                         
+     </data>
+</openerp>

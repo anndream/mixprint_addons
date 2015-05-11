@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    
+        <record id="view_ineco_partner_form2" model="ir.ui.view">
+            <field name="name">ineco.partner.form2</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <field name="comment" position="after">
+                	<field name="account_comment" placeholder="Put an accounting note..."/>
+                </field>
+                <field name="website" position="after">
+                	<field name="review" />
+                	<field name="is_user" groups="base.group_erp_manager" />
+                	<field name="total_employee" />
+                </field>
+                <field name="email" position="after">
+                	<field name="grade_by_volumne" groups="base.group_sale_grade"/>
+                	<field name="grade_by_price" groups="base.group_sale_grade" />
+                </field>
+            </field>
+        </record>
+        
+        <record id="ineco_account_review_tree" model="ir.ui.view">
+            <field name="name">ineco.partner.review.tree</field>
+            <field name="model">res.partner</field>
+            <field eval="8" name="priority"/>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <field name="phone" position="after">
+                	<field name="review" />
+                	<field name="grade_by_volumne" />
+                	<field name="grade_by_price" />
+                </field>
+            </field>
+        </record>
+        
+       <record id="ineco_partner_filter2" model="ir.ui.view">
+            <field name="name">ineco.partner.select2</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+            	<field name="user_id" position="before">
+                   <filter help="My Customer" icon="terp-personal+" name="mycustomer" domain="[('user_id','=',uid)]"/>            	
+            	</field>
+            	<field name="user_id" position="after">
+            		<field name="grade_by_volumne" />
+                	<field name="grade_by_price" />
+            	</field>
+            </field>
+       </record>
+        
+    
+	</data>
+</openerp>

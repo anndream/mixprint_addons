@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data>
+    <!--
+    Partners Extension
+  -->
+
+ 	<record id="view_iyara_area_form" model="ir.ui.view">
+      	<field name="name">Iyara Area</field>
+ 		<field name="model">iyara.area</field>
+   		<field name="arch" type="xml">
+   			<form string="Area" version="7.0">
+            	<group col="4">
+                	<field name="name"/>
+               	</group>
+      		</form>
+     	</field>
+ 	</record>
+        
+    <record id="view_partner_iyara_form" model="ir.ui.view">
+        <field name="name">res.partner.iyara.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr='//page[@string="History"]' position='after'>   
+                <page string="Customer Information"> 
+                	<group>   
+                	    <group>     
+				        	<field name="business_type_id" string="ประเภทธุรกิจ"/>
+				         	<field name="government_private" string="ภาครัฐ/เอกชน"/>
+			         	</group>
+			         	<group>     
+				        	<field name="area_id" string="พื้นที่"/>
+				         	<field name="customer_buy" string="ผู้ซื้อ"/>
+				         	<field name="customer_use" string="ผู้ใช้"/>
+			         	</group>
+		         	</group>   
+	            </page>
+            </xpath>
+        </field>
+    </record>
+    
+    <record id="view_partner_iyara_search_form" model="ir.ui.view">
+        <field name="name">res.partner.iyara.search.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <field name="category_id" position='after'>   
+				<field name="business_type_id" string="ประเภทธุรกิจ"/>
+				<field name="government_private" string="ภาครัฐ/เอกชน"/>  
+				<field name="area_id" string="พื้นที่"/>
+				<field name="customer_buy" string="ผู้ซื้อ"/>
+				<field name="customer_use" string="ผู้ใช้"/>
+            </field>
+            <filter string="Country" position='after'> 
+	            <filter string="ประเภทธุรกิจ" context="{'group_by': 'business_type_id'}"/>
+	            <filter string="ภาครัฐ/เอกชน" context="{'group_by': 'government_private'}"/>
+	            <filter string="พื้นที่" context="{'group_by': 'area_id'}"/>
+	            <filter string="ผู้ซื้อ" context="{'group_by': 'customer_buy'}"/>
+	            <filter string="ผู้ใช้" context="{'group_by': 'customer_use'}"/>
+            </filter>
+        </field>
+    </record>
+    
+    <record id="view_partner_iyara_tree_form" model="ir.ui.view">
+        <field name="name">res.partner.iyara.tree.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <field name="country_id" position='after'>   
+				<field name="business_type_id" string="ประเภทธุรกิจ" invisible="1"/>
+				<field name="government_private" string="ภาครัฐ/เอกชน" invisible="1"/>  
+				<field name="area_id" string="พื้นที่" invisible="1"/>
+				<field name="customer_buy" string="ผู้ซื้อ" invisible="1"/>
+				<field name="customer_use" string="ผู้ใช้" invisible="1"/>
+            </field>
+        </field>
+    </record>
+    
+    
+  </data>
+</openerp>

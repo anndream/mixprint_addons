@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="view_ineco_sale_order_make_purchase_form" model="ir.ui.view">
+            <field name="name">ineco.sale.order.make.purchase.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+	             	<div class="oe_right oe_button_box" name="buttons">
+						<button name="%(action_ineco_sale_make_purchase)d" states="progress,manual,waiting_date,invoice_except,done" type="action" string="Create RFQ" />	                    
+		           	</div>
+	           	</field>
+             	<xpath expr='//page[@string="Other Information"]' position='after'> 
+                    <page string="Purchase Order">
+                        <field name="purchase_ids" readonly="1">
+                            <tree string="Purchase Order">
+                                <field name="name" string="Reference"/>
+                                <field name="date_order" string="Order Date"/>
+                                <field name="partner_id"/>
+                                <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                                <field name="location_id" groups="stock.group_locations"/>
+                                <field name="minimum_planned_date"/>
+                                <field name="origin"/>
+                                <field name="state"/>
+                                <button name="purchase_cancel" states="draft,confirmed,wait_auth" string="Cancel Purchase Order" icon="gtk-cancel"/>
+                                <button name="purchase_confirm" states="draft" string="Confirm Purchase Order" icon="gtk-apply"/>
+                                <button name="purchase_approve" states="confirmed" string="Approved by Supplier" icon="gtk-ok"/>
+                            </tree>
+                        </field>
+                    </page>	 
+            	</xpath>        	    	                        	          	
+        	</field>
+        </record>
+    </data>
+</openerp>

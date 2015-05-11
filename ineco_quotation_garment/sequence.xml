@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+		<!-- Billing Sequence -->
+        <record id="seq_ineco_billing_type" model="ir.sequence.type">
+            <field name="name">Billing</field>
+            <field name="code">ineco.billing</field>
+        </record>
+
+        <record id="seq_ineco_billing" model="ir.sequence">
+            <field name="name">Billing</field>
+            <field name="code">ineco.billing</field>
+            <field name="prefix">BL%(y)s%(month)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+		<!-- Receive Sequence -->
+        <record id="seq_ineco_receive_type" model="ir.sequence.type">
+            <field name="name">Receive</field>
+            <field name="code">ineco.receive</field>
+        </record>
+
+        <record id="seq_ineco_receive" model="ir.sequence">
+            <field name="name">Receive</field>
+            <field name="code">ineco.receive</field>
+            <field name="prefix">RC%(y)s%(month)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+		<!-- Shipment Sequence -->
+        <record id="seq_ineco_shipping_type" model="ir.sequence.type">
+            <field name="name">Shipping</field>
+            <field name="code">ineco.shipping</field>
+        </record>
+
+        <record id="seq_ineco_shipping" model="ir.sequence">
+            <field name="name">Shipping</field>
+            <field name="code">ineco.shipping</field>
+            <field name="prefix">%(y)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+		<!-- Packing Box -->
+        <record id="seq_ineco_packingbox_type" model="ir.sequence.type">
+            <field name="name">Packing Box</field>
+            <field name="code">ineco.packing.box</field>
+        </record>
+
+        <record id="seq_ineco_packingbox" model="ir.sequence">
+            <field name="name">Packing Box</field>
+            <field name="code">ineco.packing.box</field>
+            <field name="prefix">%(y)s-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+   </data>
+</openerp>

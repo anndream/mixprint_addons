@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+
+        <record id="view_ineco_done_workorder_form" model="ir.ui.view">
+            <field name="name">ineco.done.workorder.form</field>
+            <field name="model">ineco.done.workorder</field>
+            <field name="arch" type="xml">
+                <form string="Done Work Order" version="7.0">
+                	<group>
+                	</group>
+                    <p class="oe_grey">
+                    </p>
+                    <footer>
+                        <button string="Update" name="update_data" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ineco_done_workorder" model="ir.actions.act_window">
+            <field name="name">Done Work Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ineco.done.workorder</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <record model="ir.values" id="ineco_done_workorder_value">
+            <!-- <field name="model_id" ref="sale.model_sale_order" /> -->
+            <field name="name">Done</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_ineco_done_workorder'))" />
+            <field name="key">action</field>
+            <field name="model">mrp.production.workcenter.line</field>
+        </record>   
+        
+    </data>
+</openerp>

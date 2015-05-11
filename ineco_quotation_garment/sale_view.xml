@@ -1,0 +1,1258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+		<!-- Color -->
+        <record id="view_ineco_color_tree" model="ir.ui.view">
+            <field name="name">sale.color.tree</field>
+            <field name="model">sale.color</field>
+            <field name="arch" type="xml">
+                <tree string="Colors">
+                    <field name="name" />
+                    <field name="name2" />
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_ineco_color_form" model="ir.ui.view">
+            <field name="name">sale.color.form</field>
+            <field name="model">sale.color</field>
+            <field name="arch" type="xml">
+                <form string="Colors">
+                    <field name="name" />
+                    <field name="name2" />
+                </form>
+            </field>
+        </record>	
+        
+        <record id="view_ineco_color_filter" model="ir.ui.view">
+            <field name="name">sale.color.select</field>
+            <field name="model">sale.color</field>
+            <field name="arch" type="xml">
+                <search string="Search Color">
+                	<field name="name" />
+                	<field name="name2" />
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_color" model="ir.actions.act_window">
+            <field name="name">Colors</field>
+            <field name="res_model">sale.color</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_color_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a color. 
+              </p><p>
+                This is the list of all color that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+        
+        <menuitem 
+            id="menu_ineco_color"
+        	action="action_ineco_color" 
+        	parent="base.menu_base_config"
+        	sequence="6"/>    
+        	
+        <!-- Size -->    
+        <record id="view_ineco_size_tree" model="ir.ui.view">
+            <field name="name">sale.size.tree</field>
+            <field name="model">sale.size</field>
+            <field name="arch" type="xml">
+                <tree string="Size">
+                	<field name="seq" />
+                    <field name="name" />
+                    <field name="code" />
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_ineco_size_form" model="ir.ui.view">
+            <field name="name">sale.size.form</field>
+            <field name="model">sale.size</field>
+            <field name="arch" type="xml">
+                <form string="Size">
+                	<field name="seq" />
+                    <field name="name" />
+                    <field name="code" required="1" />
+                </form>
+            </field>
+        </record>	
+        
+        <record id="view_ineco_size_filter" model="ir.ui.view">
+            <field name="name">sale.size.select</field>
+            <field name="model">sale.size</field>
+            <field name="arch" type="xml">
+                <search string="Search Size">
+                	<field name="name" />
+                	<field name="code" />
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_size" model="ir.actions.act_window">
+            <field name="name">Size</field>
+            <field name="res_model">sale.size</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_size_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a size. 
+              </p><p>
+                This is the list of all size that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+        
+        <menuitem 
+            id="menu_ineco_size"
+        	action="action_ineco_size" 
+        	parent="base.menu_base_config"
+        	sequence="7"/>  
+        	        	        	
+<!--         Delivery Type    -->
+        <record id="view_ineco_delivery_type_tree" model="ir.ui.view">
+            <field name="name">ineco.delivery.type.tree</field>
+            <field name="model">ineco.delivery.type</field>
+            <field name="arch" type="xml">
+                <tree string="Delivery Type">
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_ineco_delivery_type_form" model="ir.ui.view">
+            <field name="name">ineco.delivery.type.form</field>
+            <field name="model">ineco.delivery.type</field>
+            <field name="arch" type="xml">
+                <form string="Delivery Type">
+                    <field name="name" />
+                </form>
+            </field>
+        </record>	
+        
+        <record id="view_ineco_delivery_type_filter" model="ir.ui.view">
+            <field name="name">ineco.delivery.type.select</field>
+            <field name="model">ineco.delivery.type</field>
+            <field name="arch" type="xml">
+                <search string="Delivery Type">
+                	<field name="name" />
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_delivery_type" model="ir.actions.act_window">
+            <field name="name">Delivery Type</field>
+            <field name="res_model">ineco.delivery.type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_delivery_type_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a delivery type. 
+              </p><p>
+                This is the list of all delivery type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+        
+        <!-- <menuitem 
+            id="menu_ineco_delivery_type"
+        	action="action_ineco_delivery_type" 
+        	parent="base.menu_base_config"
+        	sequence="8"/>         
+         -->	
+
+		<!-- Style -->
+        <record id="view_ineco_style_tree" model="ir.ui.view">
+            <field name="name">sale.style.tree</field>
+            <field name="model">sale.style</field>
+            <field name="arch" type="xml">
+                <tree string="Style">
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_ineco_style_form" model="ir.ui.view">
+            <field name="name">sale.style.form</field>
+            <field name="model">sale.style</field>
+            <field name="arch" type="xml">
+                <form string="Style">
+                    <field name="name" />
+                </form>
+            </field>
+        </record>	
+        
+        <record id="view_ineco_style_filter" model="ir.ui.view">
+            <field name="name">sale.style.select</field>
+            <field name="model">sale.style</field>
+            <field name="arch" type="xml">
+                <search string="Search Style">
+                	<field name="name" />
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_style" model="ir.actions.act_window">
+            <field name="name">Style</field>
+            <field name="res_model">sale.style</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_style_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a color. 
+              </p><p>
+                This is the list of all color that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+        
+<!--         <menuitem  -->
+<!--             id="menu_ineco_style" -->
+<!--         	action="action_ineco_style"  -->
+<!--         	parent="base.menu_base_config" -->
+<!--         	sequence="9"/>     -->
+        	
+		<!-- Property -->
+        <record id="view_ineco_property_tree" model="ir.ui.view">
+            <field name="name">sale.property.tree</field>
+            <field name="model">sale.property</field>
+            <field name="arch" type="xml">
+                <tree string="Property">
+                	<field name="seq" />
+                    <field name="name" />
+                    <field name="active" />
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_ineco_property_form" model="ir.ui.view">
+            <field name="name">sale.property.form</field>
+            <field name="model">sale.property</field>
+            <field name="arch" type="xml">
+                <form string="Property">
+                	<field name="seq" />
+                    <field name="name" />
+                    <field name="active" />
+                </form>
+            </field>
+        </record>	
+        
+        <record id="view_ineco_property_filter" model="ir.ui.view">
+            <field name="name">sale.property.select</field>
+            <field name="model">sale.property</field>
+            <field name="arch" type="xml">
+                <search string="Search Property">
+                	<field name="name" />
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_property" model="ir.actions.act_window">
+            <field name="name">Property</field>
+            <field name="res_model">sale.property</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_property_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a property. 
+              </p><p>
+                This is the list of all property that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+        
+        <menuitem 
+            id="menu_ineco_property"
+        	action="action_ineco_property" 
+        	parent="base.menu_base_config"
+        	sequence="9"/>    
+        	        	          
+        <!-- Quotation -->
+        <record id="view_ineco_quotation_tree" model="ir.ui.view">
+            <field name="name">ineco.quotation.tree</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <tree string="Quotation" fonts="bold:message_unread==True" colors="grey:state=='cancel';blue:state in ('waiting_date','manual');red:state in ('invoice_except','shipping_except')">
+                    <field name="message_unread" invisible="1"/>
+                    <field name="name" string="Quotation No"/>
+                    <field name="date_order"/>
+                    <field name="sample_order_no" />
+                    <field name="partner_id"/>
+                    <field name="user_id"/>
+                    <field name="manager_user_id" />
+                    <field name="deposit" invisible="context.get('invisible_deposit', True)" />
+                    <field name="amount_total" sum="Total Tax Included"/>
+                    <field name="residual" invisible="context.get('invisible_residual', True)" />
+                    <field name="sale_revision" />
+                    <field name="state"/>
+                    <field name="date_sale_close" invisible="0" />
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_ineco_quotation_form" model="ir.ui.view">
+            <field name="name">ineco.quotation.form</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <form string="Sales Order" version="7.0">
+                    <header>
+                        <button name="invoice_recreate" states="invoice_except" string="Recreate Invoice" groups="base.group_user"/>
+                        <button name="invoice_corrected" states="invoice_except" string="Ignore Exception" groups="base.group_user"/>
+                        <button name="action_quotation_send" string="Send by Email" type="object" states="draft" class="oe_highlight" groups="base.group_erp_manager"/>
+                        <button name="action_quotation_send" string="Send by Email" type="object" states="sent" groups="base.group_erp_manager"/>
+                        <button name="print_quotation" string="Print" type="object" states="draft" class="oe_highlight" groups="base.group_erp_manager"/>
+                        <button name="print_quotation" string="Print" type="object" states="sent" groups="base.group_erp_manager"/>
+                        <button name="action_button_confirm" states="draft" string="Confirm Sale" type="object" groups="base.group_user"/>
+                        <button name="action_button_confirm" states="sent" string="Confirm Sale" class="oe_highlight" type="object" groups="base.group_user"/>
+                        <button name="action_view_invoice" string="View Invoice" type="object" class="oe_highlight"
+                            attrs="{'invisible': [('invoice_exists', '=', False)]}" groups="base.group_user"/>
+                        <button name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
+                            type="action" states="manual" class="oe_highlight" groups="base.group_user"/>
+                        <button name="copy_quotation" states="cancel" string="New Copy of Quotation" type="object"/>
+                        <button name="cancel" states="draft,sent" string="Cancel" groups="base.group_erp_manager"/>
+                        <button name="action_cancel" states="manual,progress" string="Cancel" type="object" groups="base.group_erp_manager"/>
+                        <button name="invoice_cancel" states="invoice_except" string="Cancel" groups="base.group_erp_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,sent,invoiced,done" statusbar_colors='{"invoice_except":"red","waiting_date":"blue"}'/>
+                </header>
+                <sheet>
+                    <h1>
+                        <label string="Quotation " attrs="{'invisible': [('state','not in',('draft','sent'))]}"/>
+                        <label string="Sale Order " attrs="{'invisible': [('state','in',('draft','sent'))]}"/>
+                        <field name="name" class="oe_inline" readonly="1"/>
+                    </h1>
+                    <group>
+                        <group>
+                            <field name="partner_id" on_change="onchange_partner_id(partner_id, context)" domain="[('customer','=',True)]" context="{'search_default_customer':1, 'show_address': 1}" options='{"always_reload": True}' />
+                            <field name="date_delivery" />
+                            <field name="sale_close_no" groups="base.group_erp_manager" />
+                            <!-- <field name="ineco_delivery_type_id" /> -->
+                            <field name="project_id" context="{'partner_id':partner_id, 'pricelist_id':pricelist_id, 'default_name':name}" groups="sale.group_analytic_accounting" domain="[('type','in',['view','normal','contract'])]"/>
+                        </group>
+                        <group>
+                            <field name="date_order"/>
+                            <field name="shop_id" groups="base.group_no_one" on_change="onchange_shop_id(shop_id, context)" widget="selection"/>
+                            <field name="client_order_ref"/>
+                            <field name="payment_term" required="1" widget="selection"/>      
+                            <field name="sale_revision" />      
+                            <field name="to_correct" groups="account.group_account_manager" />
+                            <field domain="[('type','=','sale')]" name="pricelist_id" groups="product.group_sale_pricelist" on_change="onchange_pricelist_id(pricelist_id,order_line)"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Order Lines">
+                            <field name="order_line">
+                                <form string="Sales Order Lines" version="7.0">
+                                    <header>
+                                        <button name="%(sale.action_view_sale_order_line_make_invoice)d" states="confirmed" string="Invoice" type="action" icon="terp-document-new"/>
+                                        <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done" statusbar_colors='{"exception":"red","cancel":"red"}'/>
+                                    </header>
+                                    <group>
+                                        <group>
+                                            <field name="state" invisible="1" />
+		                                    <field name="product_id"
+		                                                context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}"
+		                                                groups="base.group_user"
+		                                                on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, True, parent.date_order, False, parent.fiscal_position, False, context)"/>
+		                                    <label for="product_uom_qty"/>
+		                                	<div>
+		                                    	<field
+		                                                    context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}"
+		                                                    name="product_uom_qty" class="oe_inline"
+		                                                    on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, False, False, parent.date_order, False, parent.fiscal_position, True, context)"/>
+		                                    	<field name="product_uom" groups="product.group_uom" class="oe_inline oe_no_button"
+															on_change="product_uom_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, False, False, parent.date_order, context)"/>
+		                                    </div>
+		                                    <field name="price_unit"/>
+		                                    <label for="discount" groups="sale.group_discount_per_so_line"/>
+		                                    <div groups="sale.group_discount_per_so_line">
+		                                    	<field name="discount" class="oe_inline"/> 
+		                                    </div>
+                                            <field name="tax_id" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]"/>
+                                            <field name="sampling_qty" />
+                                    		<field name="product_uos_qty" groups="product.group_uos" invisible="1"/>
+                                    		<field name="product_uos" string="UoS" groups="product.group_uos" invisible="1"/>
+                                            
+                                        </group>
+                                        <newline />
+                                        <group>
+                                            <notebook>
+                                                <page string="Products">
+                                            		<label for="name"/>
+                                    				<field name="name"/>
+		                                        </page>
+		                                        
+		                                        <page string="Sale Property">
+		                                            <field name="order_line_property_ids">
+		                                                <tree string="Property" editable="bottom">
+		                                                    <field name="property_id" />
+		                                                    <field name="name" />
+		                                                </tree>
+		                                            </field>
+		                                        </page>
+
+		                                        <page string="Color / Gender / Sizing">
+		                                            <field name="order_line_property_other_ids">
+		                                                <tree string="Other Information" editable="bottom">
+		                                                    <field name="color_id" />
+		                                                    <field name="note" />
+		                                                    <field name="gender_id" required="1" />
+		                                                    <field name="size_id" />
+		                                                    <field name="quantity" sum="Total"/>
+		                                                </tree>
+		                                            </field>
+		                                        </page>
+                                            </notebook>
+                                        </group>
+                                    </group>
+                                </form>
+                                <tree string="Sales Order Lines">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="state" invisible="1"/>
+                                    <field name="th_weight" invisible="1"/>
+                                    <field name="product_id"
+                                        context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}"
+                                        groups="base.group_user" 
+                                        on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, True, parent.date_order, False, parent.fiscal_position, False, context)"/>
+                                    <field name="name"/>
+                                    <field name="product_uom_qty"
+                                        context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}"
+                                        on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, False, parent.date_order, False, parent.fiscal_position, True, context)"/>
+                                    <field name="product_uom"
+                                        on_change="product_uom_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, False, parent.date_order, context)"
+                                        groups="product.group_uom" options='{"no_open": True}'/>
+                                    <field name="product_uos_qty" groups="product.group_uos" invisible="1"/>
+                                    <field name="product_uos" string="UoS" groups="product.group_uos" invisible="1"/>
+                                    <field name="tax_id" widget="many2many_tags" domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]"/>
+                                    <field name="price_unit"/>
+                                    <field name="discount" groups="sale.group_discount_per_so_line"/>
+                                    <field name="price_subtotal"/>
+                                </tree>
+                            </field>
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                <field name="amount_untaxed" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                <field name="amount_tax" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                <div class="oe_subtotal_footer_separator oe_inline">
+                                    <label for="amount_total" />
+                                    <button name="button_dummy"
+                                        states="draft" string="(update)" type="object" class="oe_edit_only oe_link"/>
+                                </div>
+                                <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            <div class="oe_clear"/>
+                            <field name="note" attrs="{'readonly':[('state', '!=', 'draft')]}" class="oe_inline" placeholder="Terms and conditions..."/>
+                        </page>
+                        <page string="Address" >
+                            <group>
+                                <group>
+                            		<field name="partner_invoice_id"  context="{'default_type':'invoice'}"/>                                    
+                                </group>
+                                <group>
+                            		<field name="partner_shipping_id" context="{'default_type':'delivery'}"/>                                 
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Other Information" groups="base.group_user">
+                            <group>
+                                <group name="sales_person" groups="base.group_user">
+                                    <field name="user_id"/>
+                                    <field name="section_id" />
+                                    <field name="lead_id" required="1" />
+                                    <field groups="base.group_no_one" name="origin"/>
+                                </group>
+                                <group name="sale_pay">
+                                    <field name="fiscal_position" widget="selection"/>
+                                    <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                                </group>
+                                <group>
+                                    <field name="invoiced"/>
+                                    <field name="invoice_exists" invisible="1"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Patterns">
+                        	<field name="pattern_ids" nolabel="1" readonly="1">
+                        		<tree string="Pattern">
+                        			<field name="name" />
+                        			<field name="employee_id" />
+                        			<field name="sampling_date_start" string="Start" />
+                        			<field name="sampling_date_mark_start" string="Mark" />
+                        			<field name="sampling_date_process1_start" string="Cut" />
+                        			<field name="sampling_date_process2_start" string="Sew" />                  			
+                        			<field name="date_mark_finish" string="Mark2" />
+                        			<field name="date_finish" string="Finish" />
+                        			<field name="state" />
+                        		</tree>
+                        	</field>
+                        </page>
+                        <page string="Reference">
+                        	<group>
+                        		<group string="Sample">
+		                    		<field name="sample_order_no" />      
+		                    		<field name="sample_order_date" attrs="{'readonly': [('sample_order_date','!=',False)]}" />      
+                        			<field name="sample_revision_no" />
+                        			<field name="sample_revision_date" />
+		                    		<field name="sample_deliver_date" />                   		
+				              		<field name="cancel_sample_order"  attrs="{'invisible': [('sample_order_no','=',False)]}" groups="base.group_erp_manager" />
+		                    		<button name="action_gen_sampling_no"
+		                            	string="Get Sampling No"
+		                            	type="object" 
+		                            	icon="gtk-justify-fill"
+		                            	attrs="{'invisible': [('sample_order_no','!=',False)]}" />         
+		                            <button name="action_button_cancelsp"
+		                            	string="Cancel Sampling"
+		                            	type="object"
+		                            	icon="gtk-justify-fill"     
+		                            	groups="base.group_erp_manager"
+		                            	attrs="{'invisible': ['|',('sample_order_no','=',False),('cancel_sample_order','=',True)]}" />                                 		
+                        		</group>
+                        		<group string="Garment">
+                        			<field name="manager_user_id" />
+		                            <field name="date_sale_close" />                                          		
+				              		<field name="garment_order_no" readonly="1" attrs="{'invisible': [('state','=','draft')]}" />
+				              		<field name="garment_order_no_org" />
+				              		<field name="garment_order_date" attrs="{'invisible': [('state','=','draft')]}" />
+				              		<field name="cancel_garment_order" attrs="{'invisible': [('state','=','draft')]}" groups="base.group_erp_manager"/>
+		                    		<button name="action_gen_garment_no"
+		                            	string="Get Garment No"
+		                            	type="object" 
+		                            	icon="gtk-justify-fill"
+		                            	attrs="{'invisible': ['|',('garment_order_no','!=',False),('state','=','draft')]}" />
+		                            <field name="relate_garment_order_no" />   		                            
+                        		</group>
+                        		<group string="Pattern">
+                        			<field name="employee_id" />
+                        			<field name="marker" />
+                        			<field name="date_mark_finish" />
+                        			<field name="date_pattern_finish" />
+                        		</group>
+                        		<group string="Sampling Marker">
+                        			<field name="sampling_marker" />
+                        			<field name="sampling_marker_start" />
+                        			<field name="sampling_marker_finish" />
+                        		</group>
+                        		<group string="Sampling Cut">
+									<field name="sampling_employee1" />
+                        			<field name="sampling_employee1_start" />
+                        			<field name="sampling_employee1_finish" />
+                        		</group>
+                        		<group string="Sampling Sew">
+									<field name="sampling_employee2" />
+                        			<field name="sampling_employee2_start" />
+                        			<field name="sampling_employee2_finish" />
+                        		</group>
+                        	</group>                    	
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="message_ids" widget="mail_thread" placeholder="Share a message..."/>
+                </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_ineco_quotation_filter" model="ir.ui.view">
+            <field name="name">ineco.order.list.select</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <search string="Search Sales Order">
+                    <field name="name" string="Sales Order" filter_domain="['|',('name','ilike',self),('client_order_ref','ilike',self)]"/>
+                    <filter icon="terp-mail-message-new" string="Unread Messages" name="message_unread" domain="[('message_unread','=',True)]"/>
+                    <separator/>
+                    <filter icon="terp-document-new" string="Quotations" name="draft" domain="[('state','in',('draft','sent'))]" help="Sales Order that haven't yet been confirmed"/>
+                    <filter icon="terp-check" string="Sales" name="sales" domain="[('state','in',('manual','progress'))]"/>
+                    <filter icon="terp-dolar_ok!" string="To Invoice" domain="[('state','=','manual')]" help="Sales Order ready to be invoiced"/>
+                    <filter icon="terp-dolar_ok!" string="Done" domain="[('state','=','done')]" help="Sales Order done"/>
+                    <filter icon="terp-dolar_ok!" name="notcofirm" string="Close Date not Confirm" domain="[('date_sale_close','!=',False),('state','=','draft')]"  />
+                    <separator/>
+                    <filter string="My Sale Orders" domain="[('user_id','=',uid)]" help="My Sale Orders" icon="terp-personal" name="my_sale_orders_filter"/>
+                    <filter string="No MO" domain="[('date_sale_close','!=',False),('garment_order_date','=',False)]" name="date_error" />
+                    <field name="partner_id" />
+                    <field name="user_id" />
+                    <field name="project_id"/>
+                    <field name="garment_order_no" />
+                    <field name="manager_user_id" />
+                    <group expand="0" string="Group By...">
+                        <filter string="Customer" icon="terp-personal" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Salesperson" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
+                        <filter string="Approval" icon="terp-personal" domain="[]" context="{'group_by':'manager_user_id'}"/>
+                        <filter string="Status" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Order Date" icon="terp-go-month" domain="[]" context="{'group_by':'date_order'}"/>
+                        <filter string="Close Date" icon="terp-go-month" domain="[]" context="{'group_by':'date_sale_close'}"/>                      
+                    </group>
+					<group string="Display">
+                        <filter string="Show Deposit" context="{'invisible_deposit': False}" help="Show Deposit"/>
+                        <filter string="Show Residual" context="{'invisible_residual': False}" help="Show Residual"/>
+                    </group>                    
+               </search>
+            </field>
+        </record>
+
+        <record id="action_ineco_quotations" model="ir.actions.act_window">
+            <field name="name">Mixprint Quotations</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_ineco_quotation_tree"/>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'show_address': 1,'search_default_draft':1}</field>
+            <field name="domain">[('state','in',('draft','cancel'))]</field>
+            <field name="search_view_id" ref="view_ineco_quotation_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a quotation, the first step of a new sale.
+              </p><p>
+                OpenERP will help you handle efficiently the complete sale flow:
+                from the quotation to the sale order, the
+                delivery, the invoicing and the payment collection.
+              </p><p>
+                The social feature helps you organize discussions on each sale
+                order, and allow your customers to keep track of the evolution
+                of the sale order.
+              </p>
+            </field>
+        </record>
+
+	    <record model="ir.actions.act_window.view" id="action_ineco_operator_inbound_tree">
+	        <field name="sequence" eval="1"/>
+	        <field name="view_mode">tree</field>
+	        <field name="view_id" ref="view_ineco_quotation_tree"/>
+	        <field name="act_window_id" ref="action_ineco_quotations"/>
+	    </record>
+	    
+		
+	    <record model="ir.actions.act_window.view" id="action_ineco_operator_inbound_form">
+	        <field name="sequence" eval="3"/>
+	        <field name="view_mode">form</field>
+	        <field name="view_id" ref="view_ineco_quotation_form"/>
+	        <field name="act_window_id" ref="action_ineco_quotations"/>
+	    </record>
+        
+        <menuitem 
+            id="menu_ineco_quotations"
+        	action="action_ineco_quotations" 
+        	parent="base.menu_sales"
+        	sequence="4"/>
+
+        <!-- Sale Note Tree -->
+        <record id="view_ineco_quotation_note_tree" model="ir.ui.view">
+            <field name="name">ineco.quotation.not.tree</field>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+                <tree string="Quotation" colors="grey:state=='cancel';blue:state in ('waiting_date','manual');red:state in ('invoice_except','shipping_except')" editable="top">
+                    <field name="message_unread" invisible="1"/>
+                    <field name="name" string="Quotation No" readonly="1"/>
+                    <field name="date_order" readonly="1"/>
+                    <field name="partner_id" readonly="1"/>
+                    <field name="user_id" readonly="1"/>
+                    <field name="deposit" readonly="1" />
+                    <field name="amount_total" readonly="1"/>
+                    <field name="residual" readonly="1" />
+                    <field name="note" />
+                    <field name="state" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_ineco_note_quotations" model="ir.actions.act_window">
+            <field name="name">Quotations Note</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="view_ineco_quotation_note_tree"/>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'show_address': 1,'search_default_draft':1}</field>
+            <field name="domain">[]</field>
+            <field name="search_view_id" ref="view_ineco_quotation_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a quotation, the first step of a new sale.
+              </p><p>
+                OpenERP will help you handle efficiently the complete sale flow:
+                from the quotation to the sale order, the
+                delivery, the invoicing and the payment collection.
+              </p><p>
+                The social feature helps you organize discussions on each sale
+                order, and allow your customers to keep track of the evolution
+                of the sale order.
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+            id="menu_ineco_quotations_note"
+        	action="action_ineco_note_quotations" 
+        	parent="base.menu_sales"
+        	groups="base.group_erp_manager"
+        	sequence="5"/>
+
+        <!-- Delivery Sampling -->
+
+        <record id="view_customer_picking_out_search" model="ir.ui.view">
+            <field name="name">customer.picking.out.search</field>
+            <field name="inherit_id" ref="stock.view_picking_out_search"/>
+            <field name="model">stock.picking.out</field>
+            <field name="arch" type="xml">
+              	<filter string="To Invoice" position="before">
+              	    <field name="partner_id" />              	    
+              	</filter>
+              	<filter string="Status" position="before">
+              	    <filter string="Customer" icon="terp-personal" domain="[]" context="{'group_by':'partner_id'}"/>
+              	</filter>
+            </field>
+        </record>    
+        
+        
+        <record id="action_sampling_picking_tree" model="ir.actions.act_window">
+            <field name="name">Delivery Sampling</field>
+            <field name="res_model">stock.picking.out</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('type','=','out')]</field>
+            <field name="context">{'default_type': 'out', 'contact_display': 'partner_address', 
+            	'default_stock_journal_id':2,'show_opportunity':1}</field>
+            <field name="search_view_id" ref="stock.view_picking_out_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a delivery order. 
+              </p><p>
+                This is the list of all delivery orders that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+        
+        <menuitem 
+            id="menu_ineco_delivery_sampling"
+        	action="action_sampling_picking_tree" 
+        	parent="base.menu_sales"
+        	sequence="5"/>
+
+        <record id="view_ineco_order_tree" model="ir.ui.view">
+            <field name="name">ineco.sale.order.tree</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+            	<field name="amount_total" position="after">
+            		<field name="deposit" />
+            		<field name="residual" />
+            		<field name="commission_ready" />
+            	</field>
+              	<field name="date_order" position="after">
+              		<field name="sample_order_no" />
+              		<field name="garment_order_no" />
+              		<field name="garment_order_date" />
+              		<field name="date_sale_close" invisible="1"/>
+              	</field>
+            </field>
+        </record>
+        
+        <record id="view_ineco_order_form" model="ir.ui.view">
+            <field name="name">ineco.sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+
+ 				<button name="cancel" position="replace">
+                	<button name="cancel" states="draft,sent" string="Cancel" groups="base.group_erp_manager"/>
+                </button>
+                <button name="action_cancel" position="replace">
+                    <button name="action_cancel" states="manual,progress" string="Cancel" type="object" groups="base.group_erp_manager"/>
+                </button>
+                <button name="invoice_cancel" position="replace">
+                    <button name="invoice_cancel" states="invoice_except" string="Cancel" groups="base.group_erp_manager"/>
+                </button>
+                
+                <xpath expr="//field[@name='order_line']" position="after">
+                	<field name="order_line">
+						<tree string="Sales Order Lines">
+							<field name="sequence" widget="handle" />
+							<field name="state" invisible="1" />
+							<field name="th_weight" invisible="1" />
+							<field name="product_id"
+								context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}"
+								groups="base.group_user"
+								on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, True, parent.date_order, False, parent.fiscal_position, False, context)" />
+							<field name="name" />
+							<field name="product_uom_qty"
+								context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}"
+								on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, False, parent.date_order, False, parent.fiscal_position, True, context)" />
+							<field name="product_uom"
+								on_change="product_uom_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, False, parent.date_order, context)"
+								groups="product.group_uom" options='{"no_open": True}' />
+							<field name="product_uos_qty" groups="product.group_uos"
+								invisible="1" />
+							<field name="product_uos" string="UoS" groups="product.group_uos"
+								invisible="1" />
+							<field name="tax_id" widget="many2many_tags"
+								domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]" />
+							<field name="price_unit" />
+							<field name="discount" groups="sale.group_discount_per_so_line" />
+							<field name="price_subtotal" />
+						</tree>        
+						<form string="Sales Order Lines" version="7.0">
+							<header>
+								<button name="%(sale.action_view_sale_order_line_make_invoice)d"
+									states="confirmed" string="Invoice" type="action" icon="terp-document-new" />
+								<field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done"
+									statusbar_colors='{"exception":"red","cancel":"red"}' />
+							</header>
+							<group>
+								<group>
+									<field name="state" invisible="1" />
+									<field name="product_id"
+										context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}"
+										groups="base.group_user"
+										on_change="product_id_change(parent.pricelist_id, product_id, product_uom_qty, product_uom, product_uos_qty, product_uos, name, parent.partner_id, False, True, parent.date_order, False, parent.fiscal_position, False, context)" />
+									<label for="product_uom_qty" />
+									<div>
+										<field
+											context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'shop':parent.shop_id, 'uom':product_uom}"
+											name="product_uom_qty" class="oe_inline"
+											on_change="product_id_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, False, False, parent.date_order, False, parent.fiscal_position, True, context)" />
+										<field name="product_uom" groups="product.group_uom" class="oe_inline oe_no_button"
+											on_change="product_uom_change(parent.pricelist_id,product_id,product_uom_qty,product_uom,product_uos_qty,product_uos,name,parent.partner_id, False, False, parent.date_order, context)" />
+									</div>
+									<field name="price_unit" />
+									<label for="discount" groups="sale.group_discount_per_so_line" />
+									<div groups="sale.group_discount_per_so_line">
+										<field name="discount" class="oe_inline" />
+									</div>
+									<field name="tax_id" widget="many2many_tags"
+										domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]" />
+									<field name="sampling_qty" />
+									<field name="product_uos_qty" groups="product.group_uos"
+										invisible="1" />
+									<field name="product_uos" string="UoS" groups="product.group_uos"
+										invisible="1" />
+						
+								</group>
+								<newline />
+								<group>
+									<notebook>
+										<page string="Products">
+											<label for="name" />
+											<field name="name" />
+										</page>
+						
+										<page string="Sale Property">
+											<field name="order_line_property_ids">
+												<tree string="Property" editable="bottom">
+													<field name="property_id" />
+													<field name="name" />
+												</tree>
+											</field>
+										</page>
+						
+										<page string="Color / Gender / Sizing">
+											<field name="order_line_property_other_ids">
+												<tree string="Other Information" editable="bottom">
+													<field name="color_id" />
+													<field name="note" />
+													<field name="gender_id" />
+													<field name="size_id" />
+													<field name="quantity" />
+												</tree>
+											</field>
+										</page>
+									</notebook>
+								</group>
+							</group>
+						</form>						        	
+                	</field>             	                	
+                </xpath>
+                                
+                <xpath expr="/form/sheet/notebook/page[@string='Other Information']" position="after" >
+                    <page string="Reference">
+	                    <group colspan="4" cols="6">
+	                    	<group>
+		 	              		<field name="sample_order_no" readonly="1" />
+		 	              		<field name="sample_order_date" readonly="1" />
+	              				<field name="sample_revision_no" />
+	              				<field name="sample_revision_date" />
+		 	              		<field name="sample_deliver_date" readonly="1" />
+			              		<field name="cancel_sample_order" attrs="{'invisible': [('sample_order_no','=',False)]}" groups="base.group_erp_manager"/>
+		                    	<button name="action_gen_sampling_no"
+		                            	string="Get Sampling No"
+		                            	type="object" 
+		                            	icon="gtk-justify-fill"
+		                            	attrs="{'invisible': [('sample_order_no','!=',False)]}" />                                            		
+	              			</group>
+	              			<group>
+		                        <field name="date_sale_close" />                                           		
+			              		<field name="garment_order_no" readonly="1" />
+			              		<field name="garment_order_no_org" />
+			              		<field name="garment_order_date" />
+			              		<field name="cancel_garment_order" attrs="{'invisible': [('garment_order_no','=',False)]}" groups="base.group_erp_manager"/>		              	
+		                    	<button name="action_gen_garment_no"
+		                    			class="oe_highlight" 
+		                            	string="Get Garment No"
+		                            	type="object" 
+		                            	icon="gtk-justify-fill"
+		                            	attrs="{'invisible': [('garment_order_no','!=',False)]}" /> 
+		                    	<button name="action_regen_mo"
+		                            	string="Re Garment"
+		                            	type="object" 
+		                            	icon="gtk-justify-fill"
+		                            	groups="base.group_erp_manager"
+		                            	attrs="{'invisible': [('garment_order_no','=',False)]}" />   
+		                        <field name="relate_garment_order_no" /> 
+	              			</group>
+	                    </group>
+                    </page>
+                </xpath>        
+                <xpath expr="/form/sheet/notebook/page[@string='Order Lines']" position="after">
+                        <page string="Address" >
+                            <group>
+                                <group>
+                            		<field name="partner_invoice_id"  context="{'default_type':'invoice'}"/>                                    
+                                </group>
+                                <group>
+                            		<field name="partner_shipping_id" context="{'default_type':'delivery'}"/>                                 
+                                </group>
+                            </group>
+                        </page>                
+                </xpath>
+                <field name="partner_id" position="after">
+                	<field name="date_delivery" />
+                	<field name="sale_close_no" groups="account.group_account_manager" />
+                </field>
+                <field name="client_order_ref" position="after">
+                	<field name="payment_term" />
+                	<field name="sale_revision" />
+                	<field name="to_correct" groups="account.group_account_manager" />                          	
+                	<field name="lead_id" />
+                </field>
+              
+            </field>
+        </record>        
+
+        <record id="action_return_picking_tree" model="ir.actions.act_window">
+            <field name="name">Return Sampling</field>
+            <field name="res_model">stock.picking.in</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain">[('type','=','in'),('name','like','return')]</field>
+            <field name="context">{'default_type': 'in', 'contact_display': 'partner_address'}</field>
+            <field name="search_view_id" ref="stock.view_picking_in_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a return sampling order. 
+              </p><p>
+                This is the list of all delivery orders that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+        
+        <menuitem 
+            id="menu_ineco_return_sampling"
+        	action="action_return_picking_tree" 
+        	parent="base.menu_sales"
+        	sequence="5"/>
+
+        <record id="action_ineco_sale_invoice" model="ir.actions.act_window">
+            <field name="name">Deposit Invoices</field>
+            <field name="res_model">account.invoice</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('type','=','out_invoice'),('user_id','=',uid)]</field>
+            <field name="context">{'default_type':'out_invoice', 'type':'out_invoice', 'journal_type': 'sale'}</field>
+            <field name="search_view_id" ref="account.view_account_invoice_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a deposit invoice.
+              </p><p>
+                OpenERP's electronic invoicing allows to ease and fasten the
+                collection of customer payments. Your customer receives the
+                invoice by email and he can pay online and/or import it
+                in his own system.
+              </p><p>
+                The discussions with your customer are automatically displayed at
+                the bottom of each invoice.
+              </p>
+            </field>
+        </record>
+
+        <record id="action_ineco_sale_invoice_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="act_window_id" ref="action_ineco_sale_invoice"/>
+        </record>
+
+        <record id="action_ineco_sale_invoice_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="account.invoice_form"/>
+            <field name="act_window_id" ref="action_ineco_sale_invoice"/>
+        </record>
+        
+        <menuitem 
+        	action="action_ineco_sale_invoice" 
+        	id="menu_action_sale_invoice" 
+        	parent="base.menu_sales"
+        	sequence="10" />
+        	
+        <record id="view_sale_order_extend_search" model="ir.ui.view">
+            <field name="name">mo_sale_order_search</field>
+            <field name="inherit_id" ref="sale.view_sales_order_filter"/>
+            <field name="model">sale.order</field>
+            <field name="arch" type="xml">
+              	<field name="name" position="after">
+              		<field name="garment_order_no" />
+					<field name="date_sale_close" />
+					<filter string="Close Date" icon="terp-personal" domain="[]" context="{'group_by':'date_sale_close'}"/>
+              	</field>
+            </field>
+        </record>         	
+
+        <record id="view_sales_order_line_filter2" model="ir.ui.view">
+            <field name="name">sale.order.line.select2</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+            <field name="arch" type="xml">
+				<field name="salesman_id" position="after">
+					<field name="garmentorder_date" />
+					<field name="dateorder" />
+					<filter name="statedone" string="Done" icon="terp-stock_effects-object-colorize" domain="[('state','=','done')]" context="{}"/>
+					<filter name="stateconfirm" string="Confirm" icon="terp-stock_effects-object-colorize" domain="[('state','=','confirmed')]" context="{}"/>
+				</field>       	
+				<filter string="Status" position="after">
+					<filter string="MO Date" icon="terp-personal" domain="[]" context="{'group_by':'garmentorder_date'}"/>
+					<filter string="Order Date" icon="terp-personal" domain="[]" context="{'group_by':'dateorder'}"/>
+				</filter>
+			</field>
+		</record>        	
+
+        <record id="view_order_line_tree2" model="ir.ui.view">
+            <field name="name">sale.order.line.tree2</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.view_order_line_tree"/>
+            <field name="arch" type="xml">	
+            	<field name="order_partner_id" position="after">
+            		<field name="garmentorder_date" />
+            		<field name="dateorder" />
+            	</field>
+            	<field name="salesman_id" position="after">
+            		<field name="price_unit" />
+            	</field>
+			</field>
+		</record>
+ 
+		<!-- Gender -->
+        <record id="view_ineco_gender_tree" model="ir.ui.view">
+            <field name="name">sale.gender.tree</field>
+            <field name="model">sale.gender</field>
+            <field name="arch" type="xml">
+                <tree string="Gender">
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="name2" />
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_ineco_gender_form" model="ir.ui.view">
+            <field name="name">sale.gender.form</field>
+            <field name="model">sale.gender</field>
+            <field name="arch" type="xml">
+                <form string="Gender">
+                    <field name="name" />
+                    <field name="code" />
+                    <field name="name2" />
+                </form>
+            </field>
+        </record>	
+        
+        <record id="view_ineco_gender_filter" model="ir.ui.view">
+            <field name="name">sale.gender.select</field>
+            <field name="model">sale.gender</field>
+            <field name="arch" type="xml">
+                <search string="Search Gender">
+                	<field name="name" />
+                	<field name="code" />
+                	<field name="name2" />
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_gender" model="ir.actions.act_window">
+            <field name="name">Gender</field>
+            <field name="res_model">sale.gender</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_gender_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a gender. 
+              </p><p>
+                This is the list of all color that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+        
+        <menuitem 
+            id="menu_ineco_gender"
+        	action="action_ineco_gender" 
+        	parent="base.menu_base_config"
+        	sequence="7"/>
+
+        <record id="view_ineco_opportunity_form_view" model="ir.ui.view">
+            <field name="name">ineco.opportunity.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">	
+            	<xpath expr="//notebook/page[@string='Lead']" position="after">
+            		<page string="Opportunity Costing" >
+            			<field name="cost_ids" nolabel="1">
+            				<tree string="Cost" editable="top">
+            					<field name="cost_type_id" on_change="on_change_costtype(cost_type_id)" />
+            					<field name="quantity" />
+            					<field name="cost" invisible="1" />
+            					<field name="price_subtotal" sum="Total" />
+            				</tree>
+            			</field>
+            		</page>
+            		<page string="All Costing">
+	                	<field name="opportunity_cost_ids" nolabel="1" colspan="4" >
+	                		<tree string="Costs">
+	                			<field name="type" />
+	                			<field name="cost_type_id" />
+	                			<field name="quantity" />
+	                			<field name="cost" />
+	                			<field name="amount" sum="Total" />
+	                		</tree>
+	                	</field>
+            		</page>
+            	</xpath>
+
+			</field>
+		</record>
+        	
+   
+        <record id="view_ineco_deliverycost_form_view" model="ir.ui.view">
+            <field name="name">ineco.delivery.cost.form</field>
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form"/>
+            <field name="arch" type="xml">	
+            	<xpath expr="//notebook/page[@string='Additional Info']" position="after">
+            		<page string="Costing" >
+            			<field name="cost_ids" nolabel="1">
+            				<tree string="Cost" editable="top">
+            					<field name="cost_type_id" on_change="on_change_costtype(cost_type_id)" />
+            					<field name="date" required="1" />
+            					<field name="doc_number" />
+            					<field name="quantity" />
+            					<field name="cost" groups="account.group_account_user"/>
+            					<field name="price_subtotal" sum="Total" />
+            					<field name="invoice_id" invisible="1" />
+            					<button name="button_create_invoice" type="object"  icon="terp-document-new"
+            						attrs="{'invisible': [('invoice_id', '!=', False)]}" />
+            				</tree>
+            			</field>
+            		</page>
+            	</xpath>
+
+			</field>
+		</record>
+
+		<!-- Sale Line Property -->
+        <record id="view_sale_line_property_tree" model="ir.ui.view">
+            <field name="name">sale.line.property.tree</field>
+            <field name="model">sale.line.property</field>
+            <field name="arch" type="xml">
+                <tree string="Line Property">
+                    <field name="name" />
+                    <field name="property_id" />
+                    <field name="order_id" />
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_sale_line_property_form" model="ir.ui.view">
+            <field name="name">sale.line.property.form</field>
+            <field name="model">sale.line.property</field>
+            <field name="arch" type="xml">
+                <form string="Line Property">
+                    <field name="name" />
+                    <field name="property_id" />
+                    <field name="order_id" readonly="1" />
+                </form>
+            </field>
+        </record>		
+
+        <record id="view_sale_line_property_search" model="ir.ui.view">
+            <field name="name">sale.line.property.search</field>
+            <field name="model">sale.line.property</field>
+            <field name="arch" type="xml">
+                <search string="Line Property">
+                    <field name="name" />
+                    <field name="property_id" />
+                    <field name="order_id" />
+                </search>
+            </field>
+        </record>		
+
+        <record id="action_sale_line_property" model="ir.actions.act_window">
+            <field name="name">Property Lines</field>
+            <field name="res_model">sale.line.property</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"></field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="view_sale_line_property_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale line property. 
+              </p><p>
+                This is the list of all delivery orders that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+            
+        <menuitem 
+            id="menu_sale_line_property"
+        	action="action_sale_line_property" 
+        	parent="base.menu_sales"
+        	groups="base.group_sale_manager"
+        	sequence="7"/>
+        	
+        
+    </data>
+</openerp>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_mixprint_cheque_in_form" model="ir.ui.view">
+            <field name="name">mixprint.cheque.in.form</field>
+            <field name="model">ineco.cheque</field>
+            <field name="inherit_id" ref="ineco_thai_account.view_ineco_cheque_tree"/>
+            <field name="arch" type="xml">
+            	<field name="cheque_date" position="after">
+            		<field name="day_month" invisible="1" />
+            	</field>
+            </field>
+        </record>
+
+        <record id="view_mixprint_cheque_search" model="ir.ui.view">
+            <field name="name">mixprint.cheque.search</field>
+            <field name="model">ineco.cheque</field>
+            <field name="inherit_id" ref="ineco_thai_account.view_ineco_cheque_search"/>
+            <field name="arch" type="xml">
+            	<field name="amount" position="after">
+                  	<group expand="0" string="Group By...">
+                        <filter name="by_date" string="Month" icon="terp-partner" domain="[]" 
+                        	context="{'group_by':'cheque_date'}"/>
+                        <filter name="by_day" string="Day" icon="terp-partner" domain="[]" 
+                        	context="{'group_by':'day_month'}"/>
+                    </group>            		
+            	</field>
+            </field>
+        </record>
+
+    </data>
+</openerp>

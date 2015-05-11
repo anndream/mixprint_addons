@@ -1,0 +1,1490 @@
+<?xml version="1.0"?>
+<openerp>
+     <data>
+     
+		<!-- Sale Summary Dashboard -->
+        <record id="view_ineco_sale_summary_tree" model="ir.ui.view">
+            <field name="name">ineco.sale.summary.tree</field>
+            <field name="model">ineco.sale.summary</field>
+            <field name="arch" type="xml">
+                <tree string="Problem Type">
+                    <field name="user_id" />
+                    <field name="so" />
+                    <field name="mo" />
+                    <field name="lose" />
+                    <field name="percent90" />
+                    <field name="percent50" />
+                    <field name="percent10" />
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_ineco_sale_summary_form" model="ir.ui.view">
+            <field name="name">ineco.sale.summary.form</field>
+            <field name="model">ineco.sale.summary</field>
+            <field name="arch" type="xml">
+                <form string="Problem Type">
+                    <field name="user_id" />
+                    <field name="so" invisible="1" />
+                    <field name="mo" />
+                    <field name="lose" />
+                    <field name="percent10" />
+                    <field name="percent50" />
+                    <field name="percent90" />
+                </form>
+            </field>
+        </record>		
+        
+        <record id="view_ineco_sale_summary_filter" model="ir.ui.view">
+            <field name="name">ineco.sale.summary.select</field>
+            <field name="model">ineco.sale.summary</field>
+            <field name="arch" type="xml">
+                <search string="Search Sale Summary">
+                	<field name="user_id" />
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_sale_summary" model="ir.actions.act_window">
+            <field name="name">Sale Summary</field>
+            <field name="res_model">ineco.sale.summary</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_sale_summary_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale summary. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+
+		<!-- Sale Summary Dashboard 4 Opportunity Stages not in smart -->
+        <record id="view_ineco_sale_summary4_tree" model="ir.ui.view">
+            <field name="name">ineco.sale.summary4.tree</field>
+            <field name="model">ineco.sale.summary4</field>
+            <field name="arch" type="xml">
+                <tree string="Problem Type">
+                    <field name="nickname" />
+                    <field name="so1" sum="Total" invisible="1"/>
+                    <field name="so2" sum="Total" string="" invisible="1"/>
+                    <field name="mo1" sum="Total"/>
+                    <field name="mo2" sum="Total" string=""/>
+                    <field name="percent901" sum="Total"/>
+                    <field name="percent902" sum="Total" string=""/>
+                    <field name="percent501" sum="Total"/>
+                    <field name="percent502" sum="Total" string=""/>
+                    <field name="percent301" sum="Total"/>
+                    <field name="percent302" sum="Total" string=""/>
+                    <field name="percent101" sum="Total"/>
+                    <field name="percent102" sum="Total" string=""/>
+                    <field name="lose1" sum="Total"/>
+                    <field name="lose2" sum="Total" string=""/>
+                </tree>
+            </field>
+        </record>		
+        
+        <record id="view_ineco_sale_summary4_filter" model="ir.ui.view">
+            <field name="name">ineco.sale.summary4.select</field>
+            <field name="model">ineco.sale.summary4</field>
+            <field name="arch" type="xml">
+                <search string="Search Sale Summary">
+                	<field name="user_id" />
+                	<field name="nickname" />
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_sale_summary4" model="ir.actions.act_window">
+            <field name="name">Sale Summary</field>
+            <field name="res_model">ineco.sale.summary4</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_sale_summary4_filter"/>
+            <field name="view_id" ref="view_ineco_sale_summary4_tree" />
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale summary. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+                   
+        <menuitem
+        	id="menu_mixprint_dashboard"
+        	parent="base.menu_sales"
+        	name="Mixprint"
+        	sequence="0" />
+
+        	        
+        <!-- <menuitem 
+            id="menu_ineco_sale_summary"
+        	action="action_ineco_sale_summary4" 
+        	parent="menu_mixprint_dashboard"
+        	sequence="1"/> --> 
+
+		<!-- Sale Summary Dashboard 4 Opportunity Stages Only smart -->
+        <record id="view_ineco_sale_summary4smart_tree" model="ir.ui.view">
+            <field name="name">ineco.sale.summary4smart.tree</field>
+            <field name="model">ineco.sale.summary4smart</field>
+            <field name="arch" type="xml">
+                <tree string="Problem Type">
+                    <field name="nickname" />
+                    <field name="so1" sum="Total" invisible="1"/>
+                    <field name="so2" sum="Total" string="" invisible="1"/>
+                    <field name="mo1" sum="Total"/>
+                    <field name="mo2" sum="Total" string=""/>
+                    <field name="percent901" sum="Total"/>
+                    <field name="percent902" sum="Total" string=""/>
+                    <field name="percent501" sum="Total"/>
+                    <field name="percent502" sum="Total" string=""/>
+                    <field name="percent301" sum="Total"/>
+                    <field name="percent302" sum="Total" string=""/>
+                    <field name="percent101" sum="Total"/>
+                    <field name="percent102" sum="Total" string=""/>
+                    <field name="lose1" sum="Total"/>
+                    <field name="lose2" sum="Total" string=""/>
+                </tree>
+            </field>
+        </record>		
+        
+        <record id="view_ineco_sale_summary4smart_filter" model="ir.ui.view">
+            <field name="name">ineco.sale.summary4smart.select</field>
+            <field name="model">ineco.sale.summary4smart</field>
+            <field name="arch" type="xml">
+                <search string="Search Sale Summary">
+                	<field name="user_id" />
+                	<field name="nickname" />
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_sale_summary4smart" model="ir.actions.act_window">
+            <field name="name">Smart Sale Summary</field>
+            <field name="res_model">ineco.sale.summary4smart</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_sale_summary4smart_filter"/>
+            <field name="view_id" ref="view_ineco_sale_summary4smart_tree" />
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale summary. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+
+        	
+		<!-- Sale Summary Dashboard 5 Sale Log not in Smart -->
+        <record id="view_ineco_sale_summary5_tree" model="ir.ui.view">
+            <field name="name">ineco.sale.summary5.tree</field>
+            <field name="model">ineco.sale.summary5</field>
+            <field name="arch" type="xml">
+                <tree string="Problem Type">
+                    <field name="nickname" />
+                    <field name="so2" sum="Total" string="SO" invisible="1"/>
+                    <field name="mo2" sum="Total" string="MO"/>
+                    <field name="total_customer" sum="Total"/>
+                    <field name="total_customer_company" sum="Total" string="Comp"/>
+                    <field name="total_customer_new" sum="Total"/>
+                    <field name="logcall_inbound" sum="Total" string="In"/>
+                    <field name="logcall_outbound" sum="Total" string="Out"/>
+                    <field name="logcall_visit" sum="Total" string="Vis"/>
+                    <field name="total_quotation" sum="Total" string="QO"/>
+                    <field name="total_quotation_saleorder" sum="Total" string="SO"/>
+                    <field name="total_picking_pc" sum="Total" string="PC"/>
+                    <field name="total_picking_ds" sum="Total" string="DS"/>
+                    <field name="total_picking_rp" sum="Total" string="PR"/>
+                    <field name="total_picking_mp" sum="Total" string="PM"/>
+                    <field name="total_picking_fr" sum="Total" string="PF"/>
+                </tree>
+            </field>
+        </record>		
+        
+        <record id="view_ineco_sale_summary5_filter" model="ir.ui.view">
+            <field name="name">ineco.sale.summary5.select</field>
+            <field name="model">ineco.sale.summary5</field>
+            <field name="arch" type="xml">
+                <search string="Search Sale Summary">
+                	<field name="user_id" />
+                	<field name="nickname" />
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_sale_summary5" model="ir.actions.act_window">
+            <field name="name">Sale Summary 2</field>
+            <field name="res_model">ineco.sale.summary5</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_sale_summary5_filter"/>
+            <field name="view_id" ref="view_ineco_sale_summary5_tree" />
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale summary. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+
+		<!-- Sale Summary Dashboard 5 Sale Log Smart -->
+        <record id="view_ineco_sale_summary5smart_tree" model="ir.ui.view">
+            <field name="name">ineco.sale.summary5smart.tree</field>
+            <field name="model">ineco.sale.summary5smart</field>
+            <field name="arch" type="xml">
+                <tree string="Problem Type">
+                    <field name="nickname" />
+                    <field name="so2" sum="Total" string="SO" invisible="1"/>
+                    <field name="mo2" sum="Total" string="MO"/>
+                    <field name="total_customer" sum="Total"/>
+                    <field name="total_customer_company" sum="Total" string="Comp"/>
+                    <field name="total_customer_new" sum="Total"/>
+                    <field name="logcall_inbound" sum="Total" string="In"/>
+                    <field name="logcall_outbound" sum="Total" string="Out"/>
+                    <field name="logcall_visit" sum="Total" string="Vis"/>
+                    <field name="total_quotation" sum="Total" string="QO"/>
+                    <field name="total_quotation_saleorder" sum="Total" string="SO"/>
+                    <field name="total_picking_pc" sum="Total" string="PC"/>
+                    <field name="total_picking_ds" sum="Total" string="DS"/>
+                    <field name="total_picking_rp" sum="Total" string="PR"/>
+                    <field name="total_picking_mp" sum="Total" string="PM"/>
+                    <field name="total_picking_fr" sum="Total" string="PF"/>
+                </tree>
+            </field>
+        </record>		
+        
+        <record id="view_ineco_sale_summary5smart_filter" model="ir.ui.view">
+            <field name="name">ineco.sale.summary5smart.select</field>
+            <field name="model">ineco.sale.summary5smart</field>
+            <field name="arch" type="xml">
+                <search string="Search Sale Summary">
+                	<field name="user_id" />
+                	<field name="nickname" />
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_sale_summary5smart" model="ir.actions.act_window">
+            <field name="name">Smart Sale Log</field>
+            <field name="res_model">ineco.sale.summary5smart</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_sale_summary5smart_filter"/>
+            <field name="view_id" ref="view_ineco_sale_summary5smart_tree" />
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale summary. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+        
+        <record id="view_ineco_sale_mo_tree" model="ir.ui.view">
+            <field name="name">ineco.sale.mo.tree</field>
+            <field name="model">ineco.sale.summary5</field>
+            <field name="arch" type="xml">
+                <tree string="Problem Type">
+                    <field name="nickname" />
+                    <field name="so2" sum="Total" string="SO" invisible="1"/>
+                   	<field name="mo2" sum="Total" string="MO"/>
+                </tree>
+            </field>
+        </record>	  
+        
+        <record model="ir.ui.view" id="view_ineco_sale_mo_graph">
+            <field name="name">ineco.sale.mo.graph</field>
+            <field name="model">ineco.sale.summary5</field>
+            <field name="arch" type="xml">
+                <graph string="Files by User" type="pie">
+                    <field name="user_id" />
+                    <field name="so2" operator="+"/>
+                </graph>
+            </field>
+        </record>        
+              
+        <record id="action_ineco_sale_mo" model="ir.actions.act_window">
+            <field name="name">Sale MO</field>
+            <field name="res_model">ineco.sale.summary5</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">graph</field>
+            <field name="view_id" ref="view_ineco_sale_mo_graph"/>
+            <field name="domain">[('user_id','=',uid)]</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale summary. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>    
+
+		<!-- Sale Volume -->
+        <record model="ir.ui.view" id="view_ineco_sale_qty_amount_graph">
+            <field name="name">ineco.sale.qty.amount.graph</field>
+            <field name="model">ineco.sale.qty.amount</field>
+            <field name="arch" type="xml">
+                <graph string="Sale Qty" type="bar">
+                    <field name="type" />
+                    <field name="amount" operator="+"/>
+                    <field name="qty" operator="+" />
+                </graph>
+            </field>
+        </record>        
+        
+        <record model="ir.ui.view" id="view_ineco_sale_qty_amount_tree">
+            <field name="name">ineco.sale.qty.amount.tree</field>
+            <field name="model">ineco.sale.qty.amount</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Qty">
+                    <field name="type" />
+                    <field name="qty" />
+                    <field name="amount" />
+                </tree>
+            </field>
+        </record>          
+        
+        <record id="action_ineco_sale_volume_graph" model="ir.actions.act_window">
+            <field name="name">Sale Qty Amount</field>
+            <field name="res_model">ineco.sale.qty.amount</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree, graph</field>
+            <field name="view_id" ref="view_ineco_sale_qty_amount_tree"/>
+            <field name="domain">[('user_id','=',uid)]</field>
+            <field name="help" type="html">
+            </field>
+        </record>    
+
+		<!-- Sale 's Customer Tree -->
+        <record model="ir.ui.view" id="view_ineco_sale_qty_customer_tree">
+            <field name="name">ineco.sale.qty.customer.tree</field>
+            <field name="model">ineco.sale.qty.customer</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Qty" >
+                    <field name="type" />
+                    <field name="customer_total" />
+                </tree>
+            </field>
+        </record>        
+        
+        <record id="action_ineco_sale_customer" model="ir.actions.act_window">
+            <field name="name">Customer</field>
+            <field name="res_model">ineco.sale.qty.customer</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_sale_qty_customer_tree"/>
+            <field name="domain">[('user_id','=',uid)]</field>
+            <field name="help" type="html">
+            </field>
+        </record>    
+
+		<!-- My Opportunity -->
+        <record id="view_ineco_sale_myopportunity_tree" model="ir.ui.view">
+            <field name="name">ineco.sale.myopportunity.tree</field>
+            <field name="model">ineco.sale.summary4</field>
+            <field name="arch" type="xml">
+                <tree string="My Opportunity">
+                    <field name="total_opportunity" />
+                    <field name="percent901" />
+                    <field name="percent902" string=""/>
+                    <field name="percent501" />
+                    <field name="percent502" string=""/>
+                    <field name="percent301" />
+                    <field name="percent302" string=""/>
+                    <field name="percent101" />
+                    <field name="percent102" string=""/>
+                    <field name="lose1" />
+                    <field name="lose2" string=""/>
+                </tree>
+            </field>
+        </record>	
+        	
+        <record id="action_ineco_sale_myopportunity" model="ir.actions.act_window">
+            <field name="name">My Opportunity</field>
+            <field name="res_model">ineco.sale.summary4</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_sale_myopportunity_tree"/>
+            <field name="domain">[('user_id','=',uid)]</field>
+            <field name="help" type="html">
+            </field>
+        </record>    
+		
+		<!-- My Sale Log -->
+        <record id="view_ineco_sale_mylog_tree" model="ir.ui.view">
+            <field name="name">ineco.sale.mylog.tree</field>
+            <field name="model">ineco.sale.summary5</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Logs">
+                    <!-- <field name="nickname" />
+                         <field name="so2" sum="Total" string="SO"/>
+                    	 <field name="mo2" sum="Total" string="MO"/> 
+                    <field name="total_customer" sum="Total"/>
+                    <field name="total_customer_company" sum="Total" string="Comp"/>
+                    <field name="total_customer_new" sum="Total"/> -->
+                    <field name="logcall_inbound" string="In"/>
+                    <field name="logcall_outbound" string="Out"/>
+                    <field name="logcall_visit" string="Vis"/>
+                    <!-- <field name="total_quotation" string="QO"/>
+                    <field name="total_quotation_saleorder" string="SO"/> -->
+                    <field name="total_picking_pc" string="PC"/>
+                    <field name="total_picking_ds" string="DS"/>
+                    <field name="total_picking_rp" string="PR"/>
+                    <field name="total_picking_mp" string="PM"/>
+                    <field name="total_picking_fr" string="PF"/>
+                </tree>
+            </field>
+        </record>		
+
+        <record id="action_ineco_sale_mylog" model="ir.actions.act_window">
+            <field name="name">My Sale Logs</field>
+            <field name="res_model">ineco.sale.summary5</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_sale_mylog_tree"/>
+            <field name="domain">[('user_id','=',uid)]</field>
+            <field name="help" type="html">
+            </field>
+        </record>
+
+		<!-- My Top 10 Opportunity Tree -->
+        <record model="ir.ui.view" id="view_ineco_sale_mytop_opportunity_tree">
+            <field name="name">ineco.sale.mytop.opportunity.tree</field>
+            <field name="model">ineco.sale.mytop.opportunity</field>
+            <field name="arch" type="xml">
+                <tree string="My Top Opportunity" >
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<field name="planned_revenue" />
+                	<field name="last_date_count" />
+                	<field name="last_contact_date" />
+                </tree>
+            </field>
+        </record>        
+        
+        <record id="action_ineco_sale_mytop_opportunity" model="ir.actions.act_window">
+            <field name="name">My Top Opportunity</field>
+            <field name="res_model">ineco.sale.mytop.opportunity</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_sale_mytop_opportunity_tree"/>
+            <field name="domain">[('user_id','=',uid)]</field>
+            <field name="limit">10</field>
+            <field name="help" type="html">
+            </field>
+        </record>    
+
+		<!-- ALL Top 50 Opportunity Tree -->
+        <record model="ir.ui.view" id="view_ineco_sale_all_opportunity_tree">
+            <field name="name">ineco.sale.all.opportunity.tree</field>
+            <field name="model">ineco.sale.all.opportunity</field>
+            <field name="arch" type="xml">
+                <tree string="All Top Opportunity" >
+                	<field name="user_id" invisible="1"/>
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<field name="planned_revenue" />
+                	<field name="last_date_count" />
+                	<field name="last_contact_date" />
+                	<field name="cost_opportunity" />
+                </tree>
+            </field>
+        </record>        
+
+        <record id="view_ineco_sale_all_opportunity_filter" model="ir.ui.view">
+            <field name="name">ineco.sale.all.opportunity.filter</field>
+            <field name="model">ineco.sale.all.opportunity</field>
+            <field name="arch" type="xml">
+                <search string="Search All Opportunity">
+                	<field name="user_id" />
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<group expand="0" string="Group By...">
+                		<filter name="sale_group" string="Sale" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
+                	</group>                    
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_sale_all_opportunity" model="ir.actions.act_window">
+            <field name="name">All Top Opportunity</field>
+            <field name="res_model">ineco.sale.all.opportunity</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_sale_all_opportunity_tree"/>
+            <field name="search_view_id" ref="view_ineco_sale_all_opportunity_filter"/>
+            <field name="context">{'search_default_sale_group':1}</field>
+            <field name="limit">200</field>
+            <field name="help" type="html">
+            </field>
+        </record>    
+
+		<!-- Lose Opportunity Current Month-->
+        <record model="ir.ui.view" id="view_ineco_sale_lose_opportunity_tree">
+            <field name="name">ineco.sale.lose.opportunity.tree</field>
+            <field name="model">ineco.sale.lose.opportunity</field>
+            <field name="arch" type="xml">
+                <tree string="Lose Opportunity" >
+                	<field name="user_id" invisible="1"/>
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<field name="planned_revenue" />
+                	<field name="last_date_count" />
+                	<field name="last_contact_date" />
+                	<field name="cost_opportunity" />
+                </tree>
+            </field>
+        </record>        
+
+        <record model="ir.ui.view" id="view_ineco_sale_lose_opportunity_form">
+            <field name="name">ineco.sale.lose.opportunity.form</field>
+            <field name="model">ineco.sale.lose.opportunity</field>
+            <field name="arch" type="xml">
+                <form string="Lose Opportunity" >
+                	<field name="user_id" invisible="1"/>
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<field name="planned_revenue" />
+                	<field name="last_date_count" />
+                	<field name="last_contact_date" />
+                	<field name="cost_opportunity" />
+             		<newline />
+                	<field name="opportunity_cost_ids" nolabel="1" colspan="4" >
+                		<tree string="Costs">
+                			<field name="type" />
+                			<field name="cost_type_id" />
+                			<field name="quantity" />
+                			<field name="cost" />
+                			<field name="amount" sum="Total" />
+                		</tree>
+                	</field>
+                </form>
+            </field>
+        </record>        
+
+        <record id="view_ineco_sale_lose_opportunity_filter" model="ir.ui.view">
+            <field name="name">ineco.sale.lose.opportunity.filter</field>
+            <field name="model">ineco.sale.lose.opportunity</field>
+            <field name="arch" type="xml">
+                <search string="Search All Opportunity">
+                	<field name="user_id" />
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<group expand="0" string="Group By...">
+                		<filter name="sale_group" string="Sale" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
+                	</group>                    
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_sale_lose_opportunity" model="ir.actions.act_window">
+            <field name="name">Lose Opportunity</field>
+            <field name="res_model">ineco.sale.lose.opportunity</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_sale_all_opportunity_tree"/>
+            <field name="search_view_id" ref="view_ineco_sale_all_opportunity_filter"/>
+            <field name="context">{'search_default_sale_group':1}</field>
+            <field name="limit">200</field>
+            <field name="help" type="html">
+            </field>
+        </record>    
+
+		<!-- Lose Opportunity 1 Month-->
+        <record model="ir.ui.view" id="view_ineco_sale_lose_opportunity_month1_tree">
+            <field name="name">ineco.sale.lose.opportunity.month1.tree</field>
+            <field name="model">ineco.sale.lose.opportunity.month1</field>
+            <field name="arch" type="xml">
+                <tree string="Lose Opportunity" >
+                	<field name="user_id" invisible="1"/>
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<field name="planned_revenue" />
+                	<field name="last_date_count" />
+                	<field name="last_contact_date" />
+                	<field name="cost_opportunity" />
+                </tree>
+            </field>
+        </record>        
+
+        <record model="ir.ui.view" id="view_ineco_sale_lose_opportunity_month1_form">
+            <field name="name">ineco.sale.lose.opportunity.month1.form</field>
+            <field name="model">ineco.sale.lose.opportunity.month1</field>
+            <field name="arch" type="xml">
+                <form string="Lose Opportunity" >
+                	<field name="user_id" invisible="1"/>
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<field name="planned_revenue" />
+                	<field name="last_date_count" />
+                	<field name="last_contact_date" />
+                	<field name="cost_opportunity" />
+             		<newline />
+                	<field name="opportunity_cost_ids" nolabel="1" colspan="4" >
+                		<tree string="Costs">
+                			<field name="type" />
+                			<field name="cost_type_id" />
+                			<field name="quantity" />
+                			<field name="cost" />
+                			<field name="amount" sum="Total" />
+                		</tree>
+                	</field>
+                </form>
+            </field>
+        </record>        
+
+        <record id="view_ineco_sale_lose_opportunity_month1_filter" model="ir.ui.view">
+            <field name="name">ineco.sale.lose.opportunity.month1.filter</field>
+            <field name="model">ineco.sale.lose.opportunity.month1</field>
+            <field name="arch" type="xml">
+                <search string="Search All Opportunity">
+                	<field name="user_id" />
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<group expand="0" string="Group By...">
+                		<filter name="sale_group" string="Sale" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
+                	</group>                    
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_sale_lose_opportunity_month1" model="ir.actions.act_window">
+            <field name="name">Lose 1 Month Opportunity</field>
+            <field name="res_model">ineco.sale.lose.opportunity.month1</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_sale_lose_opportunity_month1_tree"/>
+            <field name="search_view_id" ref="view_ineco_sale_lose_opportunity_month1_filter"/>
+            <field name="context">{'search_default_sale_group':1}</field>
+            <field name="limit">200</field>
+            <field name="help" type="html">
+            </field>
+        </record>    
+
+		<!-- Lose Opportunity 3 Month-->
+        <record model="ir.ui.view" id="view_ineco_sale_lose_opportunity_month3_tree">
+            <field name="name">ineco.sale.lose.opportunity.month3.tree</field>
+            <field name="model">ineco.sale.lose.opportunity.month3</field>
+            <field name="arch" type="xml">
+                <tree string="Lose Opportunity" >
+                	<field name="user_id" invisible="1"/>
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<field name="planned_revenue" />
+                	<field name="last_date_count" />
+                	<field name="last_contact_date" />
+                	<field name="cost_opportunity" />
+                </tree>
+            </field>
+        </record>        
+
+        <record model="ir.ui.view" id="view_ineco_sale_lose_opportunity_month3_form">
+            <field name="name">ineco.sale.lose.opportunity.month3.form</field>
+            <field name="model">ineco.sale.lose.opportunity.month3</field>
+            <field name="arch" type="xml">
+                <form string="Lose Opportunity" >
+                	<field name="user_id" invisible="1"/>
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<field name="planned_revenue" />
+                	<field name="last_date_count" />
+                	<field name="last_contact_date" />
+                	<field name="cost_opportunity" />
+             		<newline />
+                	<field name="opportunity_cost_ids" nolabel="1" colspan="4" >
+                		<tree string="Costs">
+                			<field name="type" />
+                			<field name="cost_type_id" />
+                			<field name="quantity" />
+                			<field name="cost" />
+                			<field name="amount" sum="Total" />
+                		</tree>
+                	</field>
+                </form>
+            </field>
+        </record>        
+
+        <record id="view_ineco_sale_lose_opportunity_month3_filter" model="ir.ui.view">
+            <field name="name">ineco.sale.lose.opportunity.month3.filter</field>
+            <field name="model">ineco.sale.lose.opportunity.month3</field>
+            <field name="arch" type="xml">
+                <search string="Search All Opportunity">
+                	<field name="user_id" />
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<group expand="0" string="Group By...">
+                		<filter name="sale_group" string="Sale" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
+                	</group>                    
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_sale_lose_opportunity_month3" model="ir.actions.act_window">
+            <field name="name">Lose 1 Month Opportunity</field>
+            <field name="res_model">ineco.sale.lose.opportunity.month3</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_sale_lose_opportunity_month3_tree"/>
+            <field name="search_view_id" ref="view_ineco_sale_lose_opportunity_month3_filter"/>
+            <field name="context">{'search_default_sale_group':1}</field>
+            <field name="limit">200</field>
+            <field name="help" type="html">
+            </field>
+        </record>    
+
+		<!-- Lose Opportunity 6 Month-->
+        <record model="ir.ui.view" id="view_ineco_sale_lose_opportunity_month6_tree">
+            <field name="name">ineco.sale.lose.opportunity.month6.tree</field>
+            <field name="model">ineco.sale.lose.opportunity.month6</field>
+            <field name="arch" type="xml">
+                <tree string="Lose Opportunity" >
+                	<field name="user_id" invisible="1"/>
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<field name="planned_revenue" />
+                	<field name="last_date_count" />
+                	<field name="last_contact_date" />
+                	<field name="cost_opportunity" />
+                </tree>
+            </field>
+        </record>        
+
+        <record model="ir.ui.view" id="view_ineco_sale_lose_opportunity_month6_form">
+            <field name="name">ineco.sale.lose.opportunity.month6.form</field>
+            <field name="model">ineco.sale.lose.opportunity.month6</field>
+            <field name="arch" type="xml">
+                <form string="Lose Opportunity" >
+                	<field name="user_id" invisible="1"/>
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<field name="planned_revenue" />
+                	<field name="last_date_count" />
+                	<field name="last_contact_date" />
+                	<field name="cost_opportunity" />
+             		<newline />
+                	<field name="opportunity_cost_ids" nolabel="1" colspan="4" >
+                		<tree string="Costs">
+                			<field name="type" />
+                			<field name="cost_type_id" />
+                			<field name="quantity" />
+                			<field name="cost" />
+                			<field name="amount" sum="Total" />
+                		</tree>
+                	</field>
+                </form>
+            </field>
+        </record>        
+
+        <record id="view_ineco_sale_lose_opportunity_month6_filter" model="ir.ui.view">
+            <field name="name">ineco.sale.lose.opportunity.month6.filter</field>
+            <field name="model">ineco.sale.lose.opportunity.month6</field>
+            <field name="arch" type="xml">
+                <search string="Search All Opportunity">
+                	<field name="user_id" />
+                	<field name="partner_id" />
+                	<field name="stage_id" />
+                	<group expand="0" string="Group By...">
+                		<filter name="sale_group" string="Sale" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
+                	</group>                    
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_sale_lose_opportunity_month6" model="ir.actions.act_window">
+            <field name="name">Lose 1 Month Opportunity</field>
+            <field name="res_model">ineco.sale.lose.opportunity.month6</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_sale_lose_opportunity_month6_tree"/>
+            <field name="search_view_id" ref="view_ineco_sale_lose_opportunity_month6_filter"/>
+            <field name="context">{'search_default_sale_group':1}</field>
+            <field name="limit">200</field>
+            <field name="help" type="html">
+            </field>
+        </record>    
+        
+        <!-- Cotton's Stock -->
+        <record model="ir.ui.view" id="view_ineco_product_category_cotton_tree">
+            <field name="name">ineco.product.category.cotton.tree</field>
+            <field name="model">product.category</field>
+            <field name="arch" type="xml">
+                <tree string="Cotton" >
+                	<field name="parent_id" invisible="1"/>
+                	<field name="name" />
+                	<field name="product_onhand" />
+                	<field name="product_forecast" />
+                </tree>
+            </field>
+        </record>        
+        
+        <record id="actino_ineco_product_category_cotton" model="ir.actions.act_window">
+            <field name="name">Cotton's Stock</field>
+            <field name="res_model">product.category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_product_category_cotton_tree"/>     
+            <field name="domain">[('parent_id','=',43)]</field>    
+           <!--  <field name="context">{'default_tc':42}</field> -->
+           <!--  <field name="context">{'default_mixtect':41}</field> -->
+            <!-- <field name="limit">20</field> -->
+            <field name="help" type="html">
+            </field>
+        </record>    
+
+        <!-- TC's Stock -->
+        <record model="ir.ui.view" id="view_ineco_product_category_tc_tree">
+            <field name="name">ineco.product.category.tc.tree</field>
+            <field name="model">product.category</field>
+            <field name="arch" type="xml">
+                <tree string="TC" >
+                	<field name="parent_id" invisible="1"/>
+                	<field name="name" />
+                	<field name="product_onhand" />
+                	<field name="product_forecast" />
+                </tree>
+            </field>
+        </record>        
+        
+        <record id="actino_ineco_product_category_tc" model="ir.actions.act_window">
+            <field name="name">TC's Stock</field>
+            <field name="res_model">product.category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_product_category_tc_tree"/>     
+            <field name="domain">[('parent_id','=',42)]</field>    
+           <!--  <field name="context">{'default_tc':42}</field> -->
+           <!--  <field name="context">{'default_mixtect':41}</field> -->
+            <!-- <field name="limit">20</field> -->
+            <field name="help" type="html">
+            </field>
+        </record>    
+
+        <!-- Mix Tech's Stock -->
+        <record model="ir.ui.view" id="view_ineco_product_category_mixtech_tree">
+            <field name="name">ineco.product.category.mixtech.tree</field>
+            <field name="model">product.category</field>
+            <field name="arch" type="xml">
+                <tree string="Mix Tech" >
+                	<field name="parent_id" invisible="1"/>
+                	<field name="name" />
+                	<field name="product_onhand" />
+                	<field name="product_forecast" />
+                </tree>
+            </field>
+        </record>        
+        
+        <record id="actino_ineco_product_category_mixtech" model="ir.actions.act_window">
+            <field name="name">Mix Tech's Stock</field>
+            <field name="res_model">product.category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_product_category_mixtech_tree"/>     
+            <field name="domain">[('parent_id','=',41)]</field>    
+           <!--  <field name="context">{'default_tc':42}</field> -->
+           <!--  <field name="context">{'default_mixtect':41}</field> -->
+            <!-- <field name="limit">20</field> -->
+            <field name="help" type="html">
+            </field>
+        </record>    
+
+        <record id="action_ineco_product_category_stock" model="ir.actions.act_window">
+            <field name="name">Product Category Stock</field>
+            <field name="res_model">ineco.product.category.stock</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_product_category_stock_filter"/>
+            <field name="context">{'search_default_category_group':1,'search_default_category_child_group':1,'search_default_product_group':1}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale summary. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+
+        <record id="action_ineco_product_category_stock_option" model="ir.actions.act_window">
+            <field name="name">Product Category Stock Option</field>
+            <field name="res_model">ineco.product.category.stock.option</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_product_category_stock_filter"/>
+            <field name="context">{'search_default_category_group':1,'search_default_category_child_group':1,'search_default_product_group':1}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale summary. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+
+		<!-- Sale Qty -->
+        <record model="ir.ui.view" id="view_ineco_sale_qty_dashboard_tree">
+            <field name="name">ineco.sale.qty.dashboard.tree</field>
+            <field name="model">ineco.sale.qty.dashboard</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Summary Qty" >
+                	<field name="user_id" invisible="1"/>
+                	<field name="nickname" />
+                	<field name="target50000" />
+                	<field name="target10000" invisible="1" />
+                	<field name="january" />
+                	<field name="febuary" />
+                	<field name="march" />
+                	<field name="april" />
+                	<field name="may" />
+                	<field name="june" />
+                	<field name="july" />
+                	<field name="august" />
+                	<field name="september" />
+                	<field name="octorber" />
+                	<field name="november" />
+                	<field name="december" />
+                </tree>
+            </field>
+        </record>        
+        
+        <record id="action_ineco_sale_qty_dashboard" model="ir.actions.act_window">
+            <field name="name">Sale Quantity Summary</field>
+            <field name="res_model">ineco.sale.qty.dashboard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_ineco_sale_qty_dashboard_tree"/>     
+            <field name="domain">[]</field>    
+           <!--  <field name="context">{'default_tc':42}</field> -->
+           <!--  <field name="context">{'default_mixtect':41}</field> -->
+            <!-- <field name="limit">20</field> -->
+            <field name="help" type="html">
+            </field>
+        </record>    
+
+
+		<!-- Color of Last Year -->
+        <record id="view_ineco_color_of_lastyear_tree" model="ir.ui.view">
+            <field name="name">ineco.color.of.lastyear.tree</field>
+            <field name="model">ineco.color.of.lastyear</field>
+            <field name="arch" type="xml">
+                <tree string="Color of Last Year">
+                    <field name="name" />
+                    <field name="total" sum="Total" />
+                    <field name="m01" sum="Total" />
+                    <field name="m02" sum="Total" />
+                    <field name="m03" sum="Total" />
+                    <field name="m04" sum="Total" />
+                    <field name="m05" sum="Total" />
+                    <field name="m06" sum="Total" />
+                    <field name="m07" sum="Total" />
+                    <field name="m08" sum="Total" />
+                    <field name="m09" sum="Total" />
+                    <field name="m10" sum="Total" />
+                    <field name="m11" sum="Total" />
+                    <field name="m12" sum="Total" />
+                </tree>
+            </field>
+        </record>		        
+        
+        <record id="action_ineco_color_of_lastyear" model="ir.actions.act_window">
+            <field name="name">Color of Lastyear</field>
+            <field name="res_model">ineco.color.of.lastyear</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_ineco_color_of_lastyear_tree" />
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale summary. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+
+		<!-- Color of Year -->
+        <record id="view_ineco_color_of_year_tree" model="ir.ui.view">
+            <field name="name">ineco.color.of.year.tree</field>
+            <field name="model">ineco.color.of.year</field>
+            <field name="arch" type="xml">
+                <tree string="Color of Year">
+                    <field name="name" />
+                    <field name="total" sum="Total" />
+                    <field name="m01" sum="Total" />
+                    <field name="m02" sum="Total" />
+                    <field name="m03" sum="Total" />
+                    <field name="m04" sum="Total" />
+                    <field name="m05" sum="Total" />
+                    <field name="m06" sum="Total" />
+                    <field name="m07" sum="Total" />
+                    <field name="m08" sum="Total" />
+                    <field name="m09" sum="Total" />
+                    <field name="m10" sum="Total" />
+                    <field name="m11" sum="Total" />
+                    <field name="m12" sum="Total" />
+                </tree>
+            </field>
+        </record>		        
+        
+        <record id="action_ineco_color_of_year" model="ir.actions.act_window">
+            <field name="name">Color of year</field>
+            <field name="res_model">ineco.color.of.year</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_ineco_color_of_lastyear_tree" />
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale summary. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+                    
+      <!-- Dashboard Columns -->
+      <record model="ir.ui.view" id="board_mixprint_dashboard_form">
+            <field name="name">Mixprint Dashboard</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard" version="7.0">
+                    <board style="2-1">
+                        <column>
+							<action string="Top 10 Opportunity" name="%(action_ineco_sale_mytop_opportunity)d"/>
+                        	<action string="My Opportunity Stages" name="%(action_ineco_sale_myopportunity)d"/>
+                        	<action string="My Sale Logs" name="%(action_ineco_sale_mylog)d"/>                      	
+                        	<action string="Opportunity Stages" name="%(action_ineco_sale_summary4)d"/>
+                        	<action string="Sale Log" name="%(action_ineco_sale_summary5)d"/>
+                        	<action string="Smart Opportunity Stages" name="%(action_ineco_sale_summary4smart)d"/>
+                        	<action string="Smart Sale Log" name="%(action_ineco_sale_summary5smart)d"/>
+                        	<action string="Sale Quantity" name="%(action_ineco_sale_qty_dashboard)d"/>
+                        	<action string="Color of Last Year" name="%(action_ineco_color_of_lastyear)d" />
+                        	<action string="Color of year" name="%(action_ineco_color_of_year)d" />
+                        	<action string="Stock" name="%(action_ineco_product_category_stock)d" />
+                        	<action string="Stock Option" name="%(action_ineco_product_category_stock_option)d" />
+                        </column>    
+						<column>
+							<action string="Volume" name="%(action_ineco_sale_volume_graph)d"/>
+							<action string="Customer" name="%(action_ineco_sale_customer)d"/>
+							<!-- <action string="Cotton" name="%(actino_ineco_product_category_cotton)d"/>
+							<action string="TC" name="%(actino_ineco_product_category_tc)d"/>
+							<action string="Mix Tech" name="%(actino_ineco_product_category_mixtech)d"/> -->
+						</column>
+                    </board>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_mixprint_dashboard">
+            <field name="name">Dashboard</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="usage">menu</field>
+            <field name="view_id" ref="board_mixprint_dashboard_form"/>
+        </record>
+
+      <!-- Dashboard Opportunity -->
+      <record model="ir.ui.view" id="board_mixprint_opportunity_dashboard_form">
+            <field name="name">Mixprint Opportunity Dashboard</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard" version="7.0">
+                    <board style="1">
+                        <column>
+                       		<action string="Top 50 Opportunity by Sale" name="%(action_ineco_sale_all_opportunity)d"/>
+                       		<action string="Lost Current Opportunity by Sale" name="%(action_ineco_sale_lose_opportunity)d"/>
+                       		<action string="Lost 1 Month Opportunity by Sale" name="%(action_ineco_sale_lose_opportunity_month1)d"/>
+                       		<action string="Lost 3 Months Opportunity by Sale" name="%(action_ineco_sale_lose_opportunity_month3)d"/>
+                       		<action string="Lost 6 Months Opportunity by Sale" name="%(action_ineco_sale_lose_opportunity_month6)d"/>
+ 						</column>
+                    </board>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_mixprint_opportunity_dashboard">
+            <field name="name">Top 50 Opportunity</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="usage">menu</field>
+            <field name="view_id" ref="board_mixprint_opportunity_dashboard_form"/>
+        </record>
+        
+        <menuitem 
+            id="menu_ineco_sale_summary5"
+        	action="action_mixprint_dashboard" 
+        	parent="menu_mixprint_dashboard"
+        	sequence="2"/>            
+                	 
+        <menuitem 
+            id="menu_ineco_top_opportunity"
+        	action="action_mixprint_opportunity_dashboard" 
+        	parent="menu_mixprint_dashboard"
+        	sequence="3"/> 
+        	
+		<!-- Sale Fix Dashboard -->
+        <record id="view_ineco_sale_fix_tree" model="ir.ui.view">
+            <field name="name">ineco.sale.fix.tree</field>
+            <field name="model">ineco.sale.fix</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Fix">
+                    <field name="property_id" />
+                    <field name="name" />
+                    <field name="partner_id" />
+                    <field name="product_id" />
+                    <field name="price_unit" />
+                    <field name="product_uom_qty" />
+                    <field name="product_uom" />
+                    <field name="order_id" />
+                    <field name="garment_order_no" />
+                    <field name="note" />
+                    <field name="date_order" />
+                    <field name="garment_order_date" />
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_ineco_sale_fix_form" model="ir.ui.view">
+            <field name="name">ineco.sale.fix.form</field>
+            <field name="model">ineco.sale.fix</field>
+            <field name="arch" type="xml">
+                <form string="Sale Fix">
+                    <field name="property_id" />
+                    <field name="name" />
+                    <field name="partner_id" />
+                    <field name="product_id" />
+                    <field name="price_unit" />
+                    <field name="product_uom_qty" />
+                    <field name="product_uom" />
+                    <field name="order_id" />
+                    <field name="garment_order_no" />
+                    <field name="note" />
+                    <field name="date_order" />
+                    <field name="garment_order_date" />
+                </form>
+            </field>
+        </record>		
+        
+        <record id="view_ineco_sale_fix_filter" model="ir.ui.view">
+            <field name="name">ineco.sale.fix.select</field>
+            <field name="model">ineco.sale.fix</field>
+            <field name="arch" type="xml">
+                <search string="Search Sale Fix">
+                    <field name="property_id" />
+                    <field name="name" />
+                    <field name="product_id" />
+                    <field name="partner_id" />
+                    <field name="order_id" />
+                    <field name="garment_order_no" />
+                    <field name="note" />
+                    <field name="date_order" />
+                    <field name="garment_order_date" />
+                    <group expand="0" string="Group By...">
+                        <filter string="Product" domain="[]" context="{'group_by':'product_id'}"/>
+                        <filter string="Property" domain="[]" context="{'group_by':'property_id'}"/>
+                        <filter string="Customer" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Sale" domain="[]" context="{'group_by':'order_id'}"/>
+                        <filter string="Date Order" domain="[]" context="{'group_by':'date_order'}"/>
+                        <filter string="Date Mo" domain="[]" context="{'group_by':'garment_order_date'}"/>
+                    </group>
+
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_sale_fix" model="ir.actions.act_window">
+            <field name="name">Sale Fix</field>
+            <field name="res_model">ineco.sale.fix</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_sale_fix_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale summary. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+        	
+        <menuitem 
+            id="menu_ineco_sale_fix"
+        	action="action_ineco_sale_fix" 
+        	parent="menu_mixprint_dashboard"
+        	sequence="4"/> 
+
+		<!-- Warehouse Dashboard -->
+        <menuitem
+        	id="menu_mixprint_warehouse_dashboard"
+        	parent="stock.menu_stock_root"
+        	name="Mixprint"
+        	sequence="0" />        	                	 
+
+      <!-- Dashboard Opportunity -->
+      <record model="ir.ui.view" id="board_mixprint_warehouse_dashboard_form">
+            <field name="name">Mixprint Warehouse Dashboard</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard" version="7.0">
+                    <board style="1">
+                        <column>
+                        	<action string="Stock" name="%(action_ineco_product_category_stock)d" />
+                        	<action string="Stock Option" name="%(action_ineco_product_category_stock_option)d" />
+ 						</column>
+                    </board>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_mixprint_warehouse_dashboard">
+            <field name="name">Dashboard</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="usage">menu</field>
+            <field name="view_id" ref="board_mixprint_warehouse_dashboard_form"/>
+        </record>
+
+        <menuitem 
+            id="menu_ineco_mixprint_warehouse_dashboard"
+        	action="action_mixprint_warehouse_dashboard" 
+        	parent="menu_mixprint_warehouse_dashboard"
+        	sequence="2"/>  
+        	
+		<!-- Delivery Cost Dashboard -->
+        <record id="view_ineco_delivery_cost_dashboard_tree" model="ir.ui.view">
+            <field name="name">ineco.delivery.cost.dashboard.tree</field>
+            <field name="model">ineco.delivery.cost.dashboard</field>
+            <field name="arch" type="xml">
+                <tree string="Delivery Cost">
+                    <field name="name" />
+                    <field name="date" />
+                    <field name="year" invisible="1"/>
+                    <field name="month" invisible="1"/>
+                    <field name="day" invisible="1"/>
+                    <field name="origin" />
+                    <field name="partner_id" />
+                    <field name="stock_journal_id" />
+                    <field name="batch_no" />
+                    <field name="product_qty" />
+                    <field name="state" invisible="1"/>
+                    <field name="cost_type_id" />
+                    <field name="cost_qty" />
+                    <field name="cost" />
+                    <field name="amount" sum="Amount"/>
+                </tree>
+            </field>
+        </record>		        	
+
+        <record id="view_ineco_delivery_cost_dashboard_filter" model="ir.ui.view">
+            <field name="name">ineco.delivery.cost.dashboard.filter</field>
+            <field name="model">ineco.delivery.cost.dashboard</field>
+            <field name="arch" type="xml">
+                <search string="Search Delivery Cost Dashboard">
+                    <field name="name" />
+                    <field name="date" />
+                    <field name="year" />
+                    <field name="month" />
+                    <field name="day" />
+                    <field name="origin" />
+                    <field name="partner_id" />
+                    <field name="stock_journal_id" />
+                    <field name="batch_no" />
+                    <field name="cost_type_id" />
+
+                    <group expand="0" string="Group By...">
+                        <filter string="Customer" name="group_customer_id" icon="terp-partner" domain="[]" context="{'group_by':'partner_id'}"/>
+                        <filter string="Source" name="group_origin" icon="terp-gtk-jump-to-rtl" domain="[]" context="{'group_by':'origin'}"/>
+                        <filter string="Document Date" name="group_doc_date" icon="terp-go-month" domain="[]" context="{'group_by':'date'}"/>
+                        <filter string="Stock Journal" name="group_stock_journal_id" icon="terp-partner" domain="[]" context="{'group_by':'stock_journal_id'}"/>
+                        <filter string="Cost Type" name="group_cost_type_id" icon="terp-partner" domain="[]" context="{'group_by':'cost_type_id'}"/>
+                        <filter string="Year" name="group_year" icon="terp-go-month" domain="[]" context="{'group_by':'year'}"/>
+                        <filter string="Month" name="group_month" icon="terp-go-month" domain="[]" context="{'group_by':'month'}"/>
+                        <filter string="Day" name="group_day" icon="terp-go-month" domain="[]" context="{'group_by':'day'}"/>
+                    </group>
+
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_delivery_cost_dashboard" model="ir.actions.act_window">
+            <field name="name">Delivery Cost</field>
+            <field name="res_model">ineco.delivery.cost.dashboard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_delivery_cost_dashboard_filter"/>
+            <field name="context">{'search_default_group_doc_date':1,'search_default_group_cost_type_id':1}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale summary. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+            id="menu_ineco_delivery_cost_dashboard"
+        	action="action_ineco_delivery_cost_dashboard" 
+        	parent="menu_mixprint_warehouse_dashboard"
+        	sequence="3"/>  
+
+		<menuitem action="action_ineco_delivery_cost_dashboard" 
+		    id="menu_ineco_account_delivery_cost_dashboard" 
+		    parent="account.menu_finance_receivables"
+		    sequence="2"/>
+
+
+        <record id="view_ineco_saleamount_dashboard_tree" model="ir.ui.view">
+            <field name="name">ineco.sale.amount.dashboard.tree</field>
+            <field name="model">ineco.sale.amount.dashboard</field>
+            <field name="arch" type="xml">
+                <tree string="Sale Amount and Work">
+                    <field name="nickname" invisible="1"/>
+                    <field name="year" />
+                    <field name="jan_sale_amount" sum="Total" string="Jan SO"/>
+                    <field name="jan_garment_amount" sum="Total" string="Jan MO"/>
+                    <field name="feb_sale_amount" sum="Total" string="Feb SO"/>
+                    <field name="feb_garment_amount" sum="Total" string="Feb MO"/>
+                    <field name="mar_sale_amount" sum="Total" string="Mar SO"/>
+                    <field name="mar_garment_amount" sum="Total" string="Mar MO"/>
+                    <field name="apr_sale_amount" sum="Total" string="Apr SO"/>
+                    <field name="apr_garment_amount" sum="Total" string="Apr MO"/>
+                    <field name="may_sale_amount" sum="Total" string="May SO"/>
+                    <field name="may_garment_amount" sum="Total" string="May MO"/>
+                    <field name="jun_sale_amount" sum="Total" string="Jun SO"/>
+                    <field name="jun_garment_amount" sum="Total" string="Jun MO"/>
+                    <field name="jul_sale_amount" sum="Total" string="Jul SO"/>
+                    <field name="jul_garment_amount" sum="Total" string="Jul MO"/>
+                    <field name="aug_sale_amount" sum="Total" string="Aug SO"/>
+                    <field name="aug_garment_amount" sum="Total" string="Aug MO"/>
+                    <field name="sep_sale_amount" sum="Total" string="Sep SO"/>
+                    <field name="sep_garment_amount" sum="Total" string="Sep MO"/>
+                    <field name="oct_sale_amount" sum="Total" string="Oct SO"/>
+                    <field name="oct_garment_amount" sum="Total" string="Oct MO"/>
+                    <field name="nov_sale_amount" sum="Total" string="Nov SO"/>
+                    <field name="nov_garment_amount" sum="Total" string="Nov MO"/>
+                    <field name="dec_sale_amount" sum="Total" string="Dec SO"/>
+                    <field name="dec_garment_amount" sum="Total" string="Dec MO"/>
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_ineco_saleamount_dashboard_search" model="ir.ui.view">
+            <field name="name">ineco.sale.amount.dashboard.filter</field>
+            <field name="model">ineco.sale.amount.dashboard</field>
+            <field name="arch" type="xml">
+                <search string="Search All Opportunity">
+                	<field name="user_id" />
+                	<field name="year" />
+                	<group expand="0" string="Group By...">
+                		<filter name="group_user" string="Sale" icon="terp-personal" domain="[]" context="{'group_by':'nickname'}"/>
+                	</group>                    
+               	</search>
+            </field>
+        </record>
+
+        <record id="action_ineco_saleamount_dashboard" model="ir.actions.act_window">
+            <field name="name">Sale Amount</field>
+            <field name="res_model">ineco.sale.amount.dashboard</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+			<field name="search_view_id" ref="view_ineco_saleamount_dashboard_search"/>
+            <field name="context">{'search_default_group_user':1}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a sale summary. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+
+      <!-- Dashboard Sale Amount -->
+      <record model="ir.ui.view" id="board_mixprint_saleamount_dashboard_form">
+            <field name="name">Mixprint Sale Amount Dashboard</field>
+            <field name="model">board.board</field>
+            <field name="arch" type="xml">
+                <form string="Dashboard" version="7.0">
+                    <board style="1">
+                        <column>
+                       		<action string="Sale Amount (100,000 Baht)" name="%(action_ineco_saleamount_dashboard)d"/>
+ 						</column>
+                    </board>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_mixprint_saleamount_dashboard">
+            <field name="name">Sale Amount</field>
+            <field name="res_model">board.board</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="usage">menu</field>
+            <field name="view_id" ref="board_mixprint_saleamount_dashboard_form"/>
+        </record>
+        
+        <menuitem 
+            id="menu_mixprint_saleamount_dashboard"
+        	action="action_mixprint_saleamount_dashboard" 
+        	parent="menu_mixprint_dashboard"
+        	sequence="4"/> 
+
+        	
+     </data>
+</openerp>

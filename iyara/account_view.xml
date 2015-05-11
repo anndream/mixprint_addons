@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        
+        <!-- Account Account  -->
+        <record id="crm_ineco_iyara_account_account_form_view" model="ir.ui.view">
+            <field name="name">ineco.iyara.account.account.form</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_form"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="name2"/>
+                </field>
+        	</field>
+        </record>        
+        
+        <record id="ineco_iyara_view_account_list" model="ir.ui.view">
+            <field name="name">ineco.iyara.view.account.list</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_list"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="name2"/>
+                </field>
+        	</field>
+        </record>   
+             
+        <record id="ineco_iyara_view_account_search" model="ir.ui.view">
+            <field name="name">ineco.iyara.view.account.search</field>
+            <field name="model">account.account</field>
+            <field name="inherit_id" ref="account.view_account_search"/>
+            <field name="arch" type="xml">
+                <field name="name" position="after">
+                    <field name="name2"/>
+                </field>
+        	</field>
+        </record>    
+        
+        <!-- Iyara Purchase Receipt  -->
+        <record id="iyara_account_voucher_form_view" model="ir.ui.view">
+            <field name="name">iyara.account.voucher.form</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_purchase_receipt_form"/>
+            <field name="arch" type="xml">
+                <field name="journal_id" position="before">
+                    <field name="iyara_bank_date"/>
+                </field>
+        	</field>
+        </record>        
+        
+        <record id="iyara_view_account_voucher_list" model="ir.ui.view">
+            <field name="name">iyara.account.voucher.list</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_tree"/>
+            <field name="arch" type="xml">
+                <field name="date" position="after">
+                    <field name="iyara_bank_date"/>
+                </field>
+        	</field>
+        </record>   
+             
+        <record id="iyara_view_account_voucher_search" model="ir.ui.view">
+            <field name="name">iyara.account.voucher.search</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter_vendor"/>
+            <field name="arch" type="xml">
+                <field name="date" position="after">
+                    <field name="iyara_bank_date"/>
+                </field>
+        	</field>
+        </record>            
+
+        
+        <!-- Iyara Supplier Payment  -->
+        <record id="iyara_account_voucher_payment_pay_form_view" model="ir.ui.view">
+            <field name="name">iyara.account.voucher.pay.form</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_payment_form"/>
+            <field name="arch" type="xml">
+                <field name="reference" position="before">
+                    <field name="iyara_bank_date"/>
+                </field>
+        	</field>
+        </record>        
+         
+             
+        <record id="iyara_view_account_voucher_payment_pay_search" model="ir.ui.view">
+            <field name="name">iyara.account.voucher.pay.search</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter_vendor_pay"/>
+            <field name="arch" type="xml">
+                <field name="date" position="after">
+                    <field name="iyara_bank_date"/>
+                </field>
+        	</field>
+        </record>            
+        
+        <!-- Iyara Customer Payment  -->
+        <record id="iyara_account_voucher_payment_rc_form_view" model="ir.ui.view">
+            <field name="name">iyara.account.voucher.rc.form</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_vendor_receipt_form"/>
+            <field name="arch" type="xml">
+                <field name="reference" position="before">
+                    <field name="iyara_bank_date"/>
+                </field>
+        	</field>
+        </record>        
+         
+             
+        <record id="iyara_view_account_voucher_payment_rc_search" model="ir.ui.view">
+            <field name="name">iyara.account.voucher.rc.search</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_filter_customer_pay"/>
+            <field name="arch" type="xml">
+                <field name="date" position="after">
+                    <field name="iyara_bank_date"/>
+                </field>
+        	</field>
+        </record>            
+		
+        <!-- Iyara Account Move  -->
+        <record id="iyara_account_move_inherit_form_view" model="ir.ui.view">
+            <field name="name">iyara.account.move.form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="period_id" position="after">
+                    <field name="period_tax_id"/>
+                </field>               
+            	<xpath expr='//tree/field[@name="account_id"]' position='after'> 
+					<field name="ineco_date_tax"/> 
+					<field name="ineco_tax_amount"/>
+                </xpath>                
+        	</field>
+        </record>      
+
+        <!-- Account Invoice  -->
+        <record id="iyara_account_invoice_form_view" model="ir.ui.view">
+            <field name="name">iyara.account.invoice.form</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="ineco_thai_account.view_ineco_account_invoice_form"/>
+            <field name="arch" type="xml">
+                <field name="bill_due" position="after">
+	               	<field name="billing_1"/>
+	           		<field name="billing_2"/>
+	       			<field name="billing_3"/>
+	            </field>  
+	            <field name="receipt_due" position="after">  		
+	           		<field name="Receipt_1"/>
+	               	<field name="Receipt_2"/>
+	            	<field name="Receipt_3"/>
+				</field>  
+        	</field>
+        </record>           
+        
+        
+	</data>
+</openerp>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="0">
+	    
+	   	<record id="secure_ineco_kpi_year" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_kpi_year" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	    </record>      
+	     
+	   	<record id="secure_ineco_kpi_category" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_kpi_category" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	    </record>       
+
+	   	<record id="secure_ineco_kpi_sale" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_kpi_sale" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	    </record>       
+	   		   		   		    	    	    	    	    
+	   	<record id="secure_ineco_kpi_quotation" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_kpi_quotation" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	    </record>       
+	   	
+	   	<record id="secure_ineco_kpi_opportunity" model="ir.model.access">
+	        <field name="name">Employees</field>
+	        <field name="group_id" ref="base.group_user" />
+	        <field name="model_id" ref="model_ineco_kpi_opportunity" />
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	    </record>       
+	    
+	</data>
+</openerp>

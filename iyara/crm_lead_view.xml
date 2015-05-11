@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="crm_ineco_iyara_case_form_view_leads" model="ir.ui.view">
+            <field name="name">ineco.iyara.crm.lead.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+                <field name="categ_ids" position="after">
+                    <field name="project_id"/>
+                </field>
+        	</field>
+        </record>        
+        
+	</data>
+</openerp>

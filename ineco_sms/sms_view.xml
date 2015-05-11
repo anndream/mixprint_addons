@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        
+    	<menuitem name="SMS" id="menu_ineco_sms" sequence="50" />
+    	<menuitem name="Configuration" parent="menu_ineco_sms" id="menu_ineco_sms_configuration" sequence="20" />
+    	
+    	<record model="ir.ui.view" id="ineco_sms_server_form">
+      		<field name="name">ineco.sms.server.form</field>
+      		<field name="model">ineco.sms.server</field>
+      		<field name="arch" type="xml">
+	        	<form string="SMS Server" version="7.0">
+	        	    <header>
+	        	        <button name="get_balance" type="object" string="Get Balance" />	        	        
+	        	    </header>
+	        	    <sheet>
+		        	    <group string="SMS Server">
+							<div class="oe_title">
+		                        <label for="name" class="oe_edit_only"/>
+		                        <h1>
+		                            <field name="name"/>                            
+		                        </h1>
+		                        <label for="is_default" />
+		                        <field name="is_default" />
+		                    </div>
+		        	    </group>
+		        	    <group>
+		        	        <group>
+			                    <field name="uri"/>
+			                    <field name="port" />
+		        	        </group>
+		        	        <group>
+			                  	<field name="username" />
+			                    <field name="password" password="True"/>
+			                    <field name="balance" />
+		        	        </group>
+		        	    </group>
+		        	    <field name="log_ids" readonly="1">
+		        	        <tree string="Logs">
+		        	            <field name="date_send" />
+		        	            <field name="phone" />
+		        	            <field name="message" />
+		        	            <field name="status" />
+		        	        </tree>
+		        	    </field>
+	        	    </sheet>
+	                <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+	                    <field name="message_ids" widget="mail_thread" placeholder="Share a message..."/>
+	                </div>
+	        	</form>
+
+      		</field>
+    	</record>
+    	 
+    	<record model="ir.ui.view" id="ineco_sms_server_tree">
+      		<field name="name">ineco.sms.server.tree</field>
+      		<field name="model">ineco.sms.server</field>
+      		<field name="arch" type="xml">
+		        <tree string="SMS Server">
+		            <field name="name"/>		            
+		            <field name="uri"/>
+		            <field name="port" />
+		            <field name="balance" />
+		            <field name="is_default" />
+		        </tree>
+      		</field>
+    	</record>
+
+	    <record model="ir.ui.view" id="ineco_sms_server_filter">
+	      	<field name="name">ineco.sms.server.search</field>
+	      	<field name="model">ineco.sms.server</field>
+	      	<field name="arch" type="xml">
+	        	<search string="Server">
+	          		<field name="name" />
+	        	</search>
+	      	</field>
+	    </record>
+    		
+	    <record model="ir.actions.act_window" id="ineco_sms_server_action">
+	        <field name="name">SMS Server</field>
+	        <field name="res_model">ineco.sms.server</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>	   
+	     		
+    	<menuitem name="SMS Server" parent="menu_ineco_sms_configuration" id="menu_ineco_sms_server" sequence="10" action="ineco_sms_server_action"/>
+    		 
+    </data>
+</openerp>

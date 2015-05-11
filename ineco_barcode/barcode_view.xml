@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="action_barcode_home_page" model="ir.actions.client">
+            <field name="name">Barcode Finding</field>
+            <field name="tag">oebarcode.homepage</field>
+        </record>
+
+		<menuitem name="Barcode"
+            id="menu_ineco_barcode_config_root"
+            sequence="85"
+            groups="group_ineco_barcode"
+            action="action_barcode_home_page"
+            />
+        	
+
+		<!-- <menuitem 
+			action="action_ineco_barcode" 
+			id="menu_ineco_barcode"
+		 	parent="menu_ineco_barcode_config_root" 
+		 	sequence="2" />
+		 -->
+
+
+  		<!-- <menuitem 
+			id="menu_ineco_barcode_action"
+		 	groups="group_ineco_barcode"
+		 	name="Action"
+		 	parent="menu_ineco_barcode_config_root"
+		 	 />
+
+  		<menuitem 
+			action="action_barcode_home_page" 
+			id="menu_ineco_barcode_finding"
+		 	groups="group_ineco_barcode"
+		 	name="Barcode"
+		 	parent="menu_ineco_barcode_action"
+		 	 />
+		 	 
+		 -->
+
+<!--    parent="menu_ineco_barcode_config_root" 
+		<record id="view_ineco_barcode_config_form" model="ir.ui.view">
+			<field name="name">ineco.barcode.config.form</field>
+			<field name="model">ineco.barcode.config</field>
+			<field name="arch" type="xml">
+				<form string="Config" version="7.0">
+					<group>
+						<group>
+							<field name="res_model_id"/>
+							<field name="field_id" domain="[('model_id', '=', res_model_id)]"/>
+							<field name="barcode_type"/>
+						</group>
+						<group>
+							<field name="prefix" />
+							<field name="width"/>
+							<field name="height"/>
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+    
+		<record id="view_ineco_barcode_config_tree" model="ir.ui.view">
+			<field name="name">ineco.barcode.config.tree</field>
+			<field name="model">ineco.barcode.config</field>
+			<field name="arch" type="xml">
+				<tree string="Config">
+					<field name="res_model_id"/>
+					<field name="prefix" />
+					<field name="field_id"/>
+					<field name="width"/>
+					<field name="height"/>
+					<field name="barcode_type"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="action_ineco_barcode_config" model="ir.actions.act_window">
+			<field name="name">Barcode Configuration</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">ineco.barcode.config</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_ineco_barcode_config_tree"/>
+		</record>
+
+            	
+		<menuitem 
+			action="action_ineco_barcode_config" 
+			id="menu_ineco_barcode_config"
+		 	parent="menu_ineco_barcode_config_root" 
+		 	sequence="0" />
+
+
+		<record id="view_ineco_barcode_form" model="ir.ui.view">
+			<field name="name">ineco.barcode.form</field>
+			<field name="model">ineco.barcode</field>
+			<field name="arch" type="xml">
+				<form string="Config" version="7.0">
+					<group>
+						<group>
+							<field name="name"/>
+						</group>
+						<group>
+							<field name="model_id"/>
+							<field name="res_id" />
+						</group>
+					</group>
+				</form>
+			</field>
+		</record>
+    
+		<record id="view_ineco_barcode_tree" model="ir.ui.view">
+			<field name="name">ineco.barcode.tree</field>
+			<field name="model">ineco.barcode</field>
+			<field name="arch" type="xml">
+				<tree string="Config">
+					<field name="name"/>
+					<field name="model_id"/>
+					<field name="res_id" />
+				</tree>
+			</field>
+		</record>
+		
+		<record id="action_ineco_barcode" model="ir.actions.act_window">
+			<field name="name">Barcode</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">ineco.barcode</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_ineco_barcode_tree"/>
+		</record>
+ -->
+		 	
+    </data>
+</openerp>

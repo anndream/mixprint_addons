@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_ineco_picking_donedraft_in_form" model="ir.ui.view">
+            <field name="name">stock.picking.donedraft.in.form</field>
+            <field name="model">stock.picking.in</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='button_cancel']" position="after">
+                    <button name="action_done_draft" states="done" groups="base.group_erp_manager" string="Set Done to Draft" type="object" class="oe_highlight"/>
+                    <button name="action_done_draft" states="cancel" groups="base.group_erp_manager" string="Set to Draft" type="object" class="oe_highlight"/>
+                </xpath>
+            	
+        	</field>
+       	</record>
+       	
+        <record id="view_ineco_picking_donedraft_internal_form" model="ir.ui.view">
+            <field name="name">stock.picking.donedraft.internal.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='button_cancel']" position="after">
+                    <button name="action_done_draft" states="done" groups="base.group_erp_manager" string="Set Done to Draft" type="object" class="oe_highlight"/>
+                    <button name="action_done_draft" states="cancel" groups="base.group_erp_manager" string="Set to Draft" type="object" class="oe_highlight"/>
+                </xpath>
+            	
+        	</field>
+       	</record>
+       	
+        <record id="view_ineco_picking_donedraft_out_form" model="ir.ui.view">
+            <field name="name">stock.picking.donedraft.out.form</field>
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='button_cancel']" position="after">
+                    <button name="action_done_draft" states="done" groups="base.group_erp_manager" string="Set Done to Draft" type="object" class="oe_highlight"/>
+                    <button name="action_done_draft" states="cancel" groups="base.group_erp_manager" string="Set to Draft" type="object" class="oe_highlight"/>
+                </xpath>
+            	
+        	</field>
+       	</record>       	
+            
+    </data>
+</openerp>

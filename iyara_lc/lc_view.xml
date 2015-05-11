@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+		<!-- LC -->
+    	<record model="ir.ui.view" id="iyara_lc_form">
+      		<field name="name">iyara.lc.form</field>
+      		<field name="model">iyara.lc</field>
+      		<field name="arch" type="xml">
+      			<form string="LC" version="7.0">
+      				<header>
+      				</header>
+      				<sheet>
+      					<group>
+      						<group>
+      							<field name="name" />
+      							<field name="proforma_invoice_no" />
+      							<field name="partner_bank_id" />
+      							<field name="currency_id" />
+      							<field name="total" />
+      							<field name="available" />
+      						</group>
+      						<group>
+      							<field name="date" />
+      							<field name="date_tr" />
+      							<field name="date_due" />
+		      					<field name="date_etd" />
+      							<field name="date_eta" />
+      							<field name="date_import" />      							
+      						</group>
+      						<group colspan="4">
+      							<field name="line_ids" colspan="4" nolabel="1">
+      								<tree string="Line" editable="top">
+      								    <field name="purchase_id" />
+      								    <field name="purchase_line" />
+		      							<field name="product_id" />
+		      							<field name="product_qty" sum="1" />
+		      							<field name="price_subtotal" sum="1"/>
+		      							<field name="project_id" />
+		      							<field name="date_finish" />  
+		      							<field name="sale_id" />
+      								</tree>			
+      							</field>
+      							<field name="note" />
+      						</group>
+      					</group>
+      				</sheet>
+      			</form>
+      		</field>
+      	</record>
+
+    	<record model="ir.ui.view" id="iayra_lc_tree">
+      		<field name="name">iyara.lc.tree</field>
+      		<field name="model">iyara.lc</field>
+      		<field name="arch" type="xml">
+      			<tree string="LC">
+					<field name="name" />
+					<field name="date" />
+					<field name="proforma_invoice_no" />
+					<field name="partner_bank_id" />
+					<field name="currency_id" />
+					<field name="total" />
+					<field name="available" />
+					<field name="date_tr" />
+					<field name="date_due" />
+		      		<field name="date_etd" />
+      				<field name="date_eta" />
+      				<field name="date_import" />  					
+      			</tree>
+      		</field>
+      	</record>
+
+    	<record model="ir.ui.view" id="iayra_lc_search">
+      		<field name="name">iyara.lc.search</field>
+      		<field name="model">iyara.lc</field>
+      		<field name="arch" type="xml">
+      			<search string="Type">
+					<field name="name" />
+					<field name="date" />
+					<field name="proforma_invoice_no" />
+					<field name="partner_bank_id" />
+					<field name="total" />
+					<field name="currency_id" />
+					<field name="available" />
+					<field name="date_tr" />
+					<field name="date_due" />
+					<field name="date_etd" />
+      				<field name="date_eta" />
+      				<field name="date_import" /> 
+                    <group expand="0" string="Group By...">
+                        <filter string="Date Issue" icon="terp-personal" domain="[]" context="{'group_by':'date'}"/>
+                        <filter string="Date Due" icon="terp-personal" domain="[]" context="{'group_by':'date_due'}"/>
+                        <filter string="Bank LC" icon="terp-personal" domain="[]" context="{'group_by':'partner_bank_id'}"/>
+                        
+                        </group>      				 
+      			</search>
+      		</field>
+      	</record>
+      	
+	    <record model="ir.actions.act_window" id="iayra_lc_action">
+	        <field name="name">LC</field>
+	        <field name="res_model">iyara.lc</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>	   
+
+    	<menuitem name="LC" parent="purchase.menu_procurement_management" id="iayra_lc_menu" 
+    		sequence="110" action="iayra_lc_action"/>
+
+    	
+    	<record model="ir.ui.view" id="iayra_lc_res_partner_from">
+      		<field name="name">lc.res.partner.form</field>
+      		<field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>      		
+      		<field name="arch" type="xml">
+                <field name="debit" position="after">
+                    <field name="bank_lc"/>
+                    <field name="supplier_lc"/>
+                </field>
+      		</field>
+      	</record>    	
+    	
+    	
+    </data>
+</openerp>

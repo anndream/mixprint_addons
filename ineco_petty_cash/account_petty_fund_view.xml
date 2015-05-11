@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+
+		<record id="view_petty_fund_tree" model="ir.ui.view">
+			<field name="name">petty.fund.tree</field>
+			<field name="model">account.petty.fund</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Petty Cash Funds">
+					<field name="name" />
+					<field name="code" />
+					<field name="max_amount" />
+					<field name="account_id" />
+					<field name="balance" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_petty_fund_form" model="ir.ui.view">
+			<field name="name">petty.fund.form</field>
+			<field name="model">account.petty.fund</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Petty Cash Fund" version="7.0">
+					<header></header>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="company_id" />
+							</group>
+							<group>
+								<field name="code" />
+							</group>
+						</group>
+						<notebook colspan="4">
+							<page string="General">
+								<group>
+									<group>
+										<field name="max_amount" />
+										<field name="balance" />
+									</group>
+									<group>
+										<field name="account_id" domain="[('company_id','=',company_id)]" />
+									</group>
+									<group>
+										<field name="notes" />
+									</group>
+								</group>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<act_window id="action_petty_fund" name="Petty Cash Funds"
+			res_model="account.petty.fund" view_type="form" view_mode="tree,form" />
+
+	</data>
+</openerp>
+

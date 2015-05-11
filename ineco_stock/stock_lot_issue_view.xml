@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="view_picking_lot_issue_form" model="ir.ui.view">
+            <field name="name">picking.lot.issue.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+            	
+            	<field name="origin" position="after">
+            		<field name="purchase_id" />            		
+            	</field>
+            	
+            	         
+				<xpath expr="/form/sheet/notebook/page[@string='Products']" position="after">
+                        <page string="Serial Number" >
+                            <group>
+                                <button name="button_create_stockmove" states="draft" 
+                                  		string="Create Moves" 
+                                  		type="object" class="oe_highlight" />
+                                <newline />
+                                <field name="prodlot_ids" nolabel="1">
+                                	<tree string="Issue" editable="top">
+                                		<field name="name" on_change="on_barcode(name)" />
+                                		<field name="prodlot_id" domain="[('stock_available','>',0)]" />
+                                		<field name="product_id" />
+                                		<field name="location_id" />
+                                		<field name="product_qty" />
+                                		<field name="uom_id" />
+                                	</tree>
+                                </field>
+                            </group>
+                        </page>      
+                        <page string="Manufacturing Order">
+                        	<field name="is_warning_production" invisible="1" />
+                        	<field name="production_ids" widget="many2many_tags" 
+                        		attrs="{'required':[('is_warning_production', '!=', False)]}"  />
+                        </page>          
+                </xpath> 
+                
+            </field>
+        </record>
+
+        <record id="view_pickingout_lot_issue_form" model="ir.ui.view">
+            <field name="name">pickingout.lot.issue.form</field>
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+            	            	         
+				<xpath expr="/form/sheet/notebook/page[@string='Products']" position="after">
+                        <page string="Serial Number" >
+                            <group>
+                                <button name="button_create_stockmove" states="draft" 
+                                  		string="Create Moves" 
+                                  		type="object" class="oe_highlight" />
+                                <newline />
+                                <field name="prodlot_ids" nolabel="1">
+                                	<tree string="Issue" editable="top">
+                                		<field name="name" on_change="on_barcode(name)" />
+                                		<field name="prodlot_id" domain="[('stock_available','>',0)]" />
+                                		<field name="product_id" />
+                                		<field name="location_id" />
+                                		<field name="product_qty" />
+                                		<field name="uom_id" />
+                                	</tree>
+                                </field>
+                            </group>
+                        </page>      
+                        <page string="Manufacturing Order">
+                        	<field name="production_ids" widget="many2many_tags" />
+                        </page>          
+                </xpath> 
+                
+            </field>
+        </record>
+    
+    </data>
+</openerp>

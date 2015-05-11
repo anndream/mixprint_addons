@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_garment_move_picking_tree" model="ir.ui.view">
+            <field name="name">garment.move.out.tree</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="color_id" />
+                    <field name="note" />
+                    <field name="gender_id" />
+                    <field name="size_id" />
+                    <field name="product_weight" />
+                </field>
+        	</field>
+       	</record>
+
+        <record id="view_garment_move_form" model="ir.ui.view">
+            <field name="name">garment.stock.move.form</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//label[@for='prodlot_id']" position="before">
+                	<label for="product_weight" string="Weight" />
+                	<div groups="stock.group_production_lot">
+                    	<field name="product_weight" />
+                    </div>
+                </xpath>
+			</field>
+		</record>
+		
+        <record id="view_garment_split_in_lots" model="ir.ui.view">
+            <field name="name">Garment Split in Serial Numbers</field>
+            <field name="model">stock.move.split</field>
+            <field name="inherit_id" ref="stock.view_split_in_lots"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='line_ids']/tree/field[@name='quantity']" position="after">
+                	<field name="product_weight" />
+                </xpath>
+			</field>
+		</record>		
+		       	
+        <record id="view_delivery_type_search" model="ir.ui.view">
+            <field name="name">stock.delivery.type.search</field>
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_search"/>
+            <field name="arch" type="xml">
+                <field name="stock_journal_id" position="after">
+                    <!-- <field name="delivery_type_id" /> -->
+                    <field name="date_delivery" />
+                    <field name="ineco_date_delivery" />
+                    <field name="garment_order_no" />
+                    <field name="picking_transfer_id" />
+                    <field name="objective_id" />
+<!--                     <filter string="Delivery Type" domain="[]" context="{'group_by':'delivery_type_id'}"/> -->
+                </field>
+        	</field>
+       	</record>
+       	
+        <record id="view_delivery_type_form" model="ir.ui.view">
+            <field name="name">delivery.type.out.form</field>
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <!-- <xpath expr="//field[@name='stock_journal_id']" position="after">
+                    <field name="delivery_type_id" />
+                    <field name="shiping_cost" />
+                </xpath> -->
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="batch_no" />
+                    <field name="sale_id" attrs="{'readonly':[('origin', '=', False)]}"/>
+                    <field name="opportunity_id" domain="[('user_id','=',uid)]" groups="base.group_sale_salesman" />
+                    <field name="objective_id" />
+                    <field name="is_overlimit" />
+                </xpath>
+                <xpath expr="//field[@name='date_done']" position="after">
+                	<field name="date_delivery" />
+                	<field name="picking_transfer_id" readonly="1" />
+                    <!-- <field name="ineco_date_delivery" /> -->
+                </xpath>
+                <xpath expr="//button[@name='button_cancel']" position="after">
+                    <button name="button_stop_production" string="Stop Production" type="object" />
+				</xpath> 
+            </field>
+        </record>
+
+<!-- 
+        <record id="view_ineco_delivery2_form" model="ir.ui.view">
+            <field name="name">ineco.delivery2.form</field>
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_form"/>
+            <field name="arch" type="xml">
+               	<xpath expr="//button[@name='draft_validate']" position="replace">
+                    <button name="draft_validate" states="draft" string="Confirm &amp; Deliver" type="object" class="oe_highlight"/>
+				</xpath>      
+                <xpath expr="//button[@name='action_process']" position="replace">
+                    <button name="action_process" states="assigned" string="Deliver" type="object" class="oe_highlight"/>
+                </xpath>
+			</field>
+		</record>   
+-->        
+
+        <record id="view_delivery_type_tree" model="ir.ui.view">
+            <field name="name">delivery.type.out.tree</field>
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_out_tree"/>
+            <field name="arch" type="xml">
+            	<field name="invoice_state" position="before">
+<!--             		<field name="delivery_type_id" />         		 -->
+            		<field name="objective_id" invisible="1" />
+            	</field>
+            	<field name="origin" position="before">
+            		<field name="batch_no" />
+            		<field name="garment_order_no" />
+            		<field name="record_count" />
+            		<field name="quantity" sum="Total"  />
+            	</field>
+                <field name="name" position="after">
+                	<field name="date_delivery" />
+                	<!-- <field name="ineco_date_delivery" /> -->
+                </field>
+            	
+            </field>
+        </record>
+ 
+        <record id="view_order_color_form" model="ir.ui.view">
+            <field name="name">order.color.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+            	<field name="stock_journal_id" position="after">
+                    <field name="order_color" />
+                    <field name="order_type" />
+                    <field name="order_weight" />
+                    <field name="picking_note_id" on_change="onchange_note_id(picking_note_id)"/>
+                </field>
+            </field>
+        </record>        
+
+        <record id="view_stock_picking_quantity_tree" model="ir.ui.view">
+            <field name="name">ineco.stock.picking.quantity.tree</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+            	<field name="state" position="before">
+            		<field name="production_list" />
+            		<field name="record_count" />
+            		<field name="quantity" sum="Total" />
+            	</field>
+        	</field>
+        </record>
+        
+        <record id="view_stock_pickingin_quantity_tree" model="ir.ui.view">
+            <field name="name">ineco.stock.pickingin.quantity.tree</field>
+            <field name="model">stock.picking.in</field>
+            <field name="inherit_id" ref="stock.view_picking_in_tree"/>
+            <field name="arch" type="xml">
+            	<field name="state" position="before">
+            		<field name="record_count" />
+            		<field name="quantity" sum="Total" />
+            	</field>
+        	</field>
+        </record>
+        
+        
+        <record id="view_ineco_garment_internal_filter" model="ir.ui.view">
+            <field name="name">ineco.garment.internal.filter</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
+            <field name="arch" type="xml">
+            	<field name="product_id" position="after">
+            		<field name="production_list" />
+            	</field>
+        	</field>
+        </record>      
+
+        <record id="view_ineco_picking_note_tree" model="ir.ui.view">
+            <field name="name">ineco.picking.note.tree</field>
+            <field name="model">ineco.picking.note</field>
+            <field name="arch" type="xml">
+                <tree string="Picking Note">
+                 	<field name="seq" />
+                    <field name="name" />
+                    <field name="note" />
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_ineco_picking_note_search" model="ir.ui.view">
+            <field name="name">ineco.picking.note.select</field>
+            <field name="model">ineco.picking.note</field>
+            <field name="arch" type="xml">
+                <search string="Search Type">
+                	<field name="name" />
+                	<field name="note" />
+                	<field name="seq" />
+               	</search>
+            </field>
+        </record>
+        <record id="view_ineco_picking_note_form" model="ir.ui.view">
+            <field name="name">ineco.picking.note.form</field>
+            <field name="model">ineco.picking.note</field>
+            <field name="arch" type="xml">
+                <form string="Picking Note">
+                    <field name="name" />
+                    <field name="seq" />
+                    <newline />
+                    <field name="note" />
+                </form>
+            </field>
+        </record>		
+
+        <record id="action_ineco_picking_note" model="ir.actions.act_window">
+            <field name="name">Picking Note</field>
+            <field name="res_model">ineco.picking.note</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_picking_note_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a problem type. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+            id="menu_ineco_picking_note"
+        	action="action_ineco_picking_note" 
+        	parent="stock.menu_stock_configuration"
+        	
+        	/> 
+
+        <record id="view_garment_stock_journal_tree" model="ir.ui.view">
+            <field name="name">ineco.garment.journal.tree</field>
+            <field name="model">stock.journal</field>
+            <field name="inherit_id" ref="stock.view_stock_journal_tree"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                	<field name="transfer_fg" />
+                	<field name="auto_costing" />
+				</field>
+			</field>
+		</record>
+
+        <record id="view_garment_stock_journal_form" model="ir.ui.view">
+            <field name="name">ineco.garment.journal.form</field>
+            <field name="model">stock.journal</field>
+            <field name="inherit_id" ref="stock.view_stock_journal_form"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="transfer_fg"  />
+                    <field name="auto_costing" />
+                    <newline />
+                    <notebook colspan="4">
+                    	<page string="Product Limit">
+                    		<field name="product_ids" nolabel="1">
+                    			<tree string="Product" editable="top">
+                    				<field name="product_categ_id" />
+                    				<field name="quantity" />
+                    			</tree>
+                    		</field>
+                    	</page>
+                    </notebook>
+                </field>
+        	</field>
+        </record>
+
+		<!-- Ineco Delivery Objective -->
+        <record id="view_ineco_delivery_objective_tree" model="ir.ui.view">
+            <field name="name">ineco.delivery.objective.tree</field>
+            <field name="model">ineco.delivery.objective</field>
+            <field name="arch" type="xml">
+                <tree string="Objective">
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_ineco_delivery_objective_form" model="ir.ui.view">
+            <field name="name">ineco.delivery.objective.form</field>
+            <field name="model">ineco.delivery.objective</field>
+            <field name="arch" type="xml">
+                <form string="Objective">
+                    <field name="name" />
+                </form>
+            </field>
+        </record>	
+        
+        <record id="view_ineco_delivery_objective_search" model="ir.ui.view">
+            <field name="name">ineco.delivery.objective.search</field>
+            <field name="model">ineco.delivery.objective</field>
+            <field name="arch" type="xml">
+                <search string="Objective">
+                    <field name="name" />
+                </search>
+            </field>
+        </record>	
+	
+
+        <record id="action_ineco_delivery_objective" model="ir.actions.act_window">
+            <field name="name">Delivery Objective</field>
+            <field name="res_model">ineco.delivery.objective</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_delivery_objective_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a delivery objective. 
+              </p><p>
+                This is the list of all problem type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+
+        <menuitem 
+            id="menu_ineco_delivery_objective"
+        	action="action_ineco_delivery_objective" 
+        	parent="stock.menu_stock_configuration"
+        	
+        	/> 
+
+		<!--   Cost Type    -->
+        <record id="view_ineco_cost_type_tree" model="ir.ui.view">
+            <field name="name">ineco.cost.type.tree</field>
+            <field name="model">ineco.cost.type</field>
+            <field name="arch" type="xml">
+                <tree string="Cost Type">
+                	<field name="seq" />
+                    <field name="name" />
+                    <field name="cost_group_id" />
+                    <field name="cost" />     
+                    <field name="account_journal_id" />
+                    <field name="product_id" />
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_ineco_cost_type_form" model="ir.ui.view">
+            <field name="name">ineco.cost.type.form</field>
+            <field name="model">ineco.cost.type</field>
+            <field name="arch" type="xml">
+                <form string="Cost Type">
+                    <field name="name" />
+                    <field name="cost_group_id" />
+                    <field name="cost" />
+                    <field name="account_journal_id" />
+                    <field name="product_id" />
+                    <field name="seq" />
+                </form>
+            </field>
+        </record>	
+        
+        <record id="view_ineco_cost_type_filter" model="ir.ui.view">
+            <field name="name">ineco.cost.type.select</field>
+            <field name="model">ineco.cost.type</field>
+            <field name="arch" type="xml">
+                <search string="Cost Type">
+                	<field name="name" />
+                	<field name="cost_group_id" />
+                	<field name="cost" />
+                    <field name="account_journal_id" />
+                    <field name="product_id" />
+               	</search>
+            </field>
+        </record>
+        
+        <record id="action_ineco_cost_type" model="ir.actions.act_window">
+            <field name="name">Cost Type</field>
+            <field name="res_model">ineco.cost.type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_cost_type_filter"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a delivery type. 
+              </p><p>
+                This is the list of all delivery type that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+        
+        <menuitem 
+            id="menu_ineco_cost_type"
+        	action="action_ineco_cost_type" 
+        	parent="base.menu_base_config"
+        	sequence="9"/>         	
+
+		<!--   Cost Group    -->
+        <record id="view_ineco_cost_group_tree" model="ir.ui.view">
+            <field name="name">ineco.cost.group.tree</field>
+            <field name="model">ineco.cost.group</field>
+            <field name="arch" type="xml">
+                <tree string="Cost Group">
+                    <field name="name" />
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_ineco_cost_group_form" model="ir.ui.view">
+            <field name="name">ineco.cost.group.form</field>
+            <field name="model">ineco.cost.group</field>
+            <field name="arch" type="xml">
+                <form string="Cost Group">
+                    <field name="name" />
+                </form>
+            </field>
+        </record>		
+
+        <record id="view_ineco_cost_group_search" model="ir.ui.view">
+            <field name="name">ineco.cost.group.search</field>
+            <field name="model">ineco.cost.group</field>
+            <field name="arch" type="xml">
+                <search string="Cost Group">
+                    <field name="name" />
+                </search>
+            </field>
+        </record>		
+
+        <record id="action_ineco_cost_group" model="ir.actions.act_window">
+            <field name="name">Cost Group</field>
+            <field name="res_model">ineco.cost.group</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_cost_group_search"/>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a delivery type. 
+              </p><p>
+                This is the list of all cost group that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+        
+        <menuitem 
+            id="menu_ineco_cost_group"
+        	action="action_ineco_cost_group" 
+        	parent="base.menu_base_config"
+        	sequence="10"/>         	
+
+        <record model="ir.ui.view" id="view_ineco_account_pickingout_form2">
+	      	<field name="name">ineco.account.pickingout.form2</field>
+	      	<field name="model">stock.picking.out</field>
+	      	<field name="inherit_id" ref="ineco_thai_account.view_ineco_account_pickingout_form"/>
+	      	<field name="arch" type="xml">
+	      		<field name="account_internal_no" position="after">
+	      			<button name="button_get_queue" type="object" string="Get Number" attrs="{'invisible': [('account_internal_no','!=',False)]}"/>
+	      		</field>     		
+	        </field>
+	   	</record>
+
+		<!--   Packing    -->
+        <record id="view_ineco_stock_packing_tree" model="ir.ui.view">
+            <field name="name">ineco.stock.packing.tree</field>
+            <field name="model">ineco.stock.packing</field>
+            <field name="arch" type="xml">
+                <tree string="Packing">
+                    <field name="name" />
+                    <field name="date" />
+                    <field name="sequence" />
+                    <field name="customer_id" />
+                    <field name="sale_order_id" />
+                    <field name="garment_order_no" />
+                </tree>
+            </field>
+        </record>		
+
+        <record id="view_ineco_stock_packing_form" model="ir.ui.view">
+            <field name="name">ineco.stock.packing.form</field>
+            <field name="model">ineco.stock.packing</field>
+            <field name="arch" type="xml">
+                <form string="Packing" version="7.0">
+                	<header>
+                        <button name="button_done" type="object" states="draft" string="Done" />
+                        <button name="button_cancel" type="object" states="draft" string="Cancel" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done,cancel" />                		
+                	</header>
+                	<sheet>
+                		<group>
+                			<group>
+			                    <field name="name" readonly="1"/>
+			                    <field name="sale_order_id" attrs="{'readonly':[('state', 'in', ['done','cancel'])]}"/>
+			                    <field name="customer_id" />
+			                    <field name="weight" />
+			                    <div>
+				                    <button name="button_load" type="object" string="Load"  attrs="{'invisible':[('state', 'in', ['done','cancel'])]}"/>
+				                    <button name="button_reset" type="object" string="Reset 0"  attrs="{'invisible':[('state', 'in', ['done','cancel'])]}"/>
+			                    </div>
+                			</group>
+                			<group>
+			                    <field name="date" />
+			                    <field name="garment_order_no" />
+			                    <field name="sequence" attrs="{'readonly':[('state', 'in', ['done','cancel'])]}"/>/>
+			                    <field name="total" />
+                			</group>
+                			<field name="line_ids" colspan="4" nolabel="1"  attrs="{'readonly':[('state', 'in', ['done','cancel'])]}">
+                				<tree string="Item" editable="top">
+                					<field name="packing_id" invisible="1" />
+                					<field name="stock_move_id" invisible="1" />
+                					<field name="product_id" readonly="1" />
+                					<field name="color_id" readonly="1" />
+                					<field name="gender_id" readonly="1" />
+                					<field name="size_id" readonly="1" />
+                					<field name="note" readonly="1" />
+                					<field name="product_qty" readonly="1" />
+                					<field name="quantity" /> 
+                				</tree>
+                			</field>
+                		</group>
+                	</sheet>
+                </form>
+            </field>
+        </record>		
+
+        <record id="view_ineco_stock_packing_search" model="ir.ui.view">
+            <field name="name">ineco.stock.packing.search</field>
+            <field name="model">ineco.stock.packing</field>
+            <field name="arch" type="xml">
+                <search string="Packing">
+                    <field name="name" />
+                    <field name="date" />
+                    <field name="sequence" />
+                    <field name="total" />
+                    <field name="customer_id" />
+                    <field name="sale_order_id" />
+                    <field name="garment_order_no" />
+                </search>
+            </field>
+        </record>		
+
+        <record id="action_ineco_stock_packing" model="ir.actions.act_window">
+            <field name="name">Packing Box</field>
+            <field name="res_model">ineco.stock.packing</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_ineco_stock_packing_search"/>
+            <field name="context">{'default_date':time.strftime('%Y-%m-%d')}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to create a Packing. 
+              </p><p>
+                This is the list of all cost group that have to be
+                prepared, according to your different sales orders and your
+                logistics rules.
+              </p>
+            </field>
+        </record>
+
+       <menuitem 
+            id="menu_ineco_stock_packing"
+        	action="action_ineco_stock_packing" 
+        	parent="stock.menu_traceability"
+        	sequence="30"/>         	
+
+		        
+    </data>
+</openerp>

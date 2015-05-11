@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+ 
+        <record model="ir.ui.view" id="view_ineco_contract_sale_form">
+	      	<field name="name">ineco.contract.sale.form</field>
+	      	<field name="model">sale.order</field>
+	      	<field name="inherit_id" ref="sale.view_order_form"/>
+	      	<field name="arch" type="xml">
+	        	<page string="Other Information" position="after" version="7.0">
+	        		<page string="Contract Information">
+	        			<field name="contract_ids" 
+	        				context="{'default_saleorder_id':id,'default_project_id':project_id,
+	        						'default_customer_id':partner_id,}" />
+	        		</page>
+	        	</page>  	
+		    </field>
+		</record>
+		
+	</data>
+</openerp>

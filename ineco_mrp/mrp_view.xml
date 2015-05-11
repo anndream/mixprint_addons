@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+
+		<record model="ir.ui.view" id="ineco_partner_kanban_view">
+			<field name="name">ineco.mrp.workorder.form</field>
+			<field name="model">mrp.production.workcenter.line</field>
+			<field name="inherit_id"
+				ref="mrp_operations.mrp_production_workcenter_form_view_inherit" />
+			<field name="arch" type="xml">
+				<xpath expr="/form/sheet/notebook/page[@string='Information']"
+					position="after">
+					<page string="Activity">
+						<field name="activity_ids">
+							<tree string="Activity" editable="top">
+								<field name="date_action" />
+								<field name="employee_id" />
+								<field name="quantity" />
+								<field name="box_id" />
+							</tree>
+						</field>
+					</page>
+				</xpath>
+			</field>
+		</record>
+
+		<!-- KPI Year Form View -->
+		<record model="ir.ui.view" id="ineco_mrp_box_form">
+			<field name="name">ineco.mrp.box.form</field>
+			<field name="model">ineco.mrp.box</field>
+			<field name="arch" type="xml">
+				<form string="Box" version="7.0">
+					<header></header>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="last_action_datetime" />
+								<field name="active" />
+							</group>
+							<group>
+								<field name="production_id" />
+								<field name="workcenter_id" />
+								<field name="employee_id" />
+							</group>
+						</group>
+					</sheet>
+					<footer></footer>
+				</form>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ineco_mrp_box_tree">
+			<field name="name">ineco.mrp.box.tree</field>
+			<field name="model">ineco.mrp.box</field>
+			<field name="arch" type="xml">
+				<tree string="Box" editable="top">
+					<field name="name" />
+					<field name="production_id" />
+					<field name="workcenter_id" />
+					<field name="employee_id" />
+					<field name="last_hostname" />
+					<field name="last_ip_address" />
+					<field name="last_action_datetime" />
+				</tree>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="ineco_mrp_box_search">
+			<field name="name">ineco.mrp.box.search</field>
+			<field name="model">ineco.mrp.box</field>
+			<field name="arch" type="xml">
+				<search string="Box">
+					<field name="name" />
+					<field name="production_id" />
+					<field name="workcenter_id" />
+					<field name="last_hostname" />
+					<field name="last_ip_address" />
+					<field name="employee_id" />
+					<field name="last_action_datetime" />
+				</search>
+			</field>
+		</record>
+
+
+        <record id="ineco_mrp_routing_workcenter_tree" model="ir.ui.view">
+            <field name="name">ineco.mrp.routing.workcenter.tree</field>
+			<field name="inherit_id" ref="mrp.mrp_routing_workcenter_tree_view" />
+            <field name="model">mrp.routing.workcenter</field>
+            <field name="arch" type="xml">
+				<field name="cycle_nbr" position="before">
+					<field name="min_cycle_time" />
+				</field>
+			</field>
+		</record>
+
+        <record id="ineco_mrp_routing_workcenter_form" model="ir.ui.view">
+            <field name="name">ineco.mrp.routing.workcenter.form</field>
+			<field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view" />
+            <field name="model">mrp.routing.workcenter</field>
+            <field name="arch" type="xml">
+				<field name="cycle_nbr" position="before">
+					<field name="min_cycle_time" />
+				</field>
+			</field>
+		</record>
+		
+		
+		<record model="ir.actions.act_window" id="ineco_mrp_box_action">
+			<field name="name">Box</field>
+			<field name="res_model">ineco.mrp.box</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem name="Box" 
+			parent="mrp.menu_mrp_configuration"
+			id="menu_ineco_mrp_box" 
+			sequence="50" 
+			action="ineco_mrp_box_action" />
+
+
+	    <record model="ir.ui.view" id="ineco_workcenter_line_done_draft_form_view">
+	        <field name="name">ineco.donedraft.workcenter.line.form</field>
+	        <field name="model">mrp.production.workcenter.line</field>
+	        <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_form_view_inherit"/>
+	        <field name="arch" type="xml">
+	        	<button name="button_cancel" position="after">
+	        		<button name="action_done_draft" type="object" string="Set Draft" states="done"/>
+	        	</button>
+			</field>
+		</record>
+
+	    <record model="ir.ui.view" id="ineco_workcenter_line_tree_view">
+	        <field name="name">ineco.production.workcenter.line.tree</field>
+	        <field name="model">mrp.production.workcenter.line</field>
+	        <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_tree_view_inherit"/>
+	        <field name="arch" type="xml">
+	        	<xpath expr="//field[@name='cycle']" position="after">
+	        		<field name="cycle_count" />
+	        	</xpath>
+			</field>
+		</record>
+
+	    <record model="ir.ui.view" id="ineco_workcenter_line_form_view">
+	        <field name="name">ineco.production.workcenter.line.form</field>
+	        <field name="model">mrp.production.workcenter.line</field>
+	        <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_form_view_inherit"/>
+	        <field name="arch" type="xml">
+	        	<field name="cycle" position="after">
+	        		<field name="cycle_count" />
+	        	</field>
+			</field>
+		</record>
+
+
+	</data>
+</openerp>

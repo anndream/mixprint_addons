@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+        <record id="view_picking_barcode_form" model="ir.ui.view">
+            <field name="name">picking.barcode.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+            	         
+				<xpath expr="/form/sheet/notebook/page[@string='Products']" position="after">
+                        <page string="Barcode by Product" >
+                        	<group>
+	                        	<button name="button_create_stockmove_barcode" states="draft" 
+	                                  		string="Create Moves" 
+	                                  		type="object" class="oe_highlight" />
+	                            <newline />
+	                        	<field name="barcode_product_ids" nolabel="1" >
+	                        		<tree string="Barcode" editable="top">
+	                        			<field name="name" on_change="on_change_barcode(name)" />
+	                        			<field name="product_id" />
+	                        			<field name="product_qty" />
+	                        			<field name="product_uom" />
+	                        			<field name="date_action" />
+	                        		</tree>
+	                        	</field>
+                        	</group>
+                        </page>
+                </xpath>
+                
+            </field>
+		</record>
+
+        <record id="view_pickingin_barcode_form" model="ir.ui.view">
+            <field name="name">pickingin.barcode.form</field>
+            <field name="model">stock.picking.in</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+            	         
+				<xpath expr="/form/sheet/notebook/page[@string='Products']" position="after">
+                        <page string="Barcode by Product" >
+                        	<group>
+	                        	<button name="button_create_stockmove_barcode" states="draft" 
+	                                  		string="Create Moves" 
+	                                  		type="object" class="oe_highlight" />
+	                            <newline />
+	                        	<field name="barcode_product_ids" nolabel="1" >
+	                        		<tree string="Barcode" editable="top">
+	                        			<field name="name" on_change="on_change_barcode(name)" />
+	                        			<field name="product_id" />
+	                        			<field name="product_qty" />
+	                        			<field name="product_uom" />
+	                        			<field name="date_action" />
+	                        		</tree>
+	                        	</field>
+                        	</group>
+                        </page>
+                </xpath>
+                
+            </field>
+		</record>
+
+        <record id="view_pickingout_barcode_form" model="ir.ui.view">
+            <field name="name">pickingout.barcode.form</field>
+            <field name="model">stock.picking.out</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+            	         
+				<xpath expr="/form/sheet/notebook/page[@string='Products']" position="after">
+                        <page string="Barcode by Product" >
+                        	<group>
+	                        	<button name="button_create_stockmove_barcode" states="draft" 
+	                                  		string="Create Moves" 
+	                                  		type="object" class="oe_highlight" />
+	                            <newline />
+	                        	<field name="barcode_product_ids" nolabel="1" >
+	                        		<tree string="Barcode" editable="top">
+	                        			<field name="name" on_change="on_change_barcode(name)" />
+	                        			<field name="product_id" />
+	                        			<field name="product_qty" />
+	                        			<field name="product_uom" />
+	                        			<field name="date_action" />
+	                        		</tree>
+	                        	</field>
+                        	</group>
+                        </page>
+                </xpath>
+                
+            </field>
+		</record>
+    
+    </data>
+</openerp>

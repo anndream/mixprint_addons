@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+	<data>
+
+
+		<record id="view_cash_move_tree" model="ir.ui.view">
+			<field name="name">cash.move.tree</field>
+			<field name="model">account.cash.move</field>
+			<field name="type">tree</field>
+			<field name="arch" type="xml">
+				<tree string="Cash Moves">
+					<field name="name" />
+					<field name="date" />
+					<field name="fund_id" />
+					<field name="amount" />
+					<field name="state" />
+				</tree>
+			</field>
+		</record>
+
+		<record id="view_cash_move_form" model="ir.ui.view">
+			<field name="name">cash.move.form</field>
+			<field name="model">account.cash.move</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string="Cash Move" version="7.0">
+					<header>
+						<button name="button_post" string="Post" states="draft"
+							type="object" />
+						<button name="button_cancel" string="Cancel" states="draft,posted"
+							type="object" />
+						<button name="button_draft" string="To Draft" states="canceled"
+							type="object" groups="base.group_no_one" />
+						<field name="state" widget="statusbar" statusbar_visible="draft,post,cancel" />
+					</header>
+					<sheet>
+						<group>
+							<group>
+								<field name="name" />
+								<field name="date" />
+								<field name="fund_id" on_change="onchange_fund(fund_id)"
+									domain="[('company_id','=',company_id)]" />
+							</group>
+							<group>
+								<field name="type" readonly="1" />
+								<field name="amount" />
+							</group>
+						</group>
+						<notebook colspan="4">
+							<page string="GL">
+								<group>
+									<group>
+										<field name="company_id" on_change="onchange_company_id(company_id,type)" />
+										<field name="journal_id" domain="[('company_id','=',company_id)]" />
+										<field name="move_id" />
+									</group>
+									<group>
+										<field name="account_id" />
+										<field name="other_account_id" />
+										<field name="analytic_account_id" domain="[('company_id','=',company_id)]" />
+									</group>
+								</group>
+							</page>
+						</notebook>
+						<field name="notes" colspan="4" />
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="view_cash_move_tree_stmt" model="ir.ui.view">
+			<field name="name">cash.move.tree.stmt</field>
+			<field name="model">account.cash.move</field>
+			<field name="type">tree</field>
+			<field name="priority" eval="100" />
+			<field name="arch" type="xml">
+				<tree string="Petty Cash Statement">
+					<field name="name" />
+					<field name="date" />
+					<field name="deposit" />
+					<field name="withdraw" />
+					<field name="balance" />
+					<field name="description" />
+					<field name="petty_id" invisible="1" />
+				</tree>
+			</field>
+		</record>
+
+
+	</data>
+</openerp>
+

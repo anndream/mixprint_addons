@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="0">
+	    
+	    <record id="ineco_thai_account.group_account_commission" model="res.groups">
+	        <field name="name">Accountant with Commission</field>
+	        <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+	    </record>     
+
+	    <record id="ineco_thai_account.group_account_cancel" model="res.groups">
+	        <field name="name">Accountant Cancel</field>
+	        <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+	    </record>     
+
+	    <record id="ineco_thai_account.group_multiple_check" model="res.groups">
+	        <field name="name">Multiple Check</field>
+	        <field name="category_id" ref="base.module_category_accounting_and_finance"/>
+	    </record>     
+	    
+	</data>
+</openerp>

@@ -1,0 +1,436 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+	    <record model="ir.ui.view" id="view_ineco_inbound_phone_tree">
+	        <field name="name">ineco.inbound.phone.tree</field>
+	        <field name="model">crm.phonecall</field>
+	        <field name="inherit_id" ref="crm.crm_case_inbound_phone_tree_view"/>
+	        <field name="arch" type="xml">
+	            <field name="opportunity_id" position="after">                
+	                <button name="case_close" string="Call Done" type="object"
+                        states="draft,open,pending" icon="gtk-jump-to"/>
+	            </field>
+	    		<field name="user_id" position="after">
+	    		    <field name="create_user_id" />
+	    		</field>    		
+	    		<xpath expr="//button[@string='Convert to Opportunity']" position="replace">
+	                <button string="Convert to Opportunity"
+	                            type="object"
+	                            name="action_button_convert2opportunity"
+	                            invisible="1" />
+	    		    	    		    
+	    		</xpath>     
+	        </field>
+	    </record>
+
+	    <!-- Phone Call Search View -->
+	    <record id="view_ineco_phonecalls_filter" model="ir.ui.view">
+        	<field name="name">CRM - Phone Calls Search</field>
+        	<field name="model">crm.phonecall</field>
+        	<field name="inherit_id" ref="crm.view_crm_case_phonecalls_filter"/>
+        	<field name="arch" type="xml"> 
+        	  	<field name="date" position="after">
+        	  	    <filter icon="terp-mail-message-new" string="Unread Messages" help="Unread messages" name="message_unread" domain="[('message_unread','=',True)]"/>
+                    <filter icon="terp-go-today" string="Today" domain="[('date','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('date','&gt;=',time.strftime('%%Y-%%m-%%d 00:00:00'))]" />
+                    <filter icon="terp-go-today" string="This Month" domain="[('date','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('date','&gt;=',time.strftime('%%Y-%%m-01 00:00:00'))]" />
+                    <filter icon="terp-go-today" string="This Year" domain="[('date','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('date','&gt;=',time.strftime('%%Y-01-01 00:00:00'))]" />                       
+        	  	</field>       
+        	  	<filter string="Date" position="after">
+        	  	    <filter string="Created By" domain="[]" context="{'group_by':'create_user_id'}"/>
+        	  	    <filter string="Lead/Opportunity" domain="[]" context="{'group_by':'opportunity_id'}" />
+        	  	</filter> 	  
+        	</field>
+       	</record>
+	    	    
+	    <!-- Phone Call for Operator Tree View -->
+	    <record model="ir.ui.view" id="view_ineco_operator_inbound_tree">
+	        <field name="name">ineco.operator.inbound.tree</field>
+	        <field name="model">crm.phonecall</field>
+	        <field name="arch" type="xml">
+	            <tree string="Phone Calls">
+	                <field name="date"/>
+	                <field name="name"/>
+	                <field name="partner_id"
+	                    on_change="onchange_partner_id(partner_id)"/>
+	                <field name="partner_phone"
+	                    invisible="1"/>
+	                <field name="user_id"/>
+	                <field name="categ_id"
+	                    domain="[('object_id.model', '=', 'crm.phonecall')]"
+	                    invisible="1"/>
+	                <field name="state" invisible="1"/>
+	                <field name="create_date" invisible="1"/>
+	                <field name="opportunity_id" invisible="1" on_change="on_change_opportunity(opportunity_id)"/>
+		            <button name="case_close" string="Call Done" type="object"
+	                    states="draft,open,pending" icon="gtk-jump-to"/>
+	            </tree>
+	        </field>
+	    </record>	    	    
+	    
+	    <!-- Phone Call for Operation as Form View  -->
+	    <record model="ir.ui.view" id="ineco_case_phone_form_view">
+	        <field name="name">ineco.phone.call.form</field>
+	        <field name="model">crm.phonecall</field>
+	        <field name="arch" type="xml">
+	            <form string="Phone Call" version="7.0">
+	            <header>
+	                <button name="case_close" string="Call Done" type="object" class="oe_highlight"
+	                        states="open,pending"/>
+	                <button name="case_reset" string="Reset to Todo" type="object"
+	                        states="cancel"/>
+	                <button name="case_cancel" string="Cancel" type="object"
+	                        states="draft,open,pending"/>
+	                <field name="state" widget="statusbar" nolabel="1" statusbar_visible="open,done"/>
+	            </header>
+	                <sheet string="Phone Call">
+	                    <div class="oe_right"> 
+	                        <button string="Convert to Opportunity"
+	                            type="object"
+	                            name="action_button_convert2opportunity"
+	                            attrs="{'invisible':[ '|', ('opportunity_id','!=',False), ('state', 'not in', ('open', 'done'))]}"/>
+	                        <button string="Schedule Other Call"
+	                                name="%(crm.phonecall_to_phonecall_act)d"
+	                                type="action"/>
+	                        
+	                        <button string="Schedule a Meeting" name="action_make_meeting" type="object" groups="base.group_sale_salesman"/>
+	                        	                        
+	                    </div>
+	                    <div class="oe_title">
+	                        <div class="oe_edit_only">
+	                            <label for="name"/>
+	                        </div>
+	                        <h1><field name="name" required="1"/></h1>
+	                        <div class="oe_edit_only">
+	                            <label for="partner_phone" string="Phone"/>
+	                        </div>
+	                        <h2><field name="partner_phone"/></h2>
+	                    </div>
+	  
+	                    <group col="4">
+	                        <field name="date" readonly="1"/>
+	                        <field name="user_id"/>
+	                        <field name="duration" widget="float_time"/>
+	                        <field name="section_id" colspan="1" widget="selection"/>
+	                        <field name="partner_id" on_change="onchange_partner_id(partner_id)" domain="[('customer','=',True)]" />
+	                        <field name="email_from" invisible="1"/> <!--not needed because of the chatter, thus invisible, but must be in the view as it's returned by onchange_partner_id()-->
+	                        <field name="categ_id"
+	                            domain="[('object_id.model', '=', 'crm.phonecall')]"/>
+	                        <field name="partner_mobile"/>
+	                        <field name="priority"/>
+	                        <field name="opportunity_id" on_change="on_change_opportunity(opportunity_id)" groups="base.group_sale_salesman"/>
+	                    </group>
+	                    <field name="description" placeholder="Description..."/>
+	                </sheet>
+	                <div class="oe_chatter">
+	                    <field name="message_follower_ids" widget="mail_followers"/>
+	                    <field name="message_ids" widget="mail_thread"/>
+	                </div>
+	            </form>
+	        </field>
+	    </record>
+	    
+	    <record model="ir.actions.act_window" id="action_ineco_operator_inbound">
+	        <field name="name">My Phone Call</field>
+	        <field name="res_model">crm.phonecall</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="view_id" ref="view_ineco_operator_inbound_tree"/>
+	        <field name="domain">[('user_id','=',uid),('state','!=','done'),('state','!=','cancel')]</field>
+	        <field name="context">{
+              'search_default_user_id': uid,
+	            }</field>
+	        <field name="search_view_id" ref="crm.view_crm_case_phonecalls_filter"/>
+	        <field name="help" type="html">
+	          <p class="oe_view_nocontent_create">
+	            Click to log the summary of a phone call. 
+	          </p><p>
+	            OpenERP allows you to log inbound calls on the fly to track the
+	            history of the communication with a customer or to inform another
+	            team member.
+	          </p><p>
+	            In order to follow up on the call, you can trigger a request for
+	            another call, a meeting or an opportunity.
+	          </p>
+	        </field>
+	    </record>
+
+	    <record model="ir.actions.act_window.view" id="action_ineco_operator_inbound_tree">
+	        <field name="sequence" eval="1"/>
+	        <field name="view_mode">tree</field>
+	        <field name="view_id" ref="view_ineco_operator_inbound_tree"/>
+	        <field name="act_window_id" ref="action_ineco_operator_inbound"/>
+	    </record>
+	    
+		
+	    <record model="ir.actions.act_window.view" id="action_ineco_operator_inbound_form">
+	        <field name="sequence" eval="3"/>
+	        <field name="view_mode">form</field>
+	        <field name="view_id" ref="ineco_case_phone_form_view"/>
+	        <field name="act_window_id" ref="action_ineco_operator_inbound"/>
+	    </record>
+	    
+	
+	    <menuitem name="My Phone Calls" id="menu_ineco_case_phone_inbound"
+	        parent="crm.menu_crm_case_phone"
+	        action="action_ineco_operator_inbound" />
+
+	    <record model="ir.actions.act_window" id="action_ineco_operator_allinbound">
+	        <field name="name">All Phone Call</field>
+	        <field name="res_model">crm.phonecall</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="view_id" ref="view_ineco_operator_inbound_tree"/>
+	        <field name="domain">[('state','not in',['done','cancel'])]</field>
+	        <!-- <field name="context">{
+              'search_default_user_id': uid,
+	            }
+	        </field> 
+	         -->
+	        <field name="search_view_id" ref="crm.view_crm_case_phonecalls_filter"/>
+	        <field name="help" type="html">
+	          <p class="oe_view_nocontent_create">
+	            Click to log the summary of a phone call. 
+	          </p><p>
+	            OpenERP allows you to log inbound calls on the fly to track the
+	            history of the communication with a customer or to inform another
+	            team member.
+	          </p><p>
+	            In order to follow up on the call, you can trigger a request for
+	            another call, a meeting or an opportunity.
+	          </p>
+	        </field>
+	    </record>
+
+	    <record model="ir.actions.act_window.view" id="action_ineco_operator_allinbound_tree">
+	        <field name="sequence" eval="1"/>
+	        <field name="view_mode">tree</field>
+	        <field name="view_id" ref="view_ineco_operator_inbound_tree"/>
+	        <field name="act_window_id" ref="action_ineco_operator_allinbound"/>
+	    </record>
+	    
+		
+	    <record model="ir.actions.act_window.view" id="action_ineco_operator_allinbound_form">
+	        <field name="sequence" eval="3"/>
+	        <field name="view_mode">form</field>
+	        <field name="view_id" ref="ineco_case_phone_form_view"/>
+	        <field name="act_window_id" ref="action_ineco_operator_allinbound"/>
+	    </record>
+	    
+	
+	    <menuitem name="All Phone Calls" id="menu_ineco_case_phone_allinbound"
+	        parent="crm.menu_crm_case_phone"
+	        action="action_ineco_operator_allinbound" />
+
+	    <!-- LOG CALL -->	    	   	    	    	    	    
+	    <record model="ir.ui.view" id="view_ineco_logcall_tree">
+	        <field name="name">ineco.logcall.tree</field>
+	        <field name="model">crm.phonecall</field>
+	        <field name="inherit_id" ref="crm.crm_case_inbound_phone_tree_view"/>
+	        <field name="arch" type="xml">
+                <xpath expr="//button[@string='Meeting']" position="replace">
+                	<button string="Meeting"
+                	    groups="base.group_sale_salesman"
+                     	icon="gtk-redo"
+                     	name="action_make_meeting" 
+                     	type="object"/>                    
+                </xpath>
+
+	            <xpath expr="//button[@string='Convert to Opportunity']" position="replace">
+	                <button string="Convert to Opportunity"
+	                            type="object"
+	                            name="action_button_convert2opportunity"
+	                            attrs="{'invisible':[ '|', ('opportunity_id','!=',False), ('state', 'not in', ('open', 'done'))]}"/>
+                </xpath>
+	        </field>
+	    </record>
+	    
+    	<record model="ir.ui.view" id="ineco_crm_case_phone_tree_view">
+        	<field name="name">ineco.schedulecall.tree</field>
+        	<field name="model">crm.phonecall</field>
+	        <field name="inherit_id" ref="crm.crm_case_phone_tree_view"/>
+        	<field name="arch" type="xml">
+
+                <xpath expr="//button[@string='Meeting']" position="replace">       	    	    	    
+	                <button string="Meeting"
+	                    groups="base.group_sale_salesman"
+	                    states="open,pending" icon="gtk-redo"
+	                     name="action_make_meeting" type="object"/>
+                </xpath>
+                
+	            <xpath expr="//button[@string='Convert to Opportunity']" position="replace">
+	               	<button string="Convert to Opportunity"
+	                            type="object"
+	                            name="action_button_convert2opportunity"
+	                            attrs="{'invisible':[ '|', ('opportunity_id','!=',False), ('state', 'not in', ('open', 'done'))]}"/>
+				</xpath>
+				        	    	    
+        	</field>
+        </record>
+
+    	<record model="ir.ui.view" id="view_ineco_lead_tree">
+            <field name="name">ineco.lead.tree</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_leads"/>
+            <field name="arch" type="xml">
+                <field name="create_date" position="after">
+                    <field name="last_date_count" />
+                    <field name="last_contact_date" />
+                </field>
+                <field name="user_id" position="replace">
+                    <field name="user_id" invisible="0"/>                  
+                </field>
+            </field>
+        </record>
+
+    	<record model="ir.ui.view" id="view_ineco_opportunity_tree">
+            <field name="name">ineco.opportunity.tree</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+            <field name="arch" type="xml">
+                <field name="create_date" position="after">
+                    <field name="last_date_count" />
+                    <field name="last_contact_date" />
+                </field>
+            </field>
+        </record>
+    			    	    
+    	<record model="ir.ui.view" id="ineco_opportunity_form_view">
+        	<field name="name">ineco.opportunity.form.view</field>
+        	<field name="model">crm.lead</field>
+	        <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+        	<field name="arch" type="xml">
+        	    <field name="categ_ids" position="after"> 
+        	        <!-- <field name="last_date_count" /> -->
+        	        <field name="reason_ids" widget="many2many_tags_email" attrs="{'required':[('type','=','opportunity')]}" />
+        	    </field>
+                <field name="date_deadline" position="replace">
+                    <field name="date_deadline" string="Closing Date" />
+                </field>
+        	    	    
+        	</field>
+        </record>
+
+    	<record model="ir.ui.view" id="ineco_opportunity_tree_view">
+        	<field name="name">ineco.opportunity.tree.view</field>
+        	<field name="model">crm.lead</field>
+	        <field name="inherit_id" ref="crm.crm_case_tree_view_oppor"/>
+        	<field name="arch" type="xml">
+        	    <field name="planned_revenue" position="before">
+        	        <field name="is_owned" />      	    
+        	        <field name="date_deadline" string="Closing Date" />
+        	        <field name="date_closed" string="Won Date" />
+        	    </field>
+        	</field>
+        </record>
+    		
+    	
+
+	    <record model="ir.ui.view" id="ineco_task_crm_tree">
+	        <field name="name">ineco.task.tree.crm</field>
+	        <field name="model">project.task</field>
+	        <field name="priority">30</field>
+	        <field name="inherit_id" ref="project.view_task_tree2" />
+	        <field name="arch" type="xml">
+	            <field name="date_deadline" position="replace">
+	                <field name="date_deadline" invisible="0"/>
+	            </field>
+	            <field name="state" position="replace">
+	                <field name="state" invisible="0"/>
+	            </field>
+	            <field name="stage_id" position="replace">
+	                <field name="stage_id" invisible="0"/>
+	            </field>	            	            
+	            <field name="name" position="after">
+	                <field name="partner_id" />
+	            </field>
+	            
+	        </field>
+	    </record>
+	    
+		<!-- Lead Searh -->
+	    <record model="ir.ui.view" id="ineco_crm_today_search">
+	        <field name="name">ineco.crm.today.filter</field>
+	        <field name="model">crm.lead</field>
+	        <field name="priority">30</field>
+	        <field name="inherit_id" ref="crm.view_crm_case_leads_filter" />
+	        <field name="arch" type="xml">
+	            <field name="user_id" position="before">
+        	  	    <field name="contact_name" />
+                    <separator/>
+                    <filter icon="terp-go-today" string="Today" domain="[('create_date','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('create_date','&gt;=',time.strftime('%%Y-%%m-%%d 00:00:00'))]" />
+                    <filter icon="terp-go-today" string="This Month" domain="[('create_date','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('create_date','&gt;=',time.strftime('%%Y-%%m-01 00:00:00'))]" />
+                    <filter icon="terp-go-today" string="This Year" domain="[('create_date','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('create_date','&gt;=',time.strftime('%%Y-01-01 00:00:00'))]" />
+               	</field>
+	    	</field>
+	    </record>
+
+	    <!-- Opportunity Search -->
+	    <record model="ir.ui.view" id="ineco_opportunity_today_search">
+	        <field name="name">ineco.opportunity.today.filter</field>
+	        <field name="model">crm.lead</field>
+	        <field name="priority">30</field>
+	        <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter" />
+	        <field name="arch" type="xml">
+	            <field name="user_id" position="before">
+                    <separator/>
+	                    <filter icon="terp-go-today" name="this_day" string="Today" domain="[('create_date','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('create_date','&gt;=',time.strftime('%%Y-%%m-%%d 00:00:00'))]" />
+	                    <filter icon="terp-go-today" name="this_month" string="This Month" domain="[('create_date','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('create_date','&gt;=',time.strftime('%%Y-%%m-01 00:00:00'))]" />
+	                    <filter icon="terp-go-today" name="this_year" string="This Year" domain="[('create_date','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('create_date','&gt;=',time.strftime('%%Y-01-01 00:00:00'))]" />
+	                    <filter icon="terp-go-today" name="close_day" string="Close Today" domain="[('date_deadline','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('date_deadline','&gt;=',time.strftime('%%Y-%%m-%%d 00:00:00'))]" />
+	                    <filter icon="terp-go-today" name="close_month" string="Closed Month" domain="[('date_deadline','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('date_deadline','&gt;=',time.strftime('%%Y-%%m-01 00:00:00'))]" />
+	                    <filter icon="terp-go-today" name="close_year" string="Closed Year" domain="[('date_deadline','&lt;=',time.strftime('%%Y-%%m-%%d 23:59:59')),('date_deadline','&gt;=',time.strftime('%%Y-01-01 00:00:00'))]" />
+               	</field>
+	    	</field>
+	    </record>
+
+    	<!-- Reason Tree View -->
+    	<record model="ir.ui.view" id="ineco_crm_reason_tree">
+      		<field name="name">ineco.crm.reason.tree</field>
+      		<field name="model">ineco.crm.reason</field>
+      		<field name="arch" type="xml">
+		        <tree string="Reason" editable="bottom">
+		            <field name="name"/>
+		        </tree>
+      		</field>
+    	</record>
+
+	    <!-- Reason Search  -->
+	    <record model="ir.ui.view" id="ineco_crm_reason_filter">
+	      	<field name="name">ineco.crm.reason.search</field>
+	      	<field name="model">ineco.crm.reason</field>
+	      	<field name="arch" type="xml">
+	        	<search string="Reason">
+	          		<field name="name" />
+	        	</search>
+	      	</field>
+	    </record>
+    		
+	    <!-- Reason Action -->
+	    <record model="ir.actions.act_window" id="ineco_crm_reason_action">
+	        <field name="name">Reason</field>
+	        <field name="res_model">ineco.crm.reason</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>	   
+	     		
+    	<menuitem name="Reason"
+    	    parent="base.menu_crm_config_lead" 
+    	    id="menu_ineco_crm_reason" sequence="10" 
+    	    action="ineco_crm_reason_action"/>
+	    	    	    	    	    
+	    <record model="ir.ui.view" id="ineco_crm_case_phone_form_view">
+	        <field name="name">ineco.crm.phone.form.view</field>
+	        <field name="model">crm.phonecall</field>
+	        <field name="priority">50</field>
+	        <field name="inherit_id" ref="crm.crm_case_phone_form_view" />
+	        <field name="arch" type="xml">
+	        	<field name="opportunity_id" position="after">
+	        		<field name="new_customer" />
+	        		<field name="visit" />
+	        	</field>
+	        </field>
+		
+		</record>
+	    
+	    
+    </data>
+</openerp>

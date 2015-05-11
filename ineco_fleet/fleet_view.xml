@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record model='ir.ui.view' id='ineco_log_fuel_form'>
+            <field name="name">ineco.log.fuel.form</field>
+            <field name="model">fleet.vehicle.log.fuel</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_form"/>
+            <field name="arch" type="xml">
+            	<field name="amount" position="after">
+            		<field name="amount_actual" />
+            	</field>
+            </field>
+         </record>
+
+        <record model='ir.ui.view' id='ineco_log_fuel_tree'>
+            <field name="name">ineco.log.fuel.tree</field>
+            <field name="model">fleet.vehicle.log.fuel</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_log_fuel_tree"/>
+            <field name="arch" type="xml">
+            	<field name="amount" position="after">
+            		<field name="amount_actual" sum="Actual" />
+            	</field>
+            </field>
+        </record>
+
+
+	    <record model="ir.ui.view" id="view_ineco_odometer_tree">
+	        <field name="name">ineco.odometer.tree</field>
+	        <field name="model">fleet.vehicle.odometer</field>
+	        <field name="inherit_id" ref="fleet.fleet_vehicle_odometer_tree"/>
+	        <field name="arch" type="xml">
+	        	<field name="date" position="replace">
+	        		<field name="date_start" required="1"/>	        		
+	        	</field>
+	        	<field name="vehicle_id" position="after">
+	        		<field name="driver_id" required="1"/>
+	        		<field name="partner_id" />
+	        	</field>
+	        </field>
+	    </record>
+
+		<!-- Fleet Route -->
+	    <record model="ir.ui.view" id="view_ineco_fleet_route_form">
+	        <field name="name">ineco.fleet.route.form</field>
+	        <field name="model">ineco.fleet.route</field>
+	        <field name="arch" type="xml">
+	            <form string="Route" version="7.0">
+	                <header>
+	                </header>
+	                <sheet>
+	                	<group>	            
+	                		<field name="name" />
+	                		<field name="code" />
+	                	</group>
+	                </sheet>
+	            </form>
+	        </field>
+	    </record>
+	    
+	    <record model="ir.ui.view" id="view_ineco_fleet_route_tree">
+	        <field name="name">ineco.fleet.route.tree</field>
+	        <field name="model">ineco.fleet.route</field>
+	        <field name="arch" type="xml">
+	            <tree string="Route" >
+	            	<field name="code" />
+	                <field name="name" />
+	            </tree>
+	        </field>
+	    </record>	
+	    
+	    <record model="ir.ui.view" id="view_ineco_fleet_route_search">
+	        <field name="name">ineco.fleet.route.search</field>
+	        <field name="model">ineco.fleet.route</field>
+	        <field name="arch" type="xml">
+	            <search string="Route" >
+	            	<field name="code" />
+	                <field name="name" />
+	            </search>
+	        </field>
+	    </record>	        
+ 
+	    <record model="ir.actions.act_window" id="action_ineco_fleet_route">
+	        <field name="name">Route</field>
+	        <field name="res_model">ineco.fleet.route</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="search_view_id" ref="view_ineco_fleet_route_search"/>
+	    </record>
+	
+	    <menuitem name="Route" parent="fleet.fleet_configuration" id="menu_ineco_fleet_route" action="action_ineco_fleet_route" sequence="100"/>    	
+	          
+	          
+	    <!-- Driver -->  
+	    <record model="ir.ui.view" id="view_ineco_fleet_driver_form">
+	        <field name="name">ineco.fleet.driver.form</field>
+	        <field name="model">ineco.fleet.driver</field>
+	        <field name="arch" type="xml">
+	            <form string="Driver" version="7.0">
+	                <header>
+	                </header>
+	                <sheet>
+	                	<group>	            
+	                		<field name="name" />
+	                		<field name="mobile" />
+	                		<field name="odometer_ids" />
+	                	</group>
+	                </sheet>
+	            </form>
+	        </field>
+	    </record>	    
+	    
+	    <record model="ir.ui.view" id="view_ineco_fleet_driver_tree">
+	        <field name="name">ineco.fleet.driver.tree</field>
+	        <field name="model">ineco.fleet.driver</field>
+	        <field name="arch" type="xml">
+	            <tree string="Driver" >   
+	                <field name="name" />
+	                <field name="mobile" />
+	            </tree>
+	        </field>
+	    </record>		    
+	    
+	    <record model="ir.ui.view" id="view_ineco_fleet_driver_search">
+	        <field name="name">ineco.fleet.driver.search</field>
+	        <field name="model">ineco.fleet.driver</field>
+	        <field name="arch" type="xml">
+	            <search string="Driver" >   
+	                <field name="name" />
+	                <field name="mobile" />
+	            </search>
+	        </field>
+	    </record>	
+
+	    <record model="ir.actions.act_window" id="action_ineco_fleet_driver">
+	        <field name="name">Driver</field>
+	        <field name="res_model">ineco.fleet.driver</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	        <field name="search_view_id" ref="view_ineco_fleet_driver_search"/>
+	    </record>
+
+	    <menuitem name="Driver" 
+	    	parent="fleet.fleet_configuration" 
+	    	id="menu_ineco_fleet_driver" action="action_ineco_fleet_driver" sequence="90"/>    	
+
+        <record model='ir.ui.view' id='ineco_fleet_vehicle_note_form'>
+            <field name="name">ineco.fleet.vehicle.note.form</field>
+            <field name="model">fleet.vehicle</field>
+            <field name="inherit_id" ref="fleet.fleet_vehicle_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="/form/sheet" position="inside">
+            		<group col="2">
+            			<field name="note" />
+            		</group>
+            	</xpath>
+            </field>
+        </record>
+	    	    
+    </data>
+</openerp>

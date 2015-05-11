@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+
+		<!-- Product UOM Category -->
+        <record id="view_ineco_uom_category" model="ir.ui.view">
+            <field name="name">ineco.uom.categ.form</field>
+            <field name="model">product.uom.categ</field>
+            <field name="inherit_id" ref="product.product_uom_categ_form_view"/>
+            <field name="arch" type="xml">
+            	<field name="name" position="after">
+            		<field name="active" />
+            	</field>
+            </field>
+        </record>		
+		
+		<!-- Product UOM -->
+        <record model="ir.ui.view" id="view_ineco_uom_tree">
+	      	<field name="name">ineco.product.uom.tree</field>
+	      	<field name="model">product.uom</field>
+	      	<field name="inherit_id" ref="product.product_uom_tree_view"/>
+	      	<field name="arch" type="xml">
+	        	<field name="name" position="after">
+	        		<field name="factor_name" />
+	        		<field name="uom_type" />
+	        	</field>
+	      	</field>
+	    </record>  
+	    
+        <record model="ir.ui.view" id="view_product_uom_search" >
+            <field name="name">product.uom.search</field>
+            <field name="model">product.uom</field>
+            <field name="arch" type="xml">
+            	<search string="Units of Measure">
+            		<field name="name" />
+            		<field name="category_id" />
+                   <group  expand='0' string='Group by...'>
+                       <filter string='Category' icon="terp-stock_symbol-selection" domain="[]" context="{'group_by' : 'category_id'}"/>
+                   </group>
+            	</search>
+            </field>
+        </record>
+        
+        <!-- Product Search -->
+        <!-- <record id="view_ineco_childof_category_search" model="ir.ui.view">
+            <field name="name">ineco.product.category.search</field>
+            <field name="model">product.product</field>
+	      	<field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+            	<field name='categ_id' position="after">
+            		<field name="categ_id"/>
+            	</field>
+            </field>
+        </record> -->
+
+		<!-- Product Category Tree -->
+		<record id="view_ineco_product_category" model="ir.ui.view">
+            <field name="name">ineco.product.category.list</field>
+            <field name="model">product.category</field>
+	      	<field name="inherit_id" ref="product.product_category_list_view"/>
+            <field name="priority">1</field>
+            <field name="arch" type="xml">
+              	<field name="complete_name" position="after">
+              		<field name="parent_id" invisible="1" />
+              		<!-- <field name="product_count" sum="Total"/> -->
+              		<field name="product_onhand" sum="Onhand" invisible="1"/>
+              		<field name="product_forecast" sum="Forecast" invisible="1" />
+                </field>
+            </field>
+        </record>
+
+		<record id="search_ineco_product_category" model="ir.ui.view">
+            <field name="name">ineco.product.category.search</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_search_view"/>
+            <field name="arch" type="xml">
+              	<field name="parent_id" position="after">
+              		<group expand='0' string='Group by...'>
+              			<filter name="parent_category" string='Parent Category' icon="terp-stock_symbol-selection" domain="[]" 
+              			context="{'group_by' : 'parent_id'}"/>
+              		</group>
+              	</field>
+            </field>
+        </record>
+        
+        <!-- <record id=view_ineco_product_barcode_search model="ir.ui.view">
+            <field name="name">ineco.product.barcode.search</field>
+            <field name="model">product.product</field>
+	      	<field name="inherit_id" ref="product.product_search_form_view"/>
+            <field name="arch" type="xml">
+            	<field name="categ_id" position="after">
+            		<field name="internal_barcode"/>
+            	</field>
+            </field>
+        </record>
+ -->
+        <record id="view_ineco_product_barcode" model="ir.ui.view">
+            <field name="name">ineco.product.barcode.form</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+            	<field name="default_code" position="after">
+            		<field name="internal_barcode" />
+            	</field>
+    		</field>
+    	</record>
+        	        
+    </data>
+</openerp>

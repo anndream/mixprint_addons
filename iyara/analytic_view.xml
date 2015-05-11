@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record model="ir.ui.view" id="view_ineco_account_analytic_account_form">
+	      	<field name="name">ineco.account.analytic.account.form</field>
+	      	<field name="model">account.analytic.account</field>
+	      	<field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>   
+	      	<field name="arch" type="xml">
+	      	    <field name="code" position='after' >
+	     			<field name="end_project" /> 	        
+	      	    </field>
+	      	    <field name="partner_id" position='after' >
+	     			<field name="partner_use_id"/>	        
+	      	    </field>	      	    
+            	<xpath expr='//page[@string="Contract Information"]' position='after'>   	     
+	      	        <page string="Project Status">
+		      	        <group string="Sale Information">	
+		      	            <group >     	            
+				      	   		<field name="quotation_id" domain="[('state','!=','cancel'),('partner_id','=',partner_id)]" />
+				      	   		<field name="sale_order_id" domain="[('state','!=','cancel'),('partner_id','=',partner_id)]"  />
+				      	   		<field name="po_customer" />
+			      	   		</group>
+			      	   		<group>
+				      	   		<field name="quotation_date" />
+				      	   		<field name="sale_order_date" />
+				      	   		<field name="po_customer_date"/>		      	   		
+			      	   		</group> 
+		      	   		</group>
+		      	        <group string="Purchase Information">	
+		      	            <group >     	            
+				      	   		<field name="purchase_order_id" />
+				      	   		<field name="open_lc_tt" />
+				      	   		<field name="opne_lc_tt_no" />
+				      	   		<field name="ex_wh" />
+				      	   		<field name="etd_date" />
+				      	   		<field name="eta_date" />
+				      	   		<field name="to_wh_iyara_date" />
+			      	   		</group>
+			      	   		<group>
+				      	   		<field name="purchase_order_date" />
+				      	   		<field name="opne_lc_tt_bank" />
+				      	   		<field name="opne_lc_tt_date" />
+				      	   		<field name="ex_wh_date" />		      	   		
+			      	   		</group> 
+		      	   		</group>
+		      	        <group string="Service Information">	
+		      	            <group >     	            
+				      	   		<field name="test_load_date" />
+				      	   		<field name="send_to_site_date" />
+				      	   		<field name="finished_install_date" />
+				      	   		<field name="comm_system_date" />
+			      	   		</group>
+			      	   		<group>
+				      	   		<field name="training_date" />
+				      	   		<field name="start_warranty_date" />
+				      	   		<field name="end_warranty_date" />		      	   		
+			      	   		</group> 
+		      	   		</group>		      	   				      	   		
+		      	        <group string="Invoice Information">	
+		      	            <group>     	            
+				      	   		<field name="invoice_down_payment"  domain="[('type','=','out_invoice'),('state','!=','cancel'),('partner_id','=',partner_id)]" />
+				      	   		<field name="invoice_two_payment"   domain="[('type','=','out_invoice'),('state','!=','cancel'),('partner_id','=',partner_id)]"/>
+				      	   		<field name="invoice_three_payment" domain="[('type','=','out_invoice'),('state','!=','cancel'),('partner_id','=',partner_id)]"/>
+				      	   		<field name="invoice_four_payment"  domain="[('type','=','out_invoice'),('state','!=','cancel'),('partner_id','=',partner_id)]"/>
+			      	   		</group> 
+			      	   		<group>
+				      	   		<field name="date_down_payment" />
+				      	   		<field name="date_two_payment" />
+				      	   		<field name="date_three_payment" />	
+				      	   		<field name="date_four_payment" />					      	   			      	   		
+			      	   		</group> 
+		      	   		</group>		      	   		
+                        <div class="oe_clear"/>
+                        <field name="iyara_description" class="oe_inline" placeholder="Iyara Description..."/>		      	   		
+	      	   		</page>
+	      	   	</xpath>	      	   		    	    
+			</field>
+		</record>
+		
+        <record id="view_account_analytic_account_iyara_search" model="ir.ui.view">
+            <field name="name">account.analytic.account.iyara.search</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="account.view_account_analytic_account_search"/>
+            <field name="arch" type="xml">
+            	<xpath expr='//filter[@string="Pending"]' position='after'> 
+					<filter string="End Project" domain="[('end_project','=',1)]"/>	
+					<filter string="Not End Project" domain="[('end_project','=',0)]"/>	
+                </xpath>
+            	<xpath expr='//filter[@string="Status"]' position='after'> 
+                	<filter string="Salesperson" domain="[]" context="{'group_by':'manager_id'}"/>   
+                </xpath>                	
+            </field>   	
+        </record>
+   	            
+     </data>
+</openerp>

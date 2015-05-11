@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+	<data>
+	
+		<report id="ineco_incoming_form"
+		    model="stock.picking.in" 
+		    name="ineco.incoming.form" 
+		    rml="ineco_stock_report/report/incoming_form.jrxml" 
+		    string="Incoming Form (A4)"/>
+		<report id="ineco_incoming_half_form"
+		    model="stock.picking.in" 
+		    name="ineco.incoming.half.form" 
+		    rml="ineco_stock_report/report/incoming_form_halfletter.jrxml" 
+		    string="Incoming Form (Half Letter)"/>
+
+		<report id="ineco_issue_form"
+		    model="stock.picking" 
+		    name="ineco.issue.form" 
+		    rml="ineco_stock_report/report/issue_form.jrxml" 
+		    string="Issue Form (A4)"/>
+		<report id="ineco_issue_half_form"
+		    model="stock.picking" 
+		    name="ineco.issue.half.form" 
+		    rml="ineco_stock_report/report/issue_form_halfletter.jrxml" 
+		    string="Issue Form (Half Letter)"/>
+
+		<report id="ineco_transfer_form"
+		    model="stock.picking" 
+		    name="ineco.transfer.form" 
+		    rml="ineco_stock_report/report/transfer_form.jrxml" 
+		    string="Transfer Form (A4)"/>
+		<report id="ineco_transfer_half_form"
+		    model="stock.picking" 
+		    name="ineco.transfer.half.form" 
+		    rml="ineco_stock_report/report/transfer_form_halfletter.jrxml" 
+		    string="Transfer Form (Half Letter)"/>
+
+		<report id="ineco_delivery_form"
+		    model="stock.picking.out" 
+		    name="ineco.delivery.form" 
+		    rml="ineco_stock_report/report/delivery_form.jrxml" 
+		    string="Delivery Form (A4)"/>
+		<report id="ineco_delivery_half_form"
+		    model="stock.picking.out" 
+		    name="ineco.delivery.half.form" 
+		    rml="ineco_stock_report/report/delivery_form_halfletter.jrxml" 
+		    string="Delivery Form (Half Letter)"/>
+		    
+	</data>
+	
+</openerp>

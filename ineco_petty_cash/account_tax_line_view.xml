@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+<data>
+
+<record id="view_tax_line_tree" model="ir.ui.view">
+    <field name="name">view.tax.line.tree</field>
+    <field name="model">account.tax.line</field>
+    <field name="type">tree</field>
+    <field name="priority" eval="1"/>
+    <field name="arch" type="xml">
+        <tree string="Tax Lines">
+            <field name="tax_id" select="1"/>
+            <field name="name" select="2"/>
+            <field name="base_amount"/>
+            <field name="tax_amount"/>
+            <field name="ref" select="1"/>
+            <field name="date" select="1"/>
+            <field name="partner_name" select="1"/>
+            <field name="state"/>
+        </tree>
+    </field>
+</record>
+
+<record id="view_tax_line_form" model="ir.ui.view">
+    <field name="name">view.tax.line.form</field>
+    <field name="model">account.tax.line</field>
+    <field name="type">form</field>
+    <field name="priority" eval="1"/>
+    <field name="arch" type="xml">
+        <form string="Tax Line">
+            <!-- <field name="tax_group" invisible="1"/> -->
+            <field name="type_tax_use" invisible="1"/>
+
+            <field name="tax_id" readonly="1"/>
+            <field name="account_id" readonly="1"/>
+
+            <field name="company_id" invisible="1"/>
+
+            <field align="0.0" name="period_id" />
+
+            <separator string="" colspan="4"/>
+            <field name="ref"/>
+            <field name="date"/>
+
+            <field name="base_amount" readonly="1"/>
+            <field name="tax_amount"  readonly="1"/>
+
+            <field name="partner_id" readonly="1"/>
+            <field name="partner_name" readonly="1"/>
+
+            <field name="tax_id_no"  readonly="1"/>
+			<group colspan="2" col="4" attrs="{'invisible':['|',('type_tax_use','=','sale')]}">
+                <field name="wht_type" readonly="1"/>
+            </group>
+            <group col="4" colspan="4" attrs="{'invisible':['|',('type_tax_use','=','sale')]}">
+                <separator string="" colspan="4"/>
+                <field name="wht_payee" invisible="1"/>
+                <field name="wht_payee_other" invisible="1" />
+                <field name="wht_filing_type" invisible="1"/>
+                <field name="wht_filing_times" invisible="1"/>
+                <field name="assessable_type" readonly="1"/>
+            </group>
+
+        <group colspan="4" col="4">
+            <separator colspan="4"/>
+            <field name="advance_clear_id" attrs="{'invisible':[('advance_clear_id','=',False)]}"/>
+            <field name="bank_move_id" attrs="{'invisible':[('bank_move_id','=',False)]}"/>
+            <field name="cheque_move_id" attrs="{'invisible':[('cheque_move_id','=',False)]}"/>
+            <field name="invoice_id" attrs="{'invisible':[('invoice_id','=',False)]}"/>
+            <field name="payment_id" attrs="{'invisible':[('payment_id','=',False)]}"/>
+            <field name="petty_id" attrs="{'invisible':[('petty_id','=',False)]}"/>
+            <field name="move_id"/>
+        </group>
+        <field name="state"/>
+        <button states="open" string="Cancel" name="button_cancel" type="object" confirm="Are you sure you want to cancel?" icon="gtk-cancel"/>
+        </form>
+    </field>
+</record>
+
+<record id="vat_lines_search" model="ir.ui.view">
+    <field name="name">account.tax.line.vat.search</field>
+    <field name="model">account.tax.line</field>
+    <field name="type">search</field>
+    <field name="priority">2</field>
+    <field name="arch" type="xml">
+        <search string="Search VAT Lines">
+           <group col="10" colspan="4">
+                <filter name="sale" icon="terp-accessories-archiver-minus" string="Sale" domain="[('type_tax_use','=','sale')]"/>
+                <filter name="purchase" icon="terp-accessories-archiver+" string="Purchase" domain="[('type_tax_use','=','purchase')]"/>
+                <separator orientation="vertical"/>
+                <filter name="suspended" icon="terp-gtk-media-pause" string="Suspended" domain="[('tax_id.amortized_tax_id','!=', False)]"/>
+                <separator orientation="vertical"/>
+                <field name="tax_id"/>
+                <field name="ref" string="Invoice No"/>
+                <field name="period_id"/>
+                <field name="partner_id"/>
+            </group>
+            <newline/>
+            <group expand="0" string="Extended Filters..." colspan="4">
+                <field name="date"/>
+                <field name="company_id" widget="selection"/>
+            </group>
+            <newline/>
+            <group expand="0" string="Group By...">
+                <filter string="Tax" icon="terp-folder-orange" domain="[]" context="{'group_by':'tax_id'}"/>
+                <filter string="Period" icon="terp-go-month" domain="[]" context="{'group_by':'period_id'}"/>
+                <filter string="Date" icon="terp-go-month" domain="[]"  context="{'group_by':'date'}"/>
+                <filter string="Partner" icon="terp-partner" domain="[]" context="{'group_by':'partner_id'}"/>
+            </group>
+       </search>
+    </field>
+</record>
+
+<record id="wht_lines_search" model="ir.ui.view">
+    <field name="name">account.tax.line.wht.search</field>
+    <field name="model">account.tax.line</field>
+    <field name="type">search</field>
+    <field name="priority">2</field>
+    <field name="arch" type="xml">
+        <search string="Search WHT Lines">
+           <group col="10" colspan="4">
+                <filter name="sale" icon="terp-accessories-archiver-minus" string="Sale" domain="[('type_tax_use','=','sale')]"/>
+                <separator orientation="vertical"/>
+                <filter name="purchase" icon="terp-accessories-archiver+" string="Purchase" domain="[('type_tax_use','=','purchase')]"/>
+                <filter name="personal" icon="terp-personal" string="Personal" domain="[('wht_type','=', 'pnd3')]"/>
+                <filter name="company" icon="terp-partner" string="Company" domain="[('wht_type','=', 'pnd53')]"/>
+                <newline/>
+                <field name="ref" string="Invoice No"/>
+                <field name="date"/>
+                <field name="tax_id"/>
+                <field name="partner_id"/>
+            </group>
+            <newline/>
+            <group expand="0" string="Extended Filters..." colspan="4">
+                <field name="period_id"/>
+                <field name="company_id" widget="selection"/>
+            </group>
+            <newline/>
+            <group expand="0" string="Group By...">
+                <filter string="WHT No" icon="terp-folder-orange" domain="[]" context="{'group_by':'ref'}"/>
+                <separator orientation="vertical"/>
+                <filter string="Tax" icon="terp-folder-orange" domain="[]" context="{'group_by':'tax_id'}"/>
+                <filter string="Period" icon="terp-go-month" domain="[]" context="{'group_by':'period_id'}"/>
+                <filter string="Date" icon="terp-go-month" domain="[]"  context="{'group_by':'date'}"/>
+                <filter string="Partner" icon="terp-partner" domain="[]" context="{'group_by':'partner_id'}"/>
+            </group>
+       </search>
+    </field>
+</record>
+
+    <record id="action_tax_line" model="ir.actions.act_window">
+        <field name="name">VAT Lines</field>
+        <field name="res_model">account.tax.line</field>
+        <field name="domain">[('move_id','!=',False)]</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="vat_lines_search"/>
+        <field name="context">{'tax_group':'vat'}</field>
+    </record>
+
+    <record id="action_wht_line" model="ir.actions.act_window">
+        <field name="name">WHT Lines</field>
+        <field name="res_model">account.tax.line</field>
+        <field name="domain">[('move_id','!=',False)]</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="wht_lines_search"/>
+        <field name="context">{'tax_group':'wht'}</field>
+    </record>
+
+</data>
+</openerp>
+

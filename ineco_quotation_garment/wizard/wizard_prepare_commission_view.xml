@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<openerp>
+    <data>
+
+        <record id="view_ineco_prepare_commission_form" model="ir.ui.view">
+            <field name="name">ineco.prepare.commission.form</field>
+            <field name="model">ineco.prepare.commission</field>
+            <field name="arch" type="xml">
+                <form string="Prepare Commission" version="7.0">
+                	<group>
+                		<field name="commission_date" />
+                	</group>
+                    <p class="oe_grey">
+                    </p>
+                    <footer>
+                        <button string="Update" name="update_data" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ineco_prepare_commission_form" model="ir.actions.act_window">
+            <field name="name">Prepare Commission</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ineco.prepare.commission</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        
+        <record model="ir.values" id="ineco_prepare_commission_value">
+            <field name="name">Prepare Commission</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('action_ineco_prepare_commission_form'))" />
+            <field name="key">action</field>
+            <field name="model">account.invoice</field>
+        </record>   
+        
+    </data>
+</openerp>
